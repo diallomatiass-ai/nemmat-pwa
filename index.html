@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#E1E9FD" />
+  <meta name="description" content="NemMat – Matematik kurser til HF, STX og HHX." />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="NemMat" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
+  <link rel="stylesheet" href="style.css" />
+  <title>NemMat – Matematik for alle</title>
+</head>
+<body>
+
+<div id="offline-bar" class="offline-bar" hidden>📴 Offline – viser gemt indhold</div>
+
+<!-- ====== HEADER ====== -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+
+    <a href="#" class="site-logo" onclick="navigate('gymnasium');return false;">
+      <img src="https://nemmat.dk/wp-content/uploads/2024/11/NEMMAT-final.webp"
+           alt="NemMat"
+           onerror="this.style.display='none'" />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="header-nav" id="desktop-nav">
+      <ul>
+        <li class="has-dropdown" id="nav-gymnasium">
+          <a href="#" onclick="navigate('gymnasium');return false;">Gymnasium</a>
+          <ul class="dropdown">
+            <li><a href="#" onclick="navigate('hf');return false;">HF</a></li>
+            <li><a href="#" onclick="navigate('stx');return false;">STX</a></li>
+            <li><a href="#" onclick="navigate('hhx');return false;">HHX</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="navigate('institutioner');return false;">Institutioner</a></li>
+        <li><a href="#" onclick="navigate('private');return false;">Private og Forældre</a></li>
+        <li><a href="#" onclick="navigate('om');return false;">Om os</a></li>
+        <li><a href="#" onclick="navigate('kontakt');return false;">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <a href="#" class="btn-min-konto" id="header-account-link" onclick="navigate('konto');return false;">
+        <span class="konto-icon">👤</span> Min konto
+      </a>
+      <a href="#" class="btn-opret" onclick="navigate('opret');return false;">Opret konto</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="#" onclick="navigate('gymnasium');closeMobileMenu();return false;">Gymnasium</a>
+    <div class="mobile-submenu">
+      <a href="#" onclick="navigate('hf');closeMobileMenu();return false;">→ HF</a>
+      <a href="#" onclick="navigate('stx');closeMobileMenu();return false;">→ STX</a>
+      <a href="#" onclick="navigate('hhx');closeMobileMenu();return false;">→ HHX</a>
+    </div>
+    <a href="#" onclick="closeMobileMenu();return false;">Institutioner</a>
+    <a href="#" onclick="closeMobileMenu();return false;">Private og Forældre</a>
+    <a href="#" onclick="closeMobileMenu();return false;">Om os</a>
+    <a href="#" onclick="closeMobileMenu();return false;">Kontakt</a>
+    <div class="mobile-menu-btns">
+      <a href="#" class="btn-min-konto" onclick="closeMobileMenu();return false;">Min konto</a>
+      <a href="#" class="btn-opret" onclick="closeMobileMenu();return false;">Opret konto</a>
+    </div>
+  </div>
+</header>
+
+<!-- ====== MAIN ====== -->
+<main id="app"></main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-logo-col">
+      <img src="https://nemmat.dk/wp-content/uploads/2024/11/NEMMAT-final.webp"
+           alt="NemMat" class="footer-logo"
+           onerror="this.style.display='none'" />
+    </div>
+    <div class="footer-col">
+      <h3>Adresse</h3>
+      <p>Sønder Boulevard 108<br>1720 Kbh V</p>
+    </div>
+    <div class="footer-col">
+      <h3>Kontakt</h3>
+      <p>Telefon: <a href="tel:50435078">50435078</a><br>
+         E-mail: <a href="mailto:info@nemmat.dk">info@nemmat.dk</a></p>
+    </div>
+    <div class="footer-col">
+      <h3>NemMat</h3>
+      <ul>
+        <li><a href="#">Om NemMat</a></li>
+        <li><a href="#">Privatpolitik</a></li>
+        <li><a href="#">Handelsbetingelser</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
