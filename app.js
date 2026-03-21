@@ -382,13 +382,34 @@ function render() {
     case 'konto':     app.innerHTML = renderSimple('Min konto', 'Log ind på <a href="https://nemmat.dk/lp-profil/" target="_blank">nemmat.dk</a>.'); break;
     default:          app.innerHTML = renderSimple('Side ikke fundet', ''); break;
   }
+  // Fade-in animation
+  app.style.animation = 'none';
+  app.offsetHeight; // reflow
+  app.style.animation = 'fadeIn .25s ease';
   bindEvents();
 }
 
 // ── GYMNASIUM SIDE (nemmat.dk/gymnasium) ──
 function renderGymnasium() {
+  const flat = getFlatItems();
+  const totalDone = flat.filter(f => isCompleted(f.si, f.ii)).length;
+  const pct = flat.length > 0 ? Math.round((totalDone / flat.length) * 100) : 0;
+
   return `
     ${renderBreadcrumb([])}
+    <div class="gym-hero">
+      <div class="gym-hero-inner">
+        <div class="gym-hero-badge">🎓 Matematik gjort nemt</div>
+        <h1 class="gym-hero-title">Bliv bedre til matematik</h1>
+        <p class="gym-hero-sub">Videoer, quizzer og øvelser — tilpasset HF, STX og HHX</p>
+        ${pct > 0 ? `
+          <div class="gym-hero-progress">
+            <div class="gym-progress-bar"><div class="gym-progress-fill" style="width:${pct}%"></div></div>
+            <span class="gym-progress-txt">${totalDone} / ${flat.length} gennemført · ${pct}%</span>
+          </div>` : `
+          <button class="btn-hero-start" onclick="navigate('hf-c')">Start her →</button>`}
+      </div>
+    </div>
     <div style="background:var(--bg-light); padding: 40px 0 0;">
       <!-- STX sektion -->
       <div class="gym-section level-cards-section">
@@ -467,17 +488,35 @@ function renderHFNiveau(niveau) {
   const courses = isC ? HF_C_COURSES : HF_B_COURSES;
   const breadParent = {label:'HF', page:'hf'};
 
-  const cards = courses.map(c => `
-    <div class="course-card" onclick="openCourse('${c.slug}','${encodeURIComponent(c.title)}')">
+  const subjectColors = {
+    'beviser': '#6366f1', 'tal-og-algebra': '#2563eb', 'ligninger': '#0891b2',
+    'procent': '#0d9488', 'funktions': '#059669', 'lineaer': '#16a34a',
+    'eksponent': '#ca8a04', 'geometri': '#d97706', 'trigonometri': '#dc2626',
+    'deskriptiv': '#db2777', 'sandsynlighed': '#9333ea', 'logaritme': '#7c3aed',
+    'potens': '#2563eb', 'integral': '#0891b2', 'differentialregning': '#dc2626',
+    'vektorer': '#6366f1'
+  };
+  const getColor = slug => {
+    for (const [k, v] of Object.entries(subjectColors)) {
+      if (slug.includes(k)) return v;
+    }
+    return '#356df1';
+  };
+  const cards = courses.map(c => {
+    const color = getColor(c.slug);
+    return `
+    <div class="course-card" onclick="openCourse('${c.slug}','${encodeURIComponent(c.title)}')" style="--card-accent:${color}">
       <div class="course-card-img"
            style="background-image:url('${c.img}')"
-           onerror="this.style.backgroundColor='#E1E9FD'"></div>
+           onerror="this.style.backgroundColor='#E1E9FD'">
+        <div class="course-card-accent-bar" style="background:${color}"></div>
+      </div>
       <div class="course-card-body">
         <h2>${c.title}${c.subtitle ? '<br><small style="font-size:13px;color:var(--muted);font-weight:400">' + c.subtitle + '</small>' : ''}</h2>
-        <button class="btn-gaa-til">GÅ TIL KURSET</button>
+        <button class="btn-gaa-til" style="background:${color}">GÅ TIL KURSET</button>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   return `
     ${renderBreadcrumb([{label:'Gymnasium',page:'gymnasium'},{label:'HF',page:'hf'}])}
@@ -504,25 +543,31 @@ function renderCourse() {
   const totalLessons = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='lesson').length, 0);
   const totalQuizzes = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='quiz').length, 0);
 
-  const curriculumHtml = curriculum.map((sec, si) => `
+  const curriculumHtml = curriculum.map((sec, si) => {
+    const doneInSec = sec.items.filter((_, ii) => isCompleted(si, ii)).length;
+    const allDone = doneInSec === sec.items.length;
+    return `
     <div class="curriculum-section">
       <div class="curriculum-section-header" onclick="toggleSection(${si})">
         <span>${sec.title}</span>
+        ${allDone ? '<span class="section-done-badge">✓ Færdig</span>' : doneInSec > 0 ? `<span class="section-progress-badge">${doneInSec}/${sec.items.length}</span>` : ''}
         <span class="curriculum-section-meta">${sec.items.length} opgaver</span>
         <span id="chev-${si}" style="color:var(--primary);transition:transform .25s">▼</span>
       </div>
       <div class="curriculum-section-body ${si===0?'open':''}" id="sec-body-${si}">
-        ${sec.items.map(item => `
-          <div class="curriculum-item">
-            <span class="item-icon">${item.type==='quiz' ? '❓' : '📄'}</span>
+        ${sec.items.map((item, ii) => {
+          const done = isCompleted(si, ii);
+          return `
+          <div class="curriculum-item${done ? ' curriculum-item-done' : ''}" onclick="openLesson(${si},${ii})">
+            <span class="item-icon">${done ? '✅' : item.type==='quiz' ? '❓' : '📄'}</span>
             <span class="item-title">${item.title}</span>
-            <span class="item-locked">🔒</span>
+            ${done ? '' : '<span class="item-locked">🔒</span>'}
             ${item.dur ? `<span class="item-dur">${item.dur}</span>` : ''}
-          </div>
-        `).join('')}
+          </div>`;
+        }).join('')}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   return `
     ${renderBreadcrumb([
@@ -570,8 +615,21 @@ function renderCourse() {
 
       <aside class="course-sidebar">
         <div class="course-enroll-box">
-          <button class="btn-start-kursus" onclick="openLesson(0,0)">Start Kursus</button>
-          <button class="btn-kob-med">Køb Medlemskab</button>
+          ${(function() {
+            const flat = getFlatItems();
+            const totalDone = flat.filter(f => isCompleted(f.si, f.ii)).length;
+            const pct = flat.length > 0 ? Math.round((totalDone / flat.length) * 100) : 0;
+            const firstIncomplete = flat.findIndex(f => !isCompleted(f.si, f.ii));
+            const btnLabel = totalDone === 0 ? 'Start Kursus' : totalDone === flat.length ? '✅ Kursus Gennemført!' : 'Fortsæt';
+            const btnClick = firstIncomplete >= 0 ? `openLesson(${flat[firstIncomplete].si},${flat[firstIncomplete].ii})` : 'openLesson(0,0)';
+            return `
+              ${pct > 0 ? `<div class="course-enroll-progress">
+                <div class="course-enroll-pbar"><div class="course-enroll-pfill" style="width:${pct}%"></div></div>
+                <span class="course-enroll-pct">${pct}% gennemført</span>
+              </div>` : ''}
+              <button class="btn-start-kursus${pct === 100 ? ' done' : ''}" onclick="${btnClick}">${btnLabel}</button>
+              <button class="btn-kob-med">Køb Medlemskab</button>`;
+          })()}
           <ul class="course-meta-list">
             <li><span class="meta-label">Sektioner</span><span>${curriculum.length}</span></li>
             <li><span class="meta-label">Lektioner</span><span>${totalLessons}</span></li>
@@ -924,21 +982,6 @@ function getStreak() {
     return 1;
   }
   return data.streak;
-}
-
-// ── FADE-IN PÅ NAVIGATE ──
-const _origNavigate = navigate;
-
-// Override render til at tilføje fade
-const _origRender = render;
-function render() {
-  _origRender();
-  const app = document.getElementById('app');
-  if (app) {
-    app.style.animation = 'none';
-    app.offsetHeight; // reflow
-    app.style.animation = 'fadeIn .25s ease';
-  }
 }
 
 // ── PWA: OFFLINE BAR ──
