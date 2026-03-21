@@ -273,6 +273,156 @@ const VEKTORER_CURRICULUM = [
   ]}
 ];
 
+// ── QUIZ DATA (rigtige matematikspørgsmål til Vektorer 2D) ──
+// Nøgle: "si-ii" (sektionsindex-itemindex)
+const QUIZ_DATA = {
+  // Sektion 2, quiz 1 — Skalering, Modsat, Længde
+  '1-1': [
+    { q: 'Hvad er 3 · $\\vec{u}$, hvis $\\vec{u} = \\begin{pmatrix}2\\\\4\\end{pmatrix}$?',
+      opts: ['$\\begin{pmatrix}5\\\\7\\end{pmatrix}$','$\\begin{pmatrix}6\\\\12\\end{pmatrix}$','$\\begin{pmatrix}6\\\\4\\end{pmatrix}$','$\\begin{pmatrix}2\\\\12\\end{pmatrix}$'], ans: 1 },
+    { q: 'Hvad er modsat-vektoren til $\\vec{v} = \\begin{pmatrix}3\\\\-5\\end{pmatrix}$?',
+      opts: ['$\\begin{pmatrix}3\\\\5\\end{pmatrix}$','$\\begin{pmatrix}-3\\\\-5\\end{pmatrix}$','$\\begin{pmatrix}-3\\\\5\\end{pmatrix}$','$\\begin{pmatrix}5\\\\-3\\end{pmatrix}$'], ans: 2 },
+    { q: 'Hvad er længden (absolutværdien) af $\\vec{u} = \\begin{pmatrix}3\\\\4\\end{pmatrix}$?',
+      opts: ['6','7','5','8'], ans: 2 },
+    { q: 'Hvad er $|\\vec{v}|$ hvis $\\vec{v} = \\begin{pmatrix}5\\\\12\\end{pmatrix}$?',
+      opts: ['17','13','11','15'], ans: 1 },
+    { q: 'Kan man lægge en vektor og et tal sammen?',
+      opts: ['Ja, altid','Ja, hvis tallet er 0','Nej, det giver ikke mening','Ja, hvis de har samme fortegn'], ans: 2 },
+    { q: 'Hvad giver $\\frac{1}{2} \\cdot \\begin{pmatrix}6\\\\-4\\end{pmatrix}$?',
+      opts: ['$\\begin{pmatrix}3\\\\2\\end{pmatrix}$','$\\begin{pmatrix}3\\\\-2\\end{pmatrix}$','$\\begin{pmatrix}12\\\\-8\\end{pmatrix}$','$\\begin{pmatrix}-3\\\\2\\end{pmatrix}$'], ans: 1 },
+    { q: 'Enheds-vektoren i x-retningen skrives:',
+      opts: ['$(0,0)$','$(1,1)$','$(1,0)$','$(0,1)$'], ans: 2 }
+  ],
+  // Sektion 3, quiz — Addition, subtraktion, punkter til vektorer
+  '2-2': [
+    { q: 'Vektoren fra $A(1,2)$ til $B(4,6)$ er:',
+      opts: ['$\\begin{pmatrix}5\\\\8\\end{pmatrix}$','$\\begin{pmatrix}3\\\\4\\end{pmatrix}$','$\\begin{pmatrix}-3\\\\-4\\end{pmatrix}$','$\\begin{pmatrix}4\\\\6\\end{pmatrix}$'], ans: 1 },
+    { q: '$\\begin{pmatrix}2\\\\3\\end{pmatrix} + \\begin{pmatrix}1\\\\-2\\end{pmatrix} = ?$',
+      opts: ['$\\begin{pmatrix}3\\\\5\\end{pmatrix}$','$\\begin{pmatrix}1\\\\5\\end{pmatrix}$','$\\begin{pmatrix}3\\\\1\\end{pmatrix}$','$\\begin{pmatrix}2\\\\-6\\end{pmatrix}$'], ans: 2 },
+    { q: '$\\begin{pmatrix}5\\\\2\\end{pmatrix} - \\begin{pmatrix}3\\\\4\\end{pmatrix} = ?$',
+      opts: ['$\\begin{pmatrix}8\\\\6\\end{pmatrix}$','$\\begin{pmatrix}2\\\\-2\\end{pmatrix}$','$\\begin{pmatrix}-2\\\\2\\end{pmatrix}$','$\\begin{pmatrix}2\\\\2\\end{pmatrix}$'], ans: 1 },
+    { q: 'Hvad er startpunktet ligegyldigt for?',
+      opts: ['Vektorens retning','Vektorens længde og retning','Vektorens længde','Begge dele — kun koordinaterne tæller'], ans: 3 },
+    { q: 'Vektoren $\\overrightarrow{BA}$ når $A(2,5)$ og $B(6,1)$:',
+      opts: ['$\\begin{pmatrix}-4\\\\4\\end{pmatrix}$','$\\begin{pmatrix}4\\\\-4\\end{pmatrix}$','$\\begin{pmatrix}4\\\\4\\end{pmatrix}$','$\\begin{pmatrix}-4\\\\-4\\end{pmatrix}$'], ans: 0 },
+    { q: 'Addition af to vektorer $\\vec{a} + \\vec{b}$ er kommutativ. Hvad betyder det?',
+      opts: ['$\\vec{a} + \\vec{b} = 2\\vec{a}$','$\\vec{a} + \\vec{b} = \\vec{b} + \\vec{a}$','$\\vec{a} + \\vec{b} = \\vec{a} - \\vec{b}$','$\\vec{a} + \\vec{b} = 0$'], ans: 1 }
+  ],
+  // Sektion 4, quiz — Skalarprodukt
+  '3-2': [
+    { q: 'Skalarprodukt af $\\vec{a} = \\begin{pmatrix}2\\\\3\\end{pmatrix}$ og $\\vec{b} = \\begin{pmatrix}4\\\\1\\end{pmatrix}$:',
+      opts: ['11','14','8','5'], ans: 0 },
+    { q: 'Hvad er resultatet af et skalarprodukt?',
+      opts: ['En vektor','Et tal (skalar)','En vinkel','En matrix'], ans: 1 },
+    { q: '$\\vec{a} \\cdot \\vec{b} = \\begin{pmatrix}1\\\\0\\end{pmatrix} \\cdot \\begin{pmatrix}0\\\\1\\end{pmatrix} = ?$',
+      opts: ['1','-1','0','2'], ans: 2 },
+    { q: 'Formlen for skalarprodukt er:',
+      opts: ['$a_1 b_2 - a_2 b_1$','$a_1 b_1 + a_2 b_2$','$a_1 + a_2 + b_1 + b_2$','$\\sqrt{a_1^2 + b_1^2}$'], ans: 1 },
+    { q: 'Hvad giver $|\\vec{a}|^2$ udtrykt med skalarprodukt?',
+      opts: ['$\\vec{a} \\cdot \\vec{a}$','$2 \\cdot \\vec{a}$','$\\vec{a} + \\vec{a}$','$\\vec{a} \\cdot \\vec{0}$'], ans: 0 }
+  ],
+  // Sektion 5, quiz — Ortogonale vektorer
+  '4-1': [
+    { q: 'To vektorer er ortogonale (vinkelrette) når:',
+      opts: ['$\\vec{a} \\cdot \\vec{b} = 1$','$\\vec{a} \\cdot \\vec{b} = -1$','$\\vec{a} \\cdot \\vec{b} = 0$','$|\\vec{a}| = |\\vec{b}|$'], ans: 2 },
+    { q: 'Er $\\vec{a} = \\begin{pmatrix}2\\\\3\\end{pmatrix}$ og $\\vec{b} = \\begin{pmatrix}3\\\\-2\\end{pmatrix}$ ortogonale?',
+      opts: ['Ja','Nej','Kun hvis de er normerede','Det kan ikke afgøres'], ans: 0 },
+    { q: 'Hvilken vinkel er der mellem to ortogonale vektorer?',
+      opts: ['45°','180°','0°','90°'], ans: 3 },
+    { q: 'En vektor vinkelret på $\\begin{pmatrix}a\\\\b\\end{pmatrix}$ er:',
+      opts: ['$\\begin{pmatrix}-a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}b\\\\-a\\end{pmatrix}$','$\\begin{pmatrix}a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}-b\\\\a\\end{pmatrix}$'], ans: 1 }
+  ],
+  // Sektion 6, quiz — Vinkel mellem vektorer
+  '5-1': [
+    { q: 'Formlen for vinklen $\\theta$ mellem $\\vec{a}$ og $\\vec{b}$ er:',
+      opts: ['$\\cos\\theta = \\frac{\\vec{a}+\\vec{b}}{|\\vec{a}||\\vec{b}|}$','$\\cos\\theta = \\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{a}||\\vec{b}|}$','$\\sin\\theta = \\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{a}||\\vec{b}|}$','$\\tan\\theta = \\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{a}||\\vec{b}|}$'], ans: 1 },
+    { q: 'To vektorer har $\\vec{a} \\cdot \\vec{b} = 6$ og $|\\vec{a}| = 2$, $|\\vec{b}| = 3$. Vinklen er:',
+      opts: ['30°','60°','90°','0°'], ans: 3 },
+    { q: 'Hvad er vinklen hvis $\\cos\\theta = -1$?',
+      opts: ['0°','90°','180°','270°'], ans: 2 },
+    { q: 'Vinklen mellem to vektorer er altid i intervallet:',
+      opts: ['$[0°, 360°]$','$[-90°, 90°]$','$[0°, 180°]$','$[0°, 270°]$'], ans: 2 }
+  ],
+  // Sektion 7, quiz — Projektion
+  '6-2': [
+    { q: 'Projektionen af $\\vec{a}$ på $\\vec{b}$ beregnes med:',
+      opts: ['$\\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{b}|^2}\\vec{a}$','$\\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{b}|^2}\\vec{b}$','$\\frac{\\vec{a}+\\vec{b}}{|\\vec{b}|}$','$\\vec{a}\\cdot\\hat{b}$'], ans: 1 },
+    { q: 'Længden af projektionen af $\\vec{a}$ på $\\vec{b}$ er:',
+      opts: ['$|\\vec{a}| + |\\vec{b}|$','$\\frac{|\\vec{a}|}{|\\vec{b}|}$','$\\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{b}|}$','$\\vec{a}\\cdot\\vec{b}$'], ans: 2 },
+    { q: 'Hvis $\\vec{a}$ er vinkelret på $\\vec{b}$, hvad er projektionen af $\\vec{a}$ på $\\vec{b}$?',
+      opts: ['$\\vec{a}$','$\\vec{b}$','$\\vec{0}$','$1$'], ans: 2 },
+    { q: 'Projektionen er en:',
+      opts: ['Skalar','Vinkel','Vektor','Matrix'], ans: 2 }
+  ],
+  // Sektion 8, quiz 1 — Definition af determinanter
+  '7-1': [
+    { q: 'Determinanten $\\det(\\vec{a},\\vec{b})$ for $\\vec{a}=\\begin{pmatrix}a_1\\\\a_2\\end{pmatrix}, \\vec{b}=\\begin{pmatrix}b_1\\\\b_2\\end{pmatrix}$ er:',
+      opts: ['$a_1 b_1 + a_2 b_2$','$a_1 b_1 - a_2 b_2$','$a_1 b_2 - a_2 b_1$','$a_1 b_2 + a_2 b_1$'], ans: 2 },
+    { q: 'Tværvektoren til $\\begin{pmatrix}3\\\\5\\end{pmatrix}$ er:',
+      opts: ['$\\begin{pmatrix}5\\\\3\\end{pmatrix}$','$\\begin{pmatrix}-3\\\\-5\\end{pmatrix}$','$\\begin{pmatrix}-5\\\\3\\end{pmatrix}$','$\\begin{pmatrix}3\\\\-5\\end{pmatrix}$'], ans: 2 },
+    { q: '$\\det\\left(\\begin{pmatrix}2\\\\1\\end{pmatrix}, \\begin{pmatrix}3\\\\4\\end{pmatrix}\\right) = ?$',
+      opts: ['5','11','8','10'], ans: 0 },
+    { q: 'Hvad beskriver determinantens absolutværdi geometrisk?',
+      opts: ['Vinklen mellem vektorerne','Summen af vektorernes længder','Arealet af det parallelogram vektorerne udspænder','Længden af projektionen'], ans: 2 }
+  ],
+  // Sektion 8, quiz 2 — Areal, Vinkler og Parallelitet
+  '7-5': [
+    { q: 'To vektorer er parallelle hvis:',
+      opts: ['$\\vec{a}\\cdot\\vec{b}=0$','$\\det(\\vec{a},\\vec{b})=0$','$|\\vec{a}|=|\\vec{b}|$','$\\vec{a}+\\vec{b}=\\vec{0}$'], ans: 1 },
+    { q: 'Arealet af trekanten udspændt af $\\vec{a}$ og $\\vec{b}$ er:',
+      opts: ['$|\\det(\\vec{a},\\vec{b})|$','$\\frac{1}{2}|\\det(\\vec{a},\\vec{b})|$','$2|\\det(\\vec{a},\\vec{b})|$','$|\\vec{a}\\cdot\\vec{b}|$'], ans: 1 },
+    { q: '$\\det\\left(\\begin{pmatrix}1\\\\2\\end{pmatrix}, \\begin{pmatrix}2\\\\4\\end{pmatrix}\\right) = ?$',
+      opts: ['8','6','0','4'], ans: 2, hint: 'Parallelle vektorer giver determinant 0' },
+    { q: 'Formlen $\\sin\\theta = \\frac{|\\det(\\vec{a},\\vec{b})|}{|\\vec{a}||\\vec{b}|}$ bruger vi til:',
+      opts: ['At finde vektorlængden','At afgøre parallelitet','At beregne vinklen mellem to vektorer','At projicere vektorer'], ans: 2 },
+    { q: 'Arealet af parallelogrammet dannet af $\\begin{pmatrix}3\\\\0\\end{pmatrix}$ og $\\begin{pmatrix}0\\\\4\\end{pmatrix}$:',
+      opts: ['7','12','14','6'], ans: 1 }
+  ],
+  // Sektion 9, quiz — Linjen med vektorer
+  '8-2': [
+    { q: 'Parameterfremstillingen for en linje er:',
+      opts: ['$y = ax + b$','$\\begin{pmatrix}x\\\\y\\end{pmatrix} = \\begin{pmatrix}x_0\\\\y_0\\end{pmatrix} + t\\begin{pmatrix}r_1\\\\r_2\\end{pmatrix}$','$x^2 + y^2 = r^2$','$ax + by = c$'], ans: 1 },
+    { q: 'Hvad er retningsvektoren for linjen $y = 2x + 1$?',
+      opts: ['$\\begin{pmatrix}2\\\\1\\end{pmatrix}$','$\\begin{pmatrix}1\\\\2\\end{pmatrix}$','$\\begin{pmatrix}0\\\\1\\end{pmatrix}$','$\\begin{pmatrix}1\\\\0\\end{pmatrix}$'], ans: 1 },
+    { q: 'Normalvektoren til retningsvektoren $\\begin{pmatrix}1\\\\2\\end{pmatrix}$ er:',
+      opts: ['$\\begin{pmatrix}1\\\\2\\end{pmatrix}$','$\\begin{pmatrix}2\\\\-1\\end{pmatrix}$','$\\begin{pmatrix}-1\\\\-2\\end{pmatrix}$','$\\begin{pmatrix}1\\\\-2\\end{pmatrix}$'], ans: 1 },
+    { q: 'Linjens ligning $ax + by = c$ bruger hvilken vektor som koefficienter?',
+      opts: ['Retningsvektoren','En tilfældig vektor','Normalvektoren','Positionsvektoren'], ans: 2 }
+  ],
+  // Sektion 10, quiz — Linjens ligning
+  '9-1': [
+    { q: 'Linjens ligning med normalvektor $\\vec{n}=\\begin{pmatrix}2\\\\3\\end{pmatrix}$ igennem $P(1,4)$:',
+      opts: ['$2x + 3y = 14$','$3x + 2y = 11$','$2x - 3y = -10$','$x + y = 5$'], ans: 0 },
+    { q: 'Hvad bruges normalvektoren til i linjens ligning?',
+      opts: ['Den angiver linjens hældning','Den er vinkelret på linjen og giver $a$ og $b$ i $ax+by=c$','Den angiver et punkt på linjen','Den bestemmer linjens afskæring'], ans: 1 },
+    { q: 'Hvis $\\vec{n} = \\begin{pmatrix}1\\\\-1\\end{pmatrix}$ og $P(3,3)$, hvad er $c$?',
+      opts: ['6','0','3','9'], ans: 1 }
+  ],
+  // Sektion 11, quiz — Vinkel mellem linjer
+  '10-1': [
+    { q: 'Vinklen mellem to linjer med retningsvektorer $\\vec{r}_1$ og $\\vec{r}_2$ beregnes med:',
+      opts: ['$\\cos\\theta = \\frac{\\vec{r}_1\\cdot\\vec{r}_2}{|\\vec{r}_1||\\vec{r}_2|}$','$\\sin\\theta = \\frac{\\det(\\vec{r}_1,\\vec{r}_2)}{|\\vec{r}_1||\\vec{r}_2|}$','$\\tan\\theta = \\frac{|\\det|}{\\vec{r}_1\\cdot\\vec{r}_2}$','Alle tre formler er ækvivalente'], ans: 3 },
+    { q: 'To linjer er parallelle når:',
+      opts: ['$\\det(\\vec{r}_1,\\vec{r}_2) = 0$','$\\vec{r}_1\\cdot\\vec{r}_2 = 0$','$|\\vec{r}_1| = |\\vec{r}_2|$','$\\vec{r}_1 + \\vec{r}_2 = \\vec{0}$'], ans: 0 },
+    { q: 'To linjer er vinkelrette når:',
+      opts: ['$\\det(\\vec{r}_1,\\vec{r}_2) = 0$','$\\vec{r}_1\\cdot\\vec{r}_2 = 0$','$|\\vec{r}_1| = |\\vec{r}_2|$','$\\vec{r}_1 = \\vec{r}_2$'], ans: 1 }
+  ],
+  // Sektion 12, quiz — Cirkler
+  '11-3': [
+    { q: 'Cirklens ligning med centrum $(a,b)$ og radius $r$ er:',
+      opts: ['$(x+a)^2+(y+b)^2=r$','$(x-a)^2+(y-b)^2=r^2$','$x^2+y^2=r^2$','$(x-a)+(y-b)=r^2$'], ans: 1 },
+    { q: 'Cirklens parameterfremstilling med centrum $(0,0)$ og radius $r$:',
+      opts: ['$x=r\\cos t,\\ y=r\\sin t$','$x=r\\sin t,\\ y=r\\cos t$','$x=t,\\ y=r$','$x=r,\\ y=t$'], ans: 0 },
+    { q: 'Hvad er radius i $x^2 + y^2 = 25$?',
+      opts: ['25','5','$\\sqrt{5}$','$\\sqrt{25}$'], ans: 1 },
+    { q: 'Centrum i $(x-3)^2 + (y+2)^2 = 16$ er:',
+      opts: ['$(-3, 2)$','$(3, -2)$','$(3, 2)$','$(-3, -2)$'], ans: 1 }
+  ]
+};
+
+// Quiz tilstand
+let quizState = null; // { questions, current, answers, submitted }
+
 // ── CURRENT STATE ──
 let currentPage = 'gymnasium';
 let currentCourse = null;
@@ -693,13 +843,22 @@ function renderLessonViewer() {
 
   // ── CONTENT ──
   const isQuiz = item.type === 'quiz';
-  const contentHtml = `
+  const quizKey = `${currentSection}-${currentItem}`;
+  const quizQuestions = QUIZ_DATA[quizKey] || null;
+  const alreadyDone = isCompleted(currentSection, currentItem);
+
+  // Init quiz state when entering a new quiz
+  if (isQuiz && quizQuestions && (!quizState || quizState.key !== quizKey)) {
+    quizState = { key: quizKey, current: 0, answers: new Array(quizQuestions.length).fill(null), submitted: false, score: 0 };
+  }
+
+  let contentHtml;
+  if (isQuiz && quizQuestions) {
+    contentHtml = renderQuizContent(quizQuestions, sec, item, alreadyDone);
+  } else {
+    contentHtml = `
     <div class="lesson-video-wrap">
-      ${isQuiz ? `
-        <div class="lesson-video-placeholder">
-          <div class="play-icon">❓</div>
-          <span>Quiz — ${item.dur || ''}</span>
-        </div>` : item.ytId ? `
+      ${item.ytId ? `
         <iframe src="https://www.youtube.com/embed/${item.ytId}?rel=0&modestbranding=1"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>` : `
@@ -711,17 +870,18 @@ function renderLessonViewer() {
     <div class="lesson-content-body">
       <div class="lesson-breadcrumb-mini">📚 ${sec.title}</div>
       <h2>${item.title}</h2>
-      ${!isQuiz ? `<p class="lesson-desc">${item.dur ? `⏱ ${item.dur}` : ''}</p>` : ''}
+      <p class="lesson-desc">${item.dur ? `⏱ ${item.dur}` : ''}</p>
     </div>
     <div class="lesson-complete-area">
       <button id="btn-complete"
-        class="btn-mark-complete${isCompleted(currentSection, currentItem) ? ' done' : ''}"
+        class="btn-mark-complete${alreadyDone ? ' done' : ''}"
         onclick="markComplete()"
-        ${isCompleted(currentSection, currentItem) ? 'disabled' : ''}>
-        ${isCompleted(currentSection, currentItem) ? '✅ Gennemført!' : isQuiz ? '✅ Markér quiz som færdig' : '✅ Markér som gennemført'}
+        ${alreadyDone ? 'disabled' : ''}>
+        ${alreadyDone ? '✅ Gennemført!' : '✅ Markér som gennemført'}
       </button>
-      ${!isCompleted(currentSection, currentItem) ? `<span class="lesson-complete-hint">Klik når du er færdig med ${isQuiz ? 'quizzen' : 'videoen'}</span>` : ''}
+      ${!alreadyDone ? `<span class="lesson-complete-hint">Klik når du er færdig med videoen</span>` : ''}
     </div>`;
+  }
 
   // ── BOTTOM BAR ──
   const trunc = (t, n=40) => t && t.length > n ? t.substring(0, n) + '…' : t;
@@ -771,6 +931,149 @@ function renderLessonViewer() {
         <div class="lesson-bottombar-next">${nextBtn}</div>
       </div>
     </div>`;
+}
+
+// ── QUIZ RENDER ──
+function renderQuizContent(questions, sec, item, alreadyDone) {
+  if (!quizState) return '';
+
+  if (alreadyDone && !quizState.submitted) {
+    quizState.submitted = true;
+    quizState.score = questions.length;
+  }
+
+  if (quizState.submitted) {
+    const score = quizState.score;
+    const total = questions.length;
+    const pct = Math.round((score / total) * 100);
+    const grade = pct >= 80 ? '🏆 Fremragende!' : pct >= 60 ? '👍 Godt klaret!' : '💪 Prøv igen!';
+    return `
+      <div class="quiz-wrap">
+        <div class="quiz-result-screen">
+          <div class="quiz-result-icon">${pct >= 60 ? '🎉' : '📚'}</div>
+          <h2 class="quiz-result-title">${grade}</h2>
+          <div class="quiz-score-circle">
+            <span class="quiz-score-num">${score}/${total}</span>
+            <span class="quiz-score-pct">${pct}%</span>
+          </div>
+          <div class="quiz-result-bar-wrap">
+            <div class="quiz-result-bar" style="width:${pct}%; background:${pct>=60?'linear-gradient(90deg,#356df1,#29CC57)':'linear-gradient(90deg,#f59e0b,#ef4444)'}"></div>
+          </div>
+          ${pct < 60 ? `<button class="btn-quiz-retry" onclick="retryQuiz()">🔄 Prøv igen</button>` : ''}
+          <div class="quiz-review">
+            ${questions.map((q, i) => {
+              const userAns = quizState.answers[i];
+              const correct = userAns === q.ans;
+              return `
+                <div class="quiz-review-item ${correct ? 'correct' : 'wrong'}">
+                  <span class="quiz-review-icon">${correct ? '✅' : '❌'}</span>
+                  <div>
+                    <div class="quiz-review-q">Sp. ${i+1}</div>
+                    <div class="quiz-review-a">${correct ? 'Korrekt' : `Forkert — rigtigt svar: ${q.opts[q.ans]}`}</div>
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>
+          <div class="lesson-complete-area" style="padding:0;margin-top:24px;">
+            <button id="btn-complete"
+              class="btn-mark-complete${alreadyDone ? ' done' : ''}"
+              onclick="markComplete()"
+              ${alreadyDone ? 'disabled' : ''}>
+              ${alreadyDone ? '✅ Gennemført!' : '✅ Markér quiz som gennemført'}
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  const q = questions[quizState.current];
+  const total = questions.length;
+  const answered = quizState.answers[quizState.current];
+  const progressPct = Math.round((quizState.current / total) * 100);
+
+  return `
+    <div class="quiz-wrap">
+      <div class="quiz-header">
+        <div class="quiz-breadcrumb">📚 ${sec.title}</div>
+        <div class="quiz-progress-row">
+          <span class="quiz-counter">Spørgsmål ${quizState.current + 1} / ${total}</span>
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progressPct}%"></div></div>
+        </div>
+      </div>
+
+      <div class="quiz-question-card">
+        <div class="quiz-q-number">Q${quizState.current + 1}</div>
+        <p class="quiz-question-text">${q.q}</p>
+        ${q.hint ? `<div class="quiz-hint">💡 ${q.hint}</div>` : ''}
+        <div class="quiz-options">
+          ${q.opts.map((opt, i) => {
+            let cls = 'quiz-option';
+            if (answered !== null) {
+              if (i === q.ans) cls += ' correct';
+              else if (i === answered) cls += ' wrong';
+              else cls += ' dimmed';
+            } else if (answered === i) {
+              cls += ' selected';
+            }
+            return `<button class="${cls}" onclick="selectQuizAnswer(${i})" ${answered !== null ? 'disabled' : ''}>${opt}</button>`;
+          }).join('')}
+        </div>
+        ${answered !== null ? `
+          <div class="quiz-feedback ${answered === q.ans ? 'feedback-correct' : 'feedback-wrong'}">
+            ${answered === q.ans ? '✅ Korrekt!' : `❌ Forkert. Svaret er: ${q.opts[q.ans]}`}
+          </div>
+          <button class="btn-quiz-next" onclick="nextQuizQuestion()">
+            ${quizState.current < total - 1 ? 'Næste spørgsmål →' : 'Se resultat →'}
+          </button>` : ''}
+      </div>
+    </div>`;
+}
+
+function selectQuizAnswer(optIdx) {
+  if (!quizState || quizState.answers[quizState.current] !== null) return;
+  const questions = QUIZ_DATA[quizState.key];
+  quizState.answers[quizState.current] = optIdx;
+  if (optIdx === questions[quizState.current].ans) quizState.score++;
+
+  // Re-render content area only
+  const content = document.querySelector('.lesson-content');
+  if (content) {
+    const sec = getCurriculum()[currentSection];
+    const item = sec.items[currentItem];
+    content.innerHTML = renderQuizContent(questions, sec, item, isCompleted(currentSection, currentItem));
+    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
+  }
+}
+
+function nextQuizQuestion() {
+  if (!quizState) return;
+  const questions = QUIZ_DATA[quizState.key];
+  if (quizState.current < questions.length - 1) {
+    quizState.current++;
+  } else {
+    quizState.submitted = true;
+  }
+  const content = document.querySelector('.lesson-content');
+  if (content) {
+    const sec = getCurriculum()[currentSection];
+    const item = sec.items[currentItem];
+    content.innerHTML = renderQuizContent(questions, sec, item, isCompleted(currentSection, currentItem));
+    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
+    content.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function retryQuiz() {
+  if (!quizState) return;
+  const questions = QUIZ_DATA[quizState.key];
+  quizState = { key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0 };
+  const content = document.querySelector('.lesson-content');
+  if (content) {
+    const sec = getCurriculum()[currentSection];
+    const item = sec.items[currentItem];
+    content.innerHTML = renderQuizContent(questions, sec, item, false);
+    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
+  }
 }
 
 // ── STX SIDE ──
@@ -854,6 +1157,10 @@ function bindEvents() {
       if (card) card.click();
     });
   });
+  // Typeset MathJax på quiz-indhold
+  if (window.MathJax && document.querySelector('.quiz-wrap')) {
+    MathJax.typesetPromise([document.querySelector('.quiz-wrap')]).catch(()=>{});
+  }
 }
 
 // ── TAB SWITCH ──
