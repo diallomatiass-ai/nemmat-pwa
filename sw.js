@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nemmat-v3';
+const CACHE_NAME = 'nemmat-v4';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE = [
@@ -16,12 +16,12 @@ const PRECACHE = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE))
+      .then(cache => cache.addAll(PRECACHE.filter(u => !u.includes('offline'))))
       .then(() => self.skipWaiting())
   );
 });
 
-// Activate — ryd gamle caches
+// Activate — ryd alle gamle caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -30,21 +30,22 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch — cache-first for shell, network-first for API
+// Fetch — network-first for JS/CSS (altid friske filer), cache-first for billeder
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Ignorer ikke-GET og chrome-extension
   if (request.method !== 'GET' || url.protocol === 'chrome-extension:') return;
 
-  // API-kald: network-first
-  if (url.pathname.startsWith('/api/')) {
+  // JS og CSS: altid network-first så opdateringer slår igennem med det samme
+  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
     event.respondWith(
       fetch(request)
         .then(res => {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then(c => c.put(request, clone));
+          if (res && res.status === 200) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(c => c.put(request, clone));
+          }
           return res;
         })
         .catch(() => caches.match(request))
@@ -52,18 +53,17 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell: cache-first
+  // Alt andet: cache-first med network-fallback
   event.respondWith(
     caches.match(request).then(cached => {
-      if (cached) return cached;
-      return fetch(request)
-        .then(res => {
-          if (!res || res.status !== 200) return res;
+      const fetchPromise = fetch(request).then(res => {
+        if (res && res.status === 200) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then(c => c.put(request, clone));
-          return res;
-        })
-        .catch(() => caches.match(OFFLINE_URL));
-    })
+        }
+        return res;
+      });
+      return cached || fetchPromise;
+    }).catch(() => caches.match(OFFLINE_URL))
   );
 });

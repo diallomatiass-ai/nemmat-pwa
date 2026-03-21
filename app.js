@@ -460,8 +460,26 @@ function closeMobileMenu() {
 }
 
 // ── LESSON HELPERS ──
+// Kurser med fuldt indhold (resten er "kommer snart")
+const FULL_COURSES = new Set(['vektorer-matematik-b-stx-2aar']);
+
 function getCurriculum() {
-  return VEKTORER_CURRICULUM;
+  if (!currentCourse || FULL_COURSES.has(currentCourse.slug)) {
+    return VEKTORER_CURRICULUM;
+  }
+  // Placeholder-curriculum til kurser under opbygning
+  return [
+    { title: '1. Introduktion', items: [
+      { type: 'lesson', title: 'Introduktion til ' + currentCourse.title, dur: 'Kommer snart' }
+    ]},
+    { title: '2. Grundlæggende begreber', items: [
+      { type: 'lesson', title: 'Teori og definitioner', dur: 'Kommer snart' },
+      { type: 'quiz', title: 'Test dig selv', dur: '5 spørgsmål' }
+    ]},
+    { title: '3. Øvelser og eksamen', items: [
+      { type: 'quiz', title: 'Eksamensforberedelse', dur: 'Kommer snart' }
+    ]}
+  ];
 }
 
 function getFlatItems() {
@@ -689,9 +707,16 @@ function openCourse(slug, titleEncoded) {
 // ── KURSUSSIDE ──
 function renderCourse() {
   const c = currentCourse || { slug: 'tal-og-algebra', title: 'Tal og Algebra' };
+  const isFull = !currentCourse || FULL_COURSES.has(currentCourse.slug);
   const curriculum = getCurriculum();
   const totalLessons = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='lesson').length, 0);
   const totalQuizzes = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='quiz').length, 0);
+  const comingSoonBanner = !isFull ? `
+    <div class="coming-soon-banner">
+      🚀 <strong>Dette kursus er under opbygning.</strong>
+      Fuldt indhold med videoer og quizzer kommer snart.
+      <a href="#" onclick="openCourse('vektorer-matematik-b-stx-2aar', encodeURIComponent('Vektorer 2D'));return false;" style="color:#356df1;font-weight:700;margin-left:8px">Prøv Vektorer 2D i stedet →</a>
+    </div>` : '';
 
   const curriculumHtml = curriculum.map((sec, si) => {
     const doneInSec = sec.items.filter((_, ii) => isCompleted(si, ii)).length;
@@ -725,6 +750,7 @@ function renderCourse() {
       {label:'HF',page:'hf'},
       {label:'HF C Niveau',page:'hf-c'}
     ])}
+    ${comingSoonBanner}
     <div class="course-detail-wrap">
       <div class="course-main">
         <img
