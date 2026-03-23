@@ -1338,6 +1338,85 @@ const ALL_QUIZ_DATA = {
         opts: ['-1','1','5','-3'], ans: 0 },
       { q: '$a = -2,\\; b = 5$. Skæring med x-aksen?',
         opts: ['$(2,\\,0)$','$(2{,}5,\\,0)$','$(0,\\,5)$','$(5,\\,0)$'], ans: 1 }
+    ],
+    // S4: KENDT PUNKT OG HÆLDNING — item 1 (nemmat.dk)
+    '4-1': [
+      { q: 'Grafen for $f$ har hæld­ning 3 og går gennem $P(2,\\,5)$. Bestem forskriften.',
+        opts: ['$f(x)=x-3$','$f(x)=-3x+1$','$f(x)=3x-1$','$f(x)=2x+1$'], ans: 2 },
+      { q: '$f$ har hæld­ning 3 og går gennem $P(2,\\,5)$. Beregn $f(1)$.',
+        opts: ['$f(1)=2$','$f(1)=6$','$f(2)=1$','$f(1)=-1$'], ans: 0 },
+      { q: 'Grafen for $f$ har hæld­ning 5 og går gennem $P(1,\\,4)$. Hvad er $a$ og $b$?',
+        opts: ['$a=5,\\; b=-1$','$a=5,\\; b=4$','$a=5,\\; b=0$','$a=5,\\; b=1$'], ans: 0 },
+      { q: '$f$ har hæld­ning 5 og går gennem $P(1,\\,4)$. Er $f(2) = 9$?',
+        opts: ['Nej, fordi $f(2)=11$','Ja, fordi $f(2)=9$'], ans: 1 },
+      { q: 'Grafen for $f$ har hæld­ning $-5$ og går gennem $P(0,\\,4)$. Bestem forskriften.',
+        opts: ['$f(x)=-5x+0$','$f(x)=-x+4$','$f(x)=-5x+4$','$f(x)=-4x+5$'], ans: 2 }
+    ],
+    // S5: TABELFORMER OG MODELLER — item 3 (nemmat.dk)
+    '5-3': [
+      { q: 'En teleudbyder: grundpris 50 kr/mdr og 20 kr/time. Opstil en funktion for prisen $f(x)$.',
+        opts: ['$f(x)=20x+50$','$f(x)=50x+20$','$f(x)=30x+50$','$f(x)=20x+20$'], ans: 0 },
+      { q: 'En biograf: 90 kr/billet. Popcorn (60 kr) giver 10 kr rabat pr. billet. Funktion for total pris ved $x$ billetter + popcorn?',
+        opts: ['$f(x)=-80x+90$','$f(x)=-10x+90$','$f(x)=80x+60$','$f(x)=90x+60$'], ans: 2 },
+      { q: 'En fabrik: startpris 5000 kr, falder med 100 kr pr. telefon. Opstil en funktion.',
+        opts: ['$f(x)=5000+100x$','$f(x)=-5000x+100$','$f(x)=5000x-100$','$f(x)=-100x+5000$'], ans: 3 },
+      { q: 'Fitnesscenter: 200 kr/mdr + 50 kr/holdtræning. Funktion for månedlig pris $p(x)$?',
+        opts: ['$p(x)=200+50x$','$p(x)=50+50x$','$p(x)=200+200x$','$p(x)=50x-200$'], ans: 0 }
+    ],
+    // S6: SKÆRING MELLEM TO FUNKTIONER — item 1 (nemmat.dk)
+    '6-1': [
+      { q: 'Find skæringspunktet for $f(x)=3x+6$ og $g(x)=-x+22$.',
+        opts: ['$(4,\\,20)$','$(3,\\,16)$','$(4,\\,18)$','$(3,\\,22)$'], ans: 2 },
+      { q: 'Find skæringspunktet for $f(x)=4x-5$ og $g(x)=3x+15$.',
+        opts: ['$(20,\\,75)$','$(75,\\,20)$','$(25,\\,60)$','$(3,\\,9)$'], ans: 0 },
+      { q: 'To telefonmodeller: Model A = $2x+150$ og Model B = $3x+50$. Hvornår koster de det samme?',
+        opts: ['$100$ minutter','$50$ minutter','$75$ minutter','$30$ minutter'], ans: 0 },
+      { q: 'Modellerne skærer ved 100 minutter. Hvilken model er billigst over 100 minutter?',
+        opts: ['Kan ikke afgøres','Model A','Model B','De koster det samme'], ans: 1 },
+      { q: 'Modellerne skærer ved 100 minutter. Hvilken model er billigst under 100 minutter?',
+        opts: ['Kan ikke afgøres','Model A','Model B','De koster det samme'], ans: 2 },
+      { q: 'En familie overvejer to vaskemaskinemodeller. De bruger lige meget efter ca. ___ år.',
+        opts: ['$10$ år','$9$ år','$8$ år','$11$ år'], ans: 0 }
+    ],
+    // S7: REGRESSION MED CAS — item 3 (nemmat.dk)
+    '7-3': [
+      { q: '$f(x)=1{,}5x+5$ (kaffe pr. uge, $x$ = skoletimer). Hvad er $f(30)$?',
+        opts: ['$30$','$50$','$45$','$55$'], ans: 1 },
+      { q: '$f(x)=1{,}5x+5$ (kaffe pr. uge). Hvad er $f(20)$?',
+        opts: ['$35$','$30$','$25$','$20$'], ans: 0 },
+      { q: '$f(x)=1{,}5x+5$. Find $x$, når $f(x)=26$.',
+        opts: ['$16$','$11$','$9$','$14$'], ans: 3 },
+      { q: '$f(x)=8x+150$ (puls, $x$ = hastighed km/t). Hvad er $f(5)$?',
+        opts: ['$180$ slag/min','$170$ slag/min','$160$ slag/min','$190$ slag/min'], ans: 3 },
+      { q: '$f(x)=8x+150$ (puls). Find hastighed $x$, når pulsen er 190 slag/min.',
+        opts: ['$5$ km/t','$10$ km/t','$15$ km/t','$20$ km/t'], ans: 0 },
+      { q: '$f(x)=8x+150$ (puls). Hvor meget stiger pulsen, når hastigheden stiger 3 km/t?',
+        opts: ['$40$ slag/min','$24$ slag/min','$35$ slag/min','$13$ slag/min'], ans: 1 },
+      { q: '$f(x)=-10x+200$ (lommepenge, $x$ = alder). Hvad er $f(14)$?',
+        opts: ['$65$ kr','$55$ kr','$50$ kr','$60$ kr'], ans: 3 },
+      { q: '$f(x)=-10x+200$. Find alderen $x$, når lommepengene er 60 kr.',
+        opts: ['$13$ år','$14$ år','$12$ år','$10$ år'], ans: 1 },
+      { q: '$f(x)=-10x+200$. Hvad er $f(17)$?',
+        opts: ['$30$ kr','$170$ kr','$150$ kr','$90$ kr'], ans: 0 }
+    ],
+    // S8: EKSAMENSFORBEREDELSE — item 0,1,2 (nemmat.dk)
+    '8-0': [
+      { q: 'Grafen for $f(x)=ax+b$ går gennem $(2,\\,10)$ og $(6,\\,2)$. Beregn $a$ og $b$.',
+        opts: ['$a=-6,\\; b=20$','$a=20,\\; b=-6$','$a=14,\\; b=-2$','$a=-2,\\; b=14$'], ans: 3 },
+      { q: 'Med $f(x)=-2x+14$: beregn $f(1)$.',
+        opts: ['$f(1)=11$','$f(1)=12$','$f(1)=13$','$f(1)=14$'], ans: 1 }
+    ],
+    '8-1': [
+      { q: 'Grafen for $f$ har hæld­ning 5 og går gennem $P(2,\\,3)$. Beregn $f(3)$.',
+        opts: ['$f(3)=13$','$f(3)=5$','$f(3)=7$','$f(3)=8$'], ans: 3 },
+      { q: 'Løs ligningen $f(x)=18$ når $f(x)=5x-7$.',
+        opts: ['$x=4$','$x=5$','$x=7$','$x=8$'], ans: 1 }
+    ],
+    '8-2': [
+      { q: 'Temperaturen på en motorhjelm kan beskrives ved en lineær funktion. Bestem hæld­ningstallet $a$.',
+        opts: ['$5$','$3$','$4$','Kan ikke bestemmes'], ans: 0 },
+      { q: 'Hvad fortæller tallet $a$ om temperaturændringen på motorhjelmen?',
+        opts: ['Temperaturen STIGER med 5°C pr. time','Temperaturen FALDER med 5°C pr. time'], ans: 1 }
     ]
   },
 
