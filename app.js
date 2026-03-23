@@ -1828,6 +1828,58 @@ const ALL_QUIZ_DATA = {
         opts: ['$1/3$','$3/8$','$3/5$','$5/8$'], ans: 1 },
       { q: 'P(slå to seksere i træk med fair terning) = ?',
         opts: ['$1/6$','$1/12$','$1/36$','$1/72$'], ans: 2 }
+    ],
+    '1-3': [
+      { q: 'Restaurant: 3 forretter og 2 hovedretter. Antal 2-retters menuer?',
+        opts: ['$4$','$5$','$6$','$8$'], ans: 2 },
+      { q: 'Terning (6 sider) kastes og mønt (2 sider) slås. Antal muligheder i alt?',
+        opts: ['$4$','$10$','$8$','$12$'], ans: 3 },
+      { q: 'Skole: 3 formiddagsfag og 4 eftermiddagsfag. Antal dagsprogrammer (ét af hver)?',
+        opts: ['$7$','$10$','$12$','$8$'], ans: 2 },
+      { q: 'Sportsvalg: 2 fodboldhold, 3 håndboldhold, 2 volleyballhold. Eleven vælger ét hold. Antal valg?',
+        opts: ['$5$','$6$','$7$','$9$'], ans: 2 },
+      { q: 'Outfit: 3 trøjer, 2 par bukser, 2 par sko (alle skal vælges). Antal outfits?',
+        opts: ['$6$','$24$','$12$','$8$'], ans: 2 }
+    ],
+    '2-2': [
+      { q: '5 bøger skal arrangeres på en hylde. Antal måder?',
+        opts: ['$150$','$120$','$5$','$70$'], ans: 1 },
+      { q: 'Beregn $\\dfrac{10!}{9!}$',
+        opts: ['$1$','$9$','$10$','$120$'], ans: 2 },
+      { q: '4 kugler i forskellig farve skal arrangeres. Antal måder?',
+        opts: ['$12$','$48$','$24$','$4$'], ans: 2 },
+      { q: 'Bogstaverne i "ALI" skal arrangeres. Antal permutationer?',
+        opts: ['$6$','$3$','$2$','$9$'], ans: 0 },
+      { q: '8 elever skal vælge 3 til projektgruppe (orden ligegyldig). Antal måder?',
+        opts: ['$48$','$8$','$3$','$56$'], ans: 3 }
+    ],
+    '3-3': [
+      { q: 'En pose: 8 røde, 5 blå, 7 grønne kugler (20 i alt). $P(\\text{blå}) = ?$',
+        opts: ['$\\frac{1}{20}$','$\\frac{1}{4}$','$\\frac{1}{5}$','$\\frac{7}{20}$'], ans: 1 },
+      { q: 'Samme pose. $P(\\text{rød}) = ?$',
+        opts: ['$\\frac{1}{5}$','$\\frac{2}{5}$','$\\frac{7}{20}$','$\\frac{1}{4}$'], ans: 1 },
+      { q: 'Summen af alle sandsynligheder i et sandsynlighedsfelt er:',
+        opts: ['$0$','$0{,}5$','$1$','Afhænger af udfaldsrummet'], ans: 2 },
+      { q: 'Sandsynligheder er altid i intervallet:',
+        opts: ['$[-1;\\ 1]$','$[0;\\ 1]$','$[0;\\ 100]$','$[0;\\ \\infty[$'], ans: 1 }
+    ],
+    '4-2': [
+      { q: 'To terninger kastes. $P(\\text{begge viser 6}) = ?$',
+        opts: ['$\\frac{1}{3}$','$\\frac{1}{2}$','$\\frac{1}{4}$','$\\frac{1}{36}$'], ans: 3 },
+      { q: 'To terninger kastes. $P(\\text{én viser 4 og anden 5}) = ?$',
+        opts: ['$\\frac{1}{36}$','$\\frac{1}{6}$','$\\frac{1}{4}$','$\\frac{1}{40}$'], ans: 0 },
+      { q: 'Café: 6 chokoladekager, 4 isdesserter, 5 frugtdesserter. $P(\\text{chokolade eller is}) = ?$',
+        opts: ['$\\frac{1}{4}$','$\\frac{1}{6}$','$\\frac{1}{3}$','$\\frac{2}{3}$'], ans: 3 },
+      { q: 'Samme café. $P(\\text{is eller frugt}) = ?$',
+        opts: ['$\\frac{1}{5}$','$\\frac{9}{15}$','$\\frac{1}{4}$','$\\frac{10}{15}$'], ans: 1 }
+    ],
+    '5-0': [
+      { q: 'To terninger kastes. $X$ = sum af øjne. $P(X < 9) = ?$',
+        opts: ['$\\frac{26}{36}=\\frac{13}{18}$','$\\frac{20}{36}=\\frac{5}{9}$','$\\frac{10}{36}=\\frac{5}{18}$','$\\frac{2}{36}=\\frac{1}{18}$'], ans: 0 },
+      { q: 'Samme spil. $P(X > 10) = ?$',
+        opts: ['$\\frac{3}{36}$','$\\frac{5}{36}$','$\\frac{18}{36}$','$\\frac{20}{36}$'], ans: 0 },
+      { q: 'Samme spil. $P(X \\text{ er et primtal}) = ?$ (primtal: 2, 3, 5, 7, 11)',
+        opts: ['$\\frac{7}{36}$','$\\frac{5}{36}$','$\\frac{11}{36}$','$\\frac{15}{36}$'], ans: 3 }
     ]
   },
 
