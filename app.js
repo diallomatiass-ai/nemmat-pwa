@@ -1934,6 +1934,12 @@ const ALL_QUIZ_DATA = {
         opts: ['Eksponentielle funktioner vises som rette linjer','Det er nemmere at farvelægge','Det giver bedre afrunding','Ingen fordel'], ans: 0 },
       { q: 'Løs: $\\log(x^2) = 4$',
         opts: ['$x = 2$','$x = 100$','$x = \\pm 100$','$x = 4$'], ans: 2 }
+    ],
+    '2-0': [
+      { q: 'Lydniveauet $f(x) = 92 - 25\\cdot\\log(x)$ dB. Bestem $f(3)$.',
+        opts: ['$80{,}1\\text{ dB}$','$83{,}1\\text{ dB}$','$79{,}1\\text{ dB}$','$82{,}1\\text{ dB}$'], ans: 0 },
+      { q: 'Løs $f(x) = 70$ for $f(x) = 92 - 25\\cdot\\log(x)$. Hvad fortæller løsningen?',
+        opts: ['Afstand 100 m giver 100 dB','Afstand 20 m giver 140 dB','Afstand $\\approx7{,}59$ m giver 70 dB','Afstand 70 m giver 7,59 dB'], ans: 2 }
     ]
   },
 
