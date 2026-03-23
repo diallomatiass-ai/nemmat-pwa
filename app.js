@@ -1483,6 +1483,52 @@ const ALL_QUIZ_DATA = {
         opts: ['15% vækst','85% vækst','-15% (fald)','−85%'], ans: 2 },
       { q: '$f(x) = b \\cdot a^x$ med $f(0) = 4$ og $f(1) = 6$. Hvad er $a$?',
         opts: ['1,2','1,4','1,5','2'], ans: 2 }
+    ],
+    // S2: BEREGNING AF a OG b — item 2 (nemmat.dk)
+    '2-2': [
+      { q: '$f(x)=b\\cdot a^x$ går gennem $(2,\\,6)$ og $(6,\\,18)$. Bestem $a$ og $b$.',
+        opts: ['$a=3{,}46$ og $b=3{,}46$','$b=1{,}316$ og $a=3{,}46$','$a=1{,}316$ og $b=3{,}46$','$a=1{,}5$ og $b=3{,}2$'], ans: 2 },
+      { q: '$f(x)=b\\cdot a^x$ går gennem $(2,\\,6)$ og $(4,\\,18)$. Bestem forskriften.',
+        opts: ['$f(x)=2\\cdot 1{,}73^x$','$f(x)=2\\cdot 17{,}3^x$','$f(x)=4\\cdot 73^x$','$f(x)=3\\cdot 173^x$'], ans: 0 },
+      { q: '$f(x)=2\\cdot 1{,}73^x$. Beregn $f(3)$.',
+        opts: ['$f(3)=12{,}65$','$f(3)=25{,}59$','$f(3)=10{,}39$','$f(3)=15{,}65$'], ans: 2 }
+    ],
+    // S3: FORDOBLINGSKONSTANT — item 2 (nemmat.dk)
+    '3-2': [
+      { q: 'Bestem fordoblingskonstanten for $f(x)=20000\\cdot 1{,}05^x$.',
+        opts: ['$T_2=13{,}6$','$T_2=14{,}21$','$T_2=15{,}4$','$T_2=12{,}5$'], ans: 1 },
+      { q: 'En bakteriekultur vokser med $a=1{,}08$ pr. time. Hvad er fordoblingskonstanten?',
+        opts: ['$11$ timer','$10$ timer','$12{,}5$ timer','$9$ timer'], ans: 3 },
+      { q: 'En investering vokser med 9% pr. år. Beregn fordoblingskonstanten.',
+        opts: ['Fordobles hvert 100.000 år','Fordobles hvert 18 år','Fordoblingskonstanten findes ikke','Fordobles hvert 8 år'], ans: 3 },
+      { q: '$f(x)=120000\\cdot (1+0{,}25)^x$. Bestem $T_2$.',
+        opts: ['$T_2=3{,}11$','$T_2=5{,}55$','$T_2=4{,}51$','$T_2=6{,}01$'], ans: 0 },
+      { q: '$f(x)=5\\cdot 1{,}30^x$. Aflæs/beregn fordoblingskonstanten.',
+        opts: ['$T_2=4{,}54$','$T_2=2{,}64$','$T_2=3{,}52$','$T_2=5{,}55$'], ans: 1 }
+    ],
+    // S4: HALVERINGSKONSTANT — item 2 (nemmat.dk)
+    '4-2': [
+      { q: 'Bestem halveringskonstanten for $f(x)=200\\cdot 0{,}92^x$.',
+        opts: ['$T_{\\frac{1}{2}}=9{,}52$','$T_{\\frac{1}{2}}=7{,}95$','$T_{\\frac{1}{2}}=8{,}31$','$T_{\\frac{1}{2}}=9{,}10$'], ans: 2 },
+      { q: 'En smartphone: startpris 8.000 kr, $a=0{,}85$ pr. år. Hvornår er prisen halveret?',
+        opts: ['Halveret hvert 6,84 år','Halveret hvert 9,55 år','Halveret hvert 5,76 år','Halveret hvert 4,27 år'], ans: 3 },
+      { q: 'En medicin aftager med 10% i timen ($a=0{,}90$). Hvad er halveringstiden?',
+        opts: ['Halveret hvert 8,58 time','Halveret hvert 5,65 time','Halveret hvert 7,5 time','Halveret hvert 6,58 time'], ans: 3 },
+      { q: '$f(x)=2500\\cdot (1-0{,}18)^x$. Bestem $T_{\\frac{1}{2}}$.',
+        opts: ['$T_{\\frac{1}{2}}=4{,}1$','$T_{\\frac{1}{2}}=3{,}8$','$T_{\\frac{1}{2}}=3{,}49$','$T_{\\frac{1}{2}}=2{,}98$'], ans: 2 },
+      { q: '$f(x)=550\\cdot 0{,}40^x$. Bestem halveringskonstanten grafisk.',
+        opts: ['$T_{\\frac{1}{2}}=0{,}76$','$T_{\\frac{1}{2}}=0{,}5$','$T_{\\frac{1}{2}}=0{,}65$','$T_{\\frac{1}{2}}=0{,}45$'], ans: 0 }
+    ],
+    // S5: MODELLER OG REGRESSION — item 0 (FIB skipped) (nemmat.dk)
+    '5-0': [
+      { q: 'Kaffeforbrug: 800 kr/år i 2019, vokser med 10% pr. år. Opstil en eksponentiel model.',
+        opts: ['$y=800\\cdot 110^x$','$y=800\\cdot 1{,}10^x$','$y=800\\cdot 10^x$','$y=10\\cdot 1800^x$'], ans: 1 },
+      { q: 'Fitnessabonnement: 350 kr/mdr i 2021, falder med 15% pr. år. Opstil modellen.',
+        opts: ['$f(x)=15\\cdot 0{,}85^x$','$f(x)=350\\cdot 0{,}15^x$','$f(x)=350\\cdot 0{,}85^x$','$f(x)=400\\cdot 0{,}85^x$'], ans: 2 },
+      { q: '$f(x)=650\\cdot 0{,}85^x$ (DVD-salg). Hvad fortæller tallet 650?',
+        opts: ['Startværdien — 650.000 solgte DVD i 2015','Fremskrivningsfaktoren — aftager med 650 om året'], ans: 0 },
+      { q: '$f(x)=650\\cdot 0{,}85^x$ (DVD-salg). Hvad fortæller tallet 0,85?',
+        opts: ['Startværdien — 0,85 solgte DVD i 2015','Fremskrivningsfaktoren — aftager med 15% om året'], ans: 1 }
     ]
   },
   'eksponentielle-funktioner-stx': null, // sættes nedenfor
