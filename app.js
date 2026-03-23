@@ -252,6 +252,7 @@ const PROCENT_CURRICULUM = [
     { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
   ]},
   { title: '4. Renteregning', items: [
+    { type: 'lesson', title: 'Teori – Renteformlen', dur: '5 min', ytId: '-Oi_Zdg7rF8' },
     { type: 'lesson', title: 'Teori – Slutkapital', dur: '', ytId: 'EpjpWzyHzh8' },
     { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
     { type: 'lesson', title: 'Teori – Startbeløb', dur: '', ytId: 'TZUsa0zFhnM' },
@@ -920,7 +921,7 @@ const ALL_QUIZ_DATA = {
       { q: 'Hvad er $3 \\cdot 4^2 - 2 \\cdot 3 + 1$?',
         opts: ['43','145','7','42'], ans: 0, hint: 'Husk: potens før multiplikation' },
       { q: 'Forenkl $4(2x - 3) - 3(x - 1)$:',
-        opts: ['$5x - 9$','$5x - 9$','$11x - 9$','$5x - 15$'], ans: 0 },
+        opts: ['$5x - 9$','$5x + 9$','$11x - 9$','$5x - 15$'], ans: 0 },
       { q: 'Løs: $3x - 5 = 10$',
         opts: ['$x = 5$','$x = 15$','$x = 3$','$x = 1$'], ans: 0 },
       { q: '$\\frac{1}{3} + \\frac{1}{4} = ?$',
@@ -1413,7 +1414,7 @@ const ALL_QUIZ_DATA = {
       { q: 'Beregn $\\log(1000)$:',
         opts: ['2','3','4','10'], ans: 1 },
       { q: '$\\log(10^3 \\cdot 10^2) = ?$',
-        opts: ['5','6','25','6'], ans: 0 }
+        opts: ['5','6','25','3'], ans: 0 }
     ],
     '2-1': [
       { q: 'Løs: $\\log(x) = 3$',
