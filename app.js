@@ -1596,6 +1596,42 @@ const ALL_QUIZ_DATA = {
         opts: ['0,5','$\\sqrt{2}/2$','$\\sqrt{3}/2$','1'], ans: 2 },
       { q: 'En cirkel har radius 7. Hvad er omkredsen?',
         opts: ['$7\\pi$','$14\\pi$','$49\\pi$','$\\pi/7$'], ans: 1 }
+    ],
+    '4-2': [
+      { q: 'Aflæs $\\sin(53{,}1°)$ fra enhedscirklen.',
+        opts: ['$0{,}5$','$0{,}7$','$0{,}6$','$0{,}8$'], ans: 3 },
+      { q: 'Aflæs $\\cos(53{,}1°)$ fra enhedscirklen.',
+        opts: ['$0{,}8$','$0{,}65$','$0{,}6$','$0{,}7$'], ans: 2 },
+      { q: 'Aflæs $\\cos(45°)$ fra enhedscirklen.',
+        opts: ['$0{,}5$','$0{,}8$','$0{,}7$','$0{,}6$'], ans: 2 },
+      { q: 'Aflæs $\\sin(45°)$ fra enhedscirklen.',
+        opts: ['$0{,}7$','$0{,}6$','$0{,}8$','$0{,}5$'], ans: 0 },
+      { q: 'Aflæs $\\tan(45°)$ fra enhedscirklen.',
+        opts: ['$0{,}8$','$1{,}5$','$1$','$0{,}9$'], ans: 2 },
+      { q: 'Retvinklet trekant ABC: $a=7$ (modstående til A), $b=24$ (hosliggende til A). Opstil ligning for vinkel $A$.',
+        opts: ['$\\tan(24)=\\tfrac{a}{7}$','$\\tan(7)=\\tfrac{a}{24}$','$\\tan(A)=\\tfrac{24}{7}$','$\\tan(A)=\\tfrac{7}{24}$'], ans: 3 }
+    ],
+    '5-5': [
+      { q: 'Trekant ABC: $C$ er ret, $|AC|=15$, $\\angle A=39°$. Hvad er $b=|AC|$?',
+        opts: ['$54$','$15$','$39$','$24$'], ans: 1 },
+      { q: 'Trekant ABC: $C$ er ret, $|AC|=15$, $\\angle A=39°$. Opstil ligning for $|AB|$.',
+        opts: ['$\\cos(39)=\\tfrac{15}{|AB|}$','$\\cos(15)=\\tfrac{39}{|AB|}$','$\\cos(39)=\\tfrac{39}{|AB|}$','$\\cos(15)=\\tfrac{15}{|AB|}$'], ans: 0 },
+      { q: 'Trekant: $a=5$, $b=6$, $c=7$. Bestem vinkel $A$ med cosinusrelationen.',
+        opts: ['$63{,}55°$','$50{,}20°$','$44{,}42°$','$60{,}50°$'], ans: 2 },
+      { q: 'Trekant: $a=8$, $b=10$, $c=12$. Bestem vinkel $C$ med cosinusrelationen.',
+        opts: ['$77{,}25°$','$79{,}88°$','$75{,}52°$','$82{,}82°$'], ans: 3 },
+      { q: 'Sinusrelationen lyder:',
+        opts: ['$\\tfrac{a}{\\sin A}=\\tfrac{b}{\\sin B}=\\tfrac{c}{\\sin C}$','$a^2=b^2+c^2-2bc\\cos A$','$T=\\tfrac{1}{2}ab\\sin C$','$c^2=a^2+b^2$'], ans: 0 }
+    ],
+    '6-0': [
+      { q: 'Trekant ABC: $\\angle A=45°$, $|AB|=10$, $|AC|=14$. Hvad svarer siden $c$ til?',
+        opts: ['$14$','$45$','$12$','$10$'], ans: 3 },
+      { q: 'Trekant ABC: $|AB|=5$, $|AC|=3$, $C$ er ret. Bestem hypotenusen.',
+        opts: ['$4$','$2$','$5$','$3$'], ans: 2 },
+      { q: 'Retvinklet trekant: $\\angle A=35°$, $C$ er ret, hyp $=15$. Opstil ligning for den modstående katete til $A$.',
+        opts: ['$\\sin(35)=\\tfrac{\\text{mod}}{15}$','$\\sin(15)=\\tfrac{\\text{mod}}{35}$','$\\sin(\\text{mod})=\\tfrac{15}{35}$','$\\sin(35)=\\tfrac{35}{\\text{mod}}$'], ans: 0 },
+      { q: 'Trekant med højde $h=10$ og areal $=35$. Bestem grundlinjen $|AB|$.',
+        opts: ['$10$','$35$','$7$','$5$'], ans: 2 }
     ]
   },
 
