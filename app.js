@@ -139,73 +139,415 @@ const HF_B_COURSES = [
   }
 ];
 
-// ── TAL OG ALGEBRA CURRICULUM (eksempel fra nemmat.dk) ──
+// ── TAL OG ALGEBRA CURRICULUM ──
 const TAL_ALGEBRA_CURRICULUM = [
-  {
-    title: 'TAL',
-    items: [
-      { type: 'lesson', title: 'Teori – Tals betydning', dur: '5 min' },
-      { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'REGNEARTERNES HIERAKI',
-    items: [
-      { type: 'lesson', title: 'Teori – Addition og Subtraktion', dur: '4 min' },
-      { type: 'lesson', title: 'Teori om Multiplikation og Division', dur: '5 min' },
-      { type: 'lesson', title: 'Potens og Rod', dur: '5 min' },
-      { type: 'lesson', title: 'Teori om Fortegn', dur: '' },
-      { type: 'lesson', title: 'Teori – Regnearternes Hieraki', dur: '5 min' },
-      { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'POTENS OG ROD',
-    items: [
-      { type: 'lesson', title: 'Teori – Regneregler for potens og rødder', dur: '2 min' },
-      { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'EKSAMENSØVELSE 1',
-    items: [
-      { type: 'quiz', title: 'Læringstelt – Hvor meget har du styr på?', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'ALGEBRA',
-    items: [
-      { type: 'lesson', title: 'Teori – Introduktion til bogstaver', dur: '4 min' },
-      { type: 'lesson', title: 'Teori – Algebra og parenteser', dur: '5 min' },
-      { type: 'lesson', title: 'Algebra regneregler', dur: '6 min' },
-      { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'TAL OG BOGSTAVER MED DIGITALE VÆRKTØJ (CAS)',
-    items: [
-      { type: 'quiz', title: 'Læringstelt – Test din forståelse', dur: '7 spørgsmål' }
-    ]
-  },
-  {
-    title: 'BRØKREGNING',
-    items: [
-      { type: 'lesson', title: 'Teori – Hvad er en brøk, forlængelse og forkortelse', dur: '4 min' },
-      { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
-      { type: 'lesson', title: 'Teori – Addition og Subtraktion med brøker', dur: '5 min' },
-      { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
-      { type: 'lesson', title: 'Teori – Multiplikation og Division med brøker', dur: '3 min' },
-      { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
-      { type: 'lesson', title: 'Teori – Sammenhæng mellem tal og brøker', dur: '4 min' },
-      { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
-    ]
-  },
-  {
-    title: 'EKSAMENSØVELSE 2',
-    items: [
-      { type: 'quiz', title: 'Test din forståelse af Tal og Algebra', dur: '5 spørgsmål' }
-    ]
-  }
+  { title: 'TAL', items: [
+    { type: 'lesson', title: 'Teori – Tals betydning', dur: '5 min', ytId: '8VYhH_yuv6k' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål', ytId: 'PIJwhN-Kggs' }
+  ]},
+  { title: 'REGNEARTERNES HIERAKI', items: [
+    { type: 'lesson', title: 'Teori – Addition og Subtraktion', dur: '4 min', ytId: 'G5YSE6tol94' },
+    { type: 'lesson', title: 'Teori om Multiplikation og Division', dur: '5 min', ytId: '235sVrctdwg' },
+    { type: 'lesson', title: 'Potens og Rod', dur: '5 min', ytId: 'bK19NJH5KWQ' },
+    { type: 'lesson', title: 'Teori om Fortegn', dur: '', ytId: 'UhQbkGmjR2w' },
+    { type: 'lesson', title: 'Teori – Regnearternes Hieraki', dur: '5 min', ytId: 'maG4-7fQQQc' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: 'POTENS OG ROD', items: [
+    { type: 'lesson', title: 'Teori – Regneregler for potens og rødder', dur: '2 min', ytId: 'lHE0CnH9_rA' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: 'EKSAMENSØVELSE 1', items: [
+    { type: 'quiz', title: 'Læringstelt – Hvor meget har du styr på?', dur: '5 spørgsmål' }
+  ]},
+  { title: 'ALGEBRA', items: [
+    { type: 'lesson', title: 'Teori – Introduktion til bogstaver', dur: '4 min', ytId: 'PqedBFPH39w' },
+    { type: 'lesson', title: 'Teori – Algebra og parenteser', dur: '5 min', ytId: '1kYVetGT1Y8' },
+    { type: 'lesson', title: 'Algebra regneregler', dur: '6 min', ytId: 'EF0E8gYP-do' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: 'TAL OG BOGSTAVER MED DIGITALE VÆRKTØJ (CAS)', items: [
+    { type: 'quiz', title: 'Læringstelt – Test din forståelse', dur: '7 spørgsmål' }
+  ]},
+  { title: 'BRØKREGNING', items: [
+    { type: 'lesson', title: 'Teori – Hvad er en brøk, forlængelse og forkortelse', dur: '4 min', ytId: 'MEi0ORA4OwI' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Addition og Subtraktion med brøker', dur: '5 min', ytId: 'nVyrPOvC9bQ' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Multiplikation og Division med brøker', dur: '3 min', ytId: 'rdbjjpJEyR4' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Sammenhæng mellem tal og brøker', dur: '4 min', ytId: 'YWgQGtXknWo' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: 'EKSAMENSØVELSE 2', items: [
+    { type: 'quiz', title: 'Test din forståelse af Tal og Algebra', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── LIGNINGER CURRICULUM ──
+const LIGNINGER_CURRICULUM = [
+  { title: '1. Motivation og Indledning', items: [
+    { type: 'lesson', title: 'Motivation og Indledning', dur: '', ytId: 'qYXyWtIEUD0' },
+    { type: 'quiz',   title: 'Læringstelt: Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '2. Addition og Subtraktion', items: [
+    { type: 'lesson', title: 'Teori – Addition og subtraktion', dur: '5 min', ytId: '_iLc4eWjf7c' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '3. Multiplikation og Division', items: [
+    { type: 'lesson', title: 'Teori – Multiplikation og division', dur: '4 min', ytId: 'ZU3QEXRlnRg' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '4. Regler for ligninger', items: [
+    { type: 'lesson', title: 'Teori – Regler', dur: '4 min', ytId: 'Q2LMRNO8JOY' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Ubekendt på begge sider', items: [
+    { type: 'lesson', title: 'Teori – Ubekendt på begge sider af lighedstegnet', dur: '3 min', ytId: 'GdlGgiZpaaY' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Parenteser i ligninger', items: [
+    { type: 'lesson', title: 'Teori – Ligninger med Parenteser', dur: '5 min', ytId: 'wDD0RRAQWy0' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Potens og Rødder', items: [
+    { type: 'lesson', title: 'Teori – Potens og Rødder', dur: '4 min', ytId: 'eVSB_lY6OGI' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '8. Ligning i tekst', items: [
+    { type: 'lesson', title: 'Forklaring af ligning i tekst', dur: '', ytId: 'G5-3D3OfRks' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '7 spørgsmål' }
+  ]},
+  { title: '9. Logaritmiske ligninger', items: [
+    { type: 'lesson', title: 'Teori – Logaritmisk Ligning', dur: '3 min', ytId: 'YXYJkDXdfhg' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '10. Formler', items: [
+    { type: 'lesson', title: 'Teori – Formler', dur: '', ytId: 'hz1568kONNo' },
+    { type: 'lesson', title: 'Teori – Formler i tekst', dur: '', ytId: 'ZGzA3WUZ96k' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '4 spørgsmål' }
+  ]},
+  { title: '11. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Gør dig klar til den skriftlige Eksamen!', dur: '10 spørgsmål' }
+  ]}
+];
+
+// ── PROCENT OG RENTE CURRICULUM ──
+const PROCENT_CURRICULUM = [
+  { title: '1. Procentbegrebet', items: [
+    { type: 'lesson', title: 'Teori – Begrebet Procent', dur: '', ytId: 'CdANeW1Qza0' },
+    { type: 'lesson', title: 'Teori – Omregning fra Procent til Decimal', dur: '', ytId: 'ryRvFrCN83U' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Procent af tal og tilvækst', items: [
+    { type: 'lesson', title: 'Teori – Procent af tal', dur: '', ytId: 'M0ifMdZybpY' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Absolut og Relativ tilvækst', dur: '', ytId: 'vY2qXzt59mM' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Fremskrivningsfaktor og stigning/fald', items: [
+    { type: 'lesson', title: 'Teori – Fremskrivningsfaktor', dur: '', ytId: 'mtKHN0hRiZg' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – At lægge/trække procent til tal', dur: '', ytId: 'O1FOabU7OIo' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Renteregning', items: [
+    { type: 'lesson', title: 'Teori – Slutkapital', dur: '', ytId: 'EpjpWzyHzh8' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Startbeløb', dur: '', ytId: 'TZUsa0zFhnM' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse med startbeløb', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Rentebestemmelse', dur: '', ytId: 'Qnaz6MuFxAc' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Termin', dur: '', ytId: '0DTaqz0-4u8' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' },
+    { type: 'lesson', title: 'Teori – Omregning af vækstrate i forskellige tidsenheder', dur: '', ytId: 'l-yx8v_Shw0' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamensøvelser', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── LINEÆRE FUNKTIONER CURRICULUM ──
+const LINEAER_CURRICULUM = [
+  { title: '1. Forskrift for lineær funktion', items: [
+    { type: 'lesson', title: 'Teori – Forskrift for en lineær funktion y = ax + b', dur: '', ytId: 'cyoJCVAC_nQ' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Tallene a og b – visuel forståelse', items: [
+    { type: 'lesson', title: 'Teori – Tallene a og b\'s betydning for grafen', dur: '5 min', ytId: 'rPHBcApoSqw' },
+    { type: 'quiz',   title: 'Test din visuelle forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Graf, Forskrift, Graf', items: [
+    { type: 'lesson', title: 'Teori – Graf-Forskrift-Graf', dur: '6 min', ytId: 'bexYE0LYNZM' },
+    { type: 'quiz',   title: 'Test din forståelse fra forskrift til Graf', dur: '3 spørgsmål' }
+  ]},
+  { title: '4. To punkters formel', items: [
+    { type: 'lesson', title: 'Teori – To punkters formel til beregning af a og b', dur: '8 min', ytId: 'ghuvR1G7du8' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Kendt punkt og hældningskoefficient', items: [
+    { type: 'lesson', title: 'Teori – Kendt punkt og kendt hældningskoefficient', dur: '5 min', ytId: 'Bac1zBKArZo' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Tabelformer og modeller', items: [
+    { type: 'lesson', title: 'Teori – Tabelformer for lineære funktioner', dur: '', ytId: 'Mj_oW-rsXx0' },
+    { type: 'lesson', title: 'Teori – Opstilling af Lineære Modeller', dur: '3 min', ytId: '2lFRv-IyKJs' },
+    { type: 'lesson', title: 'Teori – Bestemmelse af variabler ud fra model', dur: '', ytId: 'zKxSdfTiNB0' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Skæring mellem to funktioner', items: [
+    { type: 'lesson', title: 'Teori – Skæring mellem to funktioner', dur: '4 min', ytId: '2o59Hmhh78w' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '6 spørgsmål' }
+  ]},
+  { title: '8. Regression med CAS', items: [
+    { type: 'lesson', title: 'Teori – Lineær regression (lang version)', dur: '12 min', ytId: 'k8tDAjSwxGw' },
+    { type: 'lesson', title: 'Teori – Lineær regression (kort version)', dur: '7 min', ytId: 'IhHWWXQMDcE' },
+    { type: 'lesson', title: 'Eksempel – CAS (GeoGebra) til regression', dur: '6 min', ytId: 'KoCCZIXN1yY' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '9. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamensøvelse 1', dur: '2 spørgsmål' },
+    { type: 'quiz', title: 'Eksamensøvelse 2', dur: '2 spørgsmål' },
+    { type: 'quiz', title: 'Eksamensøvelse 3', dur: '2 spørgsmål' }
+  ]}
+];
+
+// ── EKSPONENTIELLE FUNKTIONER CURRICULUM ──
+const EKSPONENT_CURRICULUM = [
+  { title: '1. Indledning og forskrift', items: [
+    { type: 'lesson', title: 'Teori – Indledning til eksponentielle funktioner', dur: '', ytId: 'WoN00-bbktY' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Fremskrivningsfaktor og vækstrate', items: [
+    { type: 'lesson', title: 'Teori – Fremskrivningsfaktor og vækstrate', dur: '', ytId: 'MyyuOy1afyA' },
+    { type: 'quiz',   title: 'Test din visuelle forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Beregning af a og b', items: [
+    { type: 'lesson', title: 'Beregning af a og b', dur: '', ytId: 'YeFsdggJa0s' },
+    { type: 'lesson', title: 'Eksempel på beregning af tallene a og b', dur: '', ytId: 'pzrFlAb2PxU' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Fordoblings- og halveringskonstant', items: [
+    { type: 'lesson', title: 'Teori – Fordoblingskonstant', dur: '', ytId: 'mbTNAR8j0-o' },
+    { type: 'lesson', title: 'Teori – Halveringskonstant', dur: '', ytId: 'Xnf-4hIIZcQ' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Modeller og regression', items: [
+    { type: 'lesson', title: 'Teori – Fra teori til virkelighed', dur: '', ytId: '0i1wxFvdKoo' },
+    { type: 'lesson', title: 'Eksempel – Eksponentiel regression med CAS', dur: '', ytId: 'w5HWVSEXCG8' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Gør dig klar til den skriftlige Eksamen', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── GEOMETRI OG TRIGONOMETRI CURRICULUM ──
+const GEOMETRI_CURRICULUM = [
+  { title: '1. Motivation og Notation', items: [
+    { type: 'lesson', title: 'Teori – Motivation og Notation', dur: '2 min', ytId: 'I4aFHGnav-M' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Ensvinklede trekanter', items: [
+    { type: 'lesson', title: 'Teori – Ensvinklede trekanter', dur: '5 min', ytId: '19fFn5kWZg0' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Retvinklede trekanter – Pythagoras', items: [
+    { type: 'lesson', title: 'Teori – Retvinklede trekanter og Pythagoras', dur: '6 min', ytId: '0GXYmxNGU94' },
+    { type: 'quiz',   title: 'Test dig selv – Pythagoras', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Enhedscirklen', items: [
+    { type: 'lesson', title: 'Teori – Enhedscirklen', dur: '6 min', ytId: '52Px45gkSTw' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Cos, Sin og Tan', items: [
+    { type: 'lesson', title: 'Teori – Brug af formlerne for Cos, Sin og Tan del 1', dur: '4 min', ytId: 'oOt_UxRbW1s' },
+    { type: 'lesson', title: 'Teori – Brug af formlerne for Cos, Sin og Tan del 2', dur: '6 min', ytId: '5G1nowqUAys' },
+    { type: 'quiz',   title: 'Test dig selv – Cos, Sin, Tan', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Konstruktion af trekanter', items: [
+    { type: 'lesson', title: 'Teori – Konstruktion med 3 kendte sider', dur: '5 min', ytId: '1oRNG7sdk3s' },
+    { type: 'lesson', title: 'Teori – Konstruktion med 2 kendte sider og mellemliggende vinkel', dur: '', ytId: '22TMHfmXqEw' },
+    { type: 'lesson', title: 'Teori – Konstruktion med 2 kendte sider og ikke mellemliggende vinkel', dur: '', ytId: 'rorEMAoCT_0' },
+    { type: 'lesson', title: 'Teori – Konstruktion med en kendt side og to vinkler', dur: '4 min', ytId: '4C1DsaeVOKs' },
+    { type: 'lesson', title: 'Teori – Konstruktion med en kendt side og to vinkler (anden udgave)', dur: '', ytId: 'm7DRgJABH-E' },
+    { type: 'quiz',   title: 'Test dig selv – Konstruktion', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamenspørgsmål – Geometri og trigonometri', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── DESKRIPTIV STATISTIK CURRICULUM ──
+const STATISTIK_CURRICULUM = [
+  { title: '1. Motivation', items: [
+    { type: 'lesson', title: 'Teori – Motivation', dur: '5 min', ytId: 'lurwUxdrZb4' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Typetal', items: [
+    { type: 'lesson', title: 'Teori – Typetal', dur: '5 min', ytId: 'R22mAm_SMRA' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Frekvens og Kumuleret Frekvens', items: [
+    { type: 'lesson', title: 'Teori – Frekvens', dur: '3 min', ytId: 'IPGrAWRLbAM' },
+    { type: 'lesson', title: 'Teori – Kumuleret Frekvens', dur: '2 min', ytId: 'CwejhNivpnE' },
+    { type: 'quiz',   title: 'Test dig selv – Frekvens', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Kvartilsæt og Trappediagram', items: [
+    { type: 'lesson', title: 'Teori – Udvidet Kvartilsæt', dur: '5 min', ytId: 'Qk3Cup4xqNY' },
+    { type: 'lesson', title: 'Trappediagram', dur: '5 min', ytId: '5P0UMDSQjAY' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Boksplot og Middelværdi', items: [
+    { type: 'lesson', title: 'Teori – Boksplot', dur: '4 min', ytId: 'e9H9sPKl4JQ' },
+    { type: 'lesson', title: 'Teori – Middelværdi', dur: '', ytId: 'IbrsNBjv2Sk' },
+    { type: 'lesson', title: 'Teori – Opsummering', dur: '2 min', ytId: 'oHWIEOrhlfM' },
+    { type: 'quiz',   title: 'Test dig selv – Boksplot', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Grupperet data', items: [
+    { type: 'lesson', title: 'Teori – Indsamling af grupperet data', dur: '3 min', ytId: 'Ks8yGon4Gg4' },
+    { type: 'lesson', title: 'Teori – Frekvens (grupperet)', dur: '3 min', ytId: 'fRKQ4aLTAxA' },
+    { type: 'lesson', title: 'Teori – Kumuleret frekvens (grupperet)', dur: '2 min', ytId: 'lWKw8kdwn7Q' },
+    { type: 'lesson', title: 'Teori – Histogram', dur: '5 min', ytId: 'WQPyTVTePo8' },
+    { type: 'lesson', title: 'Teori – Sumkurve', dur: '6 min', ytId: 't7cEMHQ8w3Q' },
+    { type: 'quiz',   title: 'Test dig selv – Grupperet data', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Variation og Outliers', items: [
+    { type: 'lesson', title: 'Teori – Boksplot, Variationsbredde og Kvartilbredde', dur: '3 min', ytId: 'GcJkJe7Camg' },
+    { type: 'lesson', title: 'Teori – Middelværdi (grupperet)', dur: '4 min', ytId: 'ufWaPrRITCg' },
+    { type: 'lesson', title: 'Teori – Forskel mellem Median og Middeltal', dur: '5 min', ytId: 'Okd5vd1UWSI' },
+    { type: 'lesson', title: 'Teori – Outliers', dur: '4 min', ytId: 'zAt3Q7TL7VA' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '8. Eksamensforberedelse', items: [
+    { type: 'lesson', title: 'Fif til Mundtlighed', dur: '13 min', ytId: '3aCbuHTYnsA' },
+    { type: 'quiz', title: 'Eksamenspørgsmål – Statistik', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── SANDSYNLIGHEDSREGNING CURRICULUM ──
+const SANDSYN_CURRICULUM = [
+  { title: '1. Motivation', items: [
+    { type: 'lesson', title: 'Teori – Motivation af Sandsynlighedsregning', dur: '1 min', ytId: 'zLwkfqOOb9M' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Tælletræ og Principper', items: [
+    { type: 'lesson', title: 'Teori – Tælletræ', dur: '5 min', ytId: '4YPx1sCrSUY' },
+    { type: 'lesson', title: 'Teori – Multiplikation og Addition princip', dur: '3 min', ytId: 'XVSa5vioNYE' },
+    { type: 'lesson', title: 'Teori – Eksempel gennemgang', dur: '', ytId: 'ivjSRZc2Vvo' },
+    { type: 'quiz',   title: 'Test dig selv – Tælletræ', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Fakultet, Permutation og Kombination', items: [
+    { type: 'lesson', title: 'Teori – Fakultet !', dur: '4 min', ytId: 'cm0NH56SRpQ' },
+    { type: 'lesson', title: 'Teori – Permutation og Kombination', dur: '8 min', ytId: 'pXgAmo9Spbg' },
+    { type: 'quiz',   title: 'Test dig selv – Kombinatorik', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Sandsynlighedsfelt og Hændelser', items: [
+    { type: 'lesson', title: 'Teori – Hvad menes der med et sandsynlighedsfelt?', dur: '5 min', ytId: '4KoPohDSBWQ' },
+    { type: 'lesson', title: 'Teori – Symmetrisk Sandsynlighed', dur: '5 min', ytId: 'likG3JcTpYU' },
+    { type: 'lesson', title: 'Teori – Sandsynlighedstabel og Hændelse', dur: '4 min', ytId: 't7DDCQBQFIo' },
+    { type: 'quiz',   title: 'Test dig selv – Sandsynlighed', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Uafhængighed og Enten-eller', items: [
+    { type: 'lesson', title: 'Teori – Uafhængighed: gange sandsynlighederne', dur: '', ytId: '_yoQoqa0FK0' },
+    { type: 'lesson', title: 'Teori – Enten-eller hændelse', dur: '3 min', ytId: 'WLwHyzjjDoY' },
+    { type: 'quiz',   title: 'Test dig selv – Uafhængighed', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamenspørgsmål – Sandsynlighed', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── 10 TALS LOGARITMER CURRICULUM ──
+const LOG_CURRICULUM = [
+  { title: '1. 10 tals logaritme', items: [
+    { type: 'lesson', title: 'Teori – 10 tals logaritme', dur: '7 min', ytId: 'UMVJOem_d-M' },
+    { type: 'quiz',   title: 'Test dig selv – Definitionen', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Regneregler for logaritme', items: [
+    { type: 'lesson', title: 'Teori – Regneregler for logaritme', dur: '3 min', ytId: 'a63Ts6WsGsI' },
+    { type: 'quiz',   title: 'Test dig selv – Regneregler', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamenspørgsmål – Logaritmer', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── ANDENGRADSPOLYNOMIER CURRICULUM (HF B) ──
+const ANDENGRADS_CURRICULUM = [
+  { title: '1. Motivation og Forskrift', items: [
+    { type: 'lesson', title: 'Motivation', dur: '6 min', ytId: 'vnUl8ze64E8' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Tallenes betydning og Diskriminant', items: [
+    { type: 'lesson', title: 'Teori – Forskrift og tallet a\'s betydning', dur: '3 min', ytId: '-W1rVHgmnfc' },
+    { type: 'lesson', title: 'Teori – Forskrift og tallene b og c\'s betydning', dur: '3 min', ytId: '2P2cfjd5pOQ' },
+    { type: 'lesson', title: 'Teori – Forskrift og betydning af diskriminanten', dur: '', ytId: 'Pbcx5sw6CSg' },
+    { type: 'quiz',   title: 'Test dig selv – Diskriminant', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Toppunktsformlen', items: [
+    { type: 'lesson', title: 'Teori – Toppunktsformlen eksempel', dur: '5 min', ytId: 'WXbqsYwzzxI' },
+    { type: 'lesson', title: 'Teori – Toppunkt som symmetriakse forståelse', dur: '5 min', ytId: '5SCVYehQp_w' },
+    { type: 'quiz',   title: 'Test dig selv – Toppunkt', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Løsning af andengradsligninger', items: [
+    { type: 'lesson', title: 'Teori – Anvendelse af formlen til at løse andengradsligning', dur: '', ytId: '_VE7FW62qNU' },
+    { type: 'lesson', title: 'Teori – Løsning når konstant eller 1. grads led mangler', dur: '', ytId: 'XCNMivUO1_g' },
+    { type: 'lesson', title: 'Overblik over bestemmelse af rødderne', dur: '9 min', ytId: 'aSwGf_kUrWM' },
+    { type: 'quiz',   title: 'Test dig selv – Rødder', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Faktorisering', items: [
+    { type: 'lesson', title: 'Teori – Faktoriseringsmetoden', dur: '4 min', ytId: 'X-YH0nIwpek' },
+    { type: 'lesson', title: 'Teori – Eksempler på toppunkt, rødder og faktorisering', dur: '7 min', ytId: 'vExMyoKjUb8' },
+    { type: 'quiz',   title: 'Test dig selv – Faktorisering', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Regression med CAS', items: [
+    { type: 'lesson', title: 'Teori – Eksempel på 2. grads regression uden CAS', dur: '', ytId: 'FfQX_l8TxDs' },
+    { type: 'lesson', title: 'Teori – Eksempel på 2. grads regression med CAS', dur: '', ytId: 'P5lGJ2Z6J64' },
+    { type: 'quiz',   title: 'Test dig selv – Regression', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Eksamensforberedelse', items: [
+    { type: 'quiz', title: 'Eksamenspørgsmål – Andengradspolynomier', dur: '5 spørgsmål' }
+  ]}
+];
+
+// ── DIFFERENTIALREGNING CURRICULUM (HF B) ──
+// ── DIFFERENTIAL CURRICULUM (10 lektioner — rigtige data fra nemmat.dk) ──
+const DIFFERENTIAL_CURRICULUM = [
+  { title: '1. Motivation og Indledning', items: [
+    { type: 'lesson', title: 'Teori – Motivation og Indledning', dur: '5 min', ytId: 'Xe0pKo3Zhus' }
+  ]},
+  { title: '2. 3-trins metoden og Grænseværdi', items: [
+    { type: 'lesson', title: 'Teori – 3-trins metoden', dur: '6 min', ytId: '9YODXFNkwco' },
+    { type: 'lesson', title: 'Teori – Grænseværdi', dur: '5 min', ytId: 'O29TgeO5JiM' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Afledte funktioner og tangenthældning', items: [
+    { type: 'lesson', title: 'Teori – Afledte funktioner og tangenthældning', dur: '6 min', ytId: 'hToGdQQMmbU' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Regneregler for differentialregning', items: [
+    { type: 'lesson', title: 'Teori – Regneregler for differentialregning', dur: '7 min', ytId: '9iof0y5BCTQ' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Tangentligning', items: [
+    { type: 'lesson', title: 'Teori – Tangentligning', dur: '5 min', ytId: 'RxZIYChWgfk' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Monotoniforhold', items: [
+    { type: 'lesson', title: 'Teori – Monotoniforhold', dur: '6 min', ytId: 'RgiT_rb-_ro' },
+    { type: 'lesson', title: 'Teori – Eksempel på Monotoniforhold', dur: '5 min', ytId: 'bsoFpvYPQaQ' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Optimering', items: [
+    { type: 'lesson', title: 'Teori – Optimering', dur: '6 min', ytId: 'Okt4kurasT8' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]},
+  { title: '8. Væksthastighed', items: [
+    { type: 'lesson', title: 'Teori – Væksthastighed', dur: '5 min', ytId: 'SMPAkRBIygQ' },
+    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+  ]}
 ];
 
 // ── VEKTORER 2D CURRICULUM (13 sektioner — rigtige data fra nemmat.dk) ──
@@ -329,8 +671,8 @@ const QUIZ_DATA = {
       opts: ['Ja','Nej','Kun hvis de er normerede','Det kan ikke afgøres'], ans: 0 },
     { q: 'Hvilken vinkel er der mellem to ortogonale vektorer?',
       opts: ['45°','180°','0°','90°'], ans: 3 },
-    { q: 'En vektor vinkelret på $\\begin{pmatrix}a\\\\b\\end{pmatrix}$ er:',
-      opts: ['$\\begin{pmatrix}-a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}b\\\\-a\\end{pmatrix}$','$\\begin{pmatrix}a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}-b\\\\a\\end{pmatrix}$'], ans: 1 }
+    { q: 'Tværvektoren til $\\begin{pmatrix}a\\\\b\\end{pmatrix}$ er:',
+      opts: ['$\\begin{pmatrix}-a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}b\\\\-a\\end{pmatrix}$','$\\begin{pmatrix}a\\\\-b\\end{pmatrix}$','$\\begin{pmatrix}-b\\\\a\\end{pmatrix}$'], ans: 3 }
   ],
   // Sektion 6, quiz — Vinkel mellem vektorer
   '5-1': [
@@ -420,6 +762,851 @@ const QUIZ_DATA = {
   ]
 };
 
+// ── ALLE CURRICULA (slug → curriculum) ──
+const ALL_CURRICULA = {
+  'vektorer-matematik-b-stx-2aar': null, // sættes nedenfor (cirkulær ref løsning)
+  'tal-og-algebra': TAL_ALGEBRA_CURRICULUM,
+  'tal-og-algebra-b-niveau': TAL_ALGEBRA_CURRICULUM,
+  'ligninger-1-aar-hf-2': LIGNINGER_CURRICULUM,
+  'procent-og-rentesregning': PROCENT_CURRICULUM,
+  'lineaer-funktioner': LINEAER_CURRICULUM,
+  'eksponentielle-funktioner': EKSPONENT_CURRICULUM,
+  'eksponentielle-funktioner-stx': EKSPONENT_CURRICULUM,
+  'geometri-og-trigonometri': GEOMETRI_CURRICULUM,
+  'deskriptiv-statistik': STATISTIK_CURRICULUM,
+  'statistik-stx-c': STATISTIK_CURRICULUM,
+  'sandsynlighedsregning': SANDSYN_CURRICULUM,
+  '10-tals-logaritme': LOG_CURRICULUM,
+  'andengradspolynomier-hf': ANDENGRADS_CURRICULUM,
+  'differentialregning-hf-b': DIFFERENTIAL_CURRICULUM,
+};
+
+// ── ALLE QUIZ-DATA (slug → {key → spørgsmål}) ──
+const ALL_QUIZ_DATA = {
+  'vektorer-matematik-b-stx-2aar': QUIZ_DATA,
+
+  // ────────────────────────────────────────────────────
+  // TAL OG ALGEBRA
+  // ────────────────────────────────────────────────────
+  'tal-og-algebra': {
+    // S0: TAL — item 1
+    '0-1': [
+      { q: 'Hvilken type tal er $\\sqrt{2}$?',
+        opts: ['Naturligt tal','Rationalt tal','Irrationalt tal','Helt tal'], ans: 2 },
+      { q: 'Hvad er $|-7|$?',
+        opts: ['-7','7','$1/7$','49'], ans: 1 },
+      { q: '$\\pi$ tilhører hvilken talmængde?',
+        opts: ['$\\mathbb{Q}$ (rationale tal)','$\\mathbb{N}$ (naturlige tal)','$\\mathbb{Z}$ (hele tal)','$\\mathbb{R} \\setminus \\mathbb{Q}$ (irrationale tal)'], ans: 3 },
+      { q: 'Hvad er $-3 \\cdot (-4)$?',
+        opts: ['-12','-7','7','12'], ans: 3 },
+      { q: 'Hvilken mængde er størst (flest elementer)?',
+        opts: ['$\\mathbb{N}$','$\\mathbb{Z}$','$\\mathbb{Q}$','$\\mathbb{R}$'], ans: 3 }
+    ],
+    // S1: REGNEARTERNES HIERARKI — item 5
+    '1-5': [
+      { q: 'Hvad beregnes FØR i $3 + 2 \\cdot 4$?',
+        opts: ['$3 + 2 = 5$','$2 \\cdot 4 = 8$','$3 + 4 = 7$','$2 + 4 = 6$'], ans: 1 },
+      { q: 'Hvad er $2 + 3 \\cdot (4 - 1)^2$?',
+        opts: ['29','125','24','20'], ans: 0 },
+      { q: 'Hvad er $10 - 2^3 + 1$?',
+        opts: ['3','1','17','7'], ans: 0 },
+      { q: 'Regnerækkefølgen (PEMDAS/BEDMAS) er:',
+        opts: ['Plus, gange, potens, parentes','Parentes → potens → gang/divider → plus/minus','Parentes → plus → gange → potens','Ingen fast orden'], ans: 1 },
+      { q: 'Hvad er $6 \\div 2 \\cdot 3$?',
+        opts: ['1','9','4','12'], ans: 1 }
+    ],
+    // S2: POTENS OG ROD — item 1
+    '2-1': [
+      { q: 'Hvad er $2^5$?',
+        opts: ['10','25','32','16'], ans: 2 },
+      { q: '$a^n \\cdot a^m = ?$',
+        opts: ['$a^{n+m}$','$a^{n \\cdot m}$','$a^{n/m}$','$2a^{nm}$'], ans: 0 },
+      { q: 'Hvad er $\\sqrt{144}$?',
+        opts: ['12','14','11','72'], ans: 0 },
+      { q: 'Hvad er $8^{1/3}$?',
+        opts: ['2','4','512','24'], ans: 0 },
+      { q: '$(a^2)^3 = ?$',
+        opts: ['$a^5$','$a^6$','$a^{23}$','$a$'], ans: 1 }
+    ],
+    // S3: EKSAMENSØVELSE 1 — item 0
+    '3-0': [
+      { q: 'Hvad er $3^2 + 4^2$?',
+        opts: ['49','25','14','7'], ans: 1 },
+      { q: 'Forenkl $2x + 3y - x$:',
+        opts: ['$x + 3y$','$2x - 3y$','$x - 3y$','$3x + 3y$'], ans: 0 },
+      { q: 'Hvad er $\\frac{7}{8} + \\frac{1}{4}$?',
+        opts: ['$\\frac{8}{12}$','$\\frac{7}{32}$','$\\frac{9}{8}$','$\\frac{1}{2}$'], ans: 2 },
+      { q: 'Hvad er $0{,}3 \\cdot 0{,}4$?',
+        opts: ['0,7','0,12','1,2','0,012'], ans: 1 },
+      { q: 'Hvad er 40% af 250?',
+        opts: ['50','75','100','125'], ans: 2 }
+    ],
+    // S4: ALGEBRA — item 3
+    '4-3': [
+      { q: 'Forenkl $3x + 2y - x + 5y$:',
+        opts: ['$2x + 7y$','$4x + 3y$','$3x + 7y$','$2x + 3y$'], ans: 0 },
+      { q: '$a(b + c) = ?$',
+        opts: ['$ab + c$','$ab + ac$','$a + b + c$','$abc$'], ans: 1 },
+      { q: 'Forenkl $(x+2)(x-2)$:',
+        opts: ['$x^2 - 4$','$x^2 + 4$','$x^2 - 2$','$x^2 - 4x$'], ans: 0 },
+      { q: 'Løs: $2x = 8$',
+        opts: ['$x = 16$','$x = 6$','$x = 4$','$x = 10$'], ans: 2 },
+      { q: '$(a + b)^2 = ?$',
+        opts: ['$a^2 + b^2$','$a^2 + 2ab + b^2$','$a^2 - b^2$','$2(a+b)$'], ans: 1 }
+    ],
+    // S5: CAS — item 0
+    '5-0': [
+      { q: 'Hvad betyder CAS?',
+        opts: ['Computer Algebra System','Calculator Arithmetic Software','Computer Arithmetic Standard','Calculation And Statistics'], ans: 0 },
+      { q: 'Hvad kan CAS bruges til?',
+        opts: ['Kun tegning af grafer','Kun numerisk beregning','Symbolsk og numerisk beregning samt grafisk fremstilling','Kun statistik'], ans: 2 },
+      { q: 'Hvilken kommando bruges til at løse ligninger i de fleste CAS-systemer?',
+        opts: ['integral()','solve()','plot()','diff()'], ans: 1 }
+    ],
+    // S6: BRØKREGNING item 1 — hvad er en brøk
+    '6-1': [
+      { q: 'Hvad betyder brøken $\\frac{3}{4}$?',
+        opts: ['3 divideret med 4','Tredje potens af 4','Summen af 3 og 4','4 divideret med 3'], ans: 0 },
+      { q: 'Forlæng $\\frac{2}{3}$ med 4:',
+        opts: ['$\\frac{8}{12}$','$\\frac{6}{7}$','$\\frac{2}{12}$','$\\frac{6}{12}$'], ans: 0 },
+      { q: 'Forkort $\\frac{6}{9}$ mest muligt:',
+        opts: ['$\\frac{3}{4}$','$\\frac{2}{3}$','$\\frac{1}{2}$','$\\frac{6}{9}$'], ans: 1 },
+      { q: 'Hvilke brøker er ækvivalente?',
+        opts: ['$\\frac{2}{3}$ og $\\frac{4}{5}$','$\\frac{1}{2}$ og $\\frac{3}{6}$','$\\frac{3}{4}$ og $\\frac{4}{5}$','$\\frac{2}{5}$ og $\\frac{3}{4}$'], ans: 1 },
+      { q: 'Hvad er 0,5 som brøk (forkortet)?',
+        opts: ['$\\frac{5}{10}$','$\\frac{1}{2}$','Begge er korrekte','Ingen af dem'], ans: 2 }
+    ],
+    // S6: BRØKREGNING item 3 — addition og subtraktion
+    '6-3': [
+      { q: '$\\frac{1}{3} + \\frac{1}{6} = ?$',
+        opts: ['$\\frac{2}{9}$','$\\frac{3}{9}$','$\\frac{1}{2}$','$\\frac{2}{6}$'], ans: 2 },
+      { q: '$\\frac{3}{4} - \\frac{1}{2} = ?$',
+        opts: ['$\\frac{1}{4}$','$\\frac{2}{2}$','$\\frac{1}{2}$','$\\frac{3}{8}$'], ans: 0 },
+      { q: '$\\frac{5}{6} + \\frac{1}{4} = ?$',
+        opts: ['$\\frac{6}{10}$','$\\frac{13}{12}$','$\\frac{6}{24}$','$\\frac{1}{2}$'], ans: 1 },
+      { q: 'Hvad er fælles nævner for $\\frac{1}{3}$ og $\\frac{1}{4}$?',
+        opts: ['7','12','1','3'], ans: 1 },
+      { q: '$2\\frac{1}{3} + 1\\frac{2}{3} = ?$',
+        opts: ['$3\\frac{1}{3}$','$4$','$3\\frac{3}{6}$','$3\\frac{2}{3}$'], ans: 1 }
+    ],
+    // S6: BRØKREGNING item 5 — multiplikation og division
+    '6-5': [
+      { q: '$\\frac{2}{3} \\cdot \\frac{3}{4} = ?$',
+        opts: ['$\\frac{5}{7}$','$\\frac{6}{12}$','$\\frac{1}{2}$','$\\frac{6}{7}$'], ans: 2 },
+      { q: '$\\frac{4}{5} \\div \\frac{2}{3} = ?$',
+        opts: ['$\\frac{8}{15}$','$\\frac{2}{15}$','$\\frac{6}{5}$','$\\frac{3}{8}$'], ans: 2 },
+      { q: '$\\frac{3}{8} \\cdot 4 = ?$',
+        opts: ['$\\frac{7}{8}$','$\\frac{3}{2}$','$\\frac{12}{32}$','$\\frac{4}{8}$'], ans: 1 },
+      { q: 'Hvad er den reciproke (omvendte) til $\\frac{3}{5}$?',
+        opts: ['$\\frac{5}{3}$','$-\\frac{3}{5}$','$\\frac{3}{-5}$','$\\frac{1}{15}$'], ans: 0 },
+      { q: '$\\frac{1}{2} \\div \\frac{1}{4} = ?$',
+        opts: ['$\\frac{1}{8}$','$2$','$\\frac{1}{2}$','$4$'], ans: 1 }
+    ],
+    // S6: BRØKREGNING item 7 — sammenhæng tal og brøker
+    '6-7': [
+      { q: 'Omskriv 0,75 til en forkortet brøk:',
+        opts: ['$\\frac{75}{100}$','$\\frac{7}{10}$','$\\frac{3}{4}$','$\\frac{3}{5}$'], ans: 2 },
+      { q: 'Hvad er $\\frac{3}{8}$ som decimaltal?',
+        opts: ['0,35','0,375','0,38','0,3'], ans: 1 },
+      { q: 'Omskriv $2\\frac{3}{4}$ til uægte brøk:',
+        opts: ['$\\frac{5}{4}$','$\\frac{11}{4}$','$\\frac{8}{4}$','$\\frac{6}{4}$'], ans: 1 },
+      { q: 'Hvad er $\\frac{7}{3}$ som blandet tal?',
+        opts: ['$2\\frac{1}{3}$','$2\\frac{2}{3}$','$3\\frac{1}{3}$','$1\\frac{4}{3}$'], ans: 0 },
+      { q: 'Hvad svarer 125% til som forkortet brøk?',
+        opts: ['$\\frac{12}{5}$','$\\frac{5}{4}$','$\\frac{1}{4}$','$\\frac{5}{8}$'], ans: 1 }
+    ],
+    // S7: EKSAMENSØVELSE 2 — item 0
+    '7-0': [
+      { q: 'Hvad er $3 \\cdot 4^2 - 2 \\cdot 3 + 1$?',
+        opts: ['43','145','7','42'], ans: 0, hint: 'Husk: potens før multiplikation' },
+      { q: 'Forenkl $4(2x - 3) - 3(x - 1)$:',
+        opts: ['$5x - 9$','$5x - 9$','$11x - 9$','$5x - 15$'], ans: 0 },
+      { q: 'Løs: $3x - 5 = 10$',
+        opts: ['$x = 5$','$x = 15$','$x = 3$','$x = 1$'], ans: 0 },
+      { q: '$\\frac{1}{3} + \\frac{1}{4} = ?$',
+        opts: ['$\\frac{1}{7}$','$\\frac{2}{7}$','$\\frac{7}{12}$','$\\frac{1}{12}$'], ans: 2 },
+      { q: 'Hvad er 40% af 250?',
+        opts: ['50','75','100','125'], ans: 2 }
+    ]
+  },
+  'tal-og-algebra-b-niveau': null, // sættes nedenfor
+
+  // ────────────────────────────────────────────────────
+  // LIGNINGER
+  // ────────────────────────────────────────────────────
+  'ligninger-1-aar-hf-2': {
+    // S0: Lineære ligninger — item 1
+    '0-1': [
+      { q: 'Løs: $2x + 4 = 10$',
+        opts: ['$x = 2$','$x = 3$','$x = 4$','$x = 7$'], ans: 1 },
+      { q: 'Løs: $5x - 3 = 12$',
+        opts: ['$x = 1$','$x = 2$','$x = 3$','$x = 9$'], ans: 2 },
+      { q: 'Løs: $\\frac{x}{3} = 4$',
+        opts: ['$x = 7$','$x = 12$','$x = \\frac{4}{3}$','$x = 1$'], ans: 1 },
+      { q: 'Løs: $4x = 20$',
+        opts: ['$x = 5$','$x = 16$','$x = 80$','$x = 24$'], ans: 0 },
+      { q: 'Hvad gør man for at isolere x i $3x = 12$?',
+        opts: ['Subtraher 3','Divider med 3','Multipliker med 3','Adder 3'], ans: 1 }
+    ],
+    // S1: Ligninger med parenteser — item 1
+    '1-1': [
+      { q: 'Løs: $2(x + 3) = 10$',
+        opts: ['$x = 2$','$x = 3$','$x = 8$','$x = 5$'], ans: 0 },
+      { q: 'Løs: $3(2x - 1) = 15$',
+        opts: ['$x = 2$','$x = 3$','$x = 6$','$x = 5$'], ans: 1 },
+      { q: 'Løs: $-(x + 4) = 6$',
+        opts: ['$x = -10$','$x = -2$','$x = 10$','$x = 2$'], ans: 0 },
+      { q: 'Forenkl: $2(x + 1) + 3(x - 2)$',
+        opts: ['$5x - 4$','$5x + 4$','$5x - 8$','$6x - 4$'], ans: 0 },
+      { q: 'Løs: $4(x - 1) = 2(x + 3)$',
+        opts: ['$x = 1$','$x = 3$','$x = 5$','$x = 7$'], ans: 2 }
+    ],
+    // S2: Ligningssystemer — item 2
+    '2-2': [
+      { q: 'Løs: $x + y = 5$ og $x - y = 1$',
+        opts: ['$x=3,\\; y=2$','$x=2,\\; y=3$','$x=4,\\; y=1$','$x=1,\\; y=4$'], ans: 0 },
+      { q: 'Hvad er substitutionsmetoden?',
+        opts: ['Multiplicér ligningerne','Isolér én ubekendt og indsæt i den anden','Addér ligningerne','Subtraher ligningerne'], ans: 1 },
+      { q: 'Løs: $2x + y = 7$ og $x + y = 4$',
+        opts: ['$x=3,\\; y=1$','$x=1,\\; y=3$','$x=2,\\; y=3$','$x=4,\\; y=0$'], ans: 0 },
+      { q: 'To ligninger med to ubekendte har som regel:',
+        opts: ['Ingen løsning','Uendeligt mange løsninger','Præcist én løsning','To løsninger'], ans: 2 },
+      { q: 'Løs: $y = 2x$ og $x + y = 6$',
+        opts: ['$x=2,\\; y=4$','$x=3,\\; y=3$','$x=1,\\; y=5$','$x=4,\\; y=2$'], ans: 0 }
+    ],
+    // S3: Formler — item 1
+    '3-1': [
+      { q: 'Isoler $r$ i $A = \\pi r^2$:',
+        opts: ['$r = A/\\pi$','$r = \\sqrt{A/\\pi}$','$r = A^2/\\pi$','$r = A/(2\\pi)$'], ans: 1 },
+      { q: 'Isoler $b$ i $a = \\frac{b+c}{2}$:',
+        opts: ['$b = 2a + c$','$b = 2a - c$','$b = a/2 - c$','$b = (a-c)/2$'], ans: 1 },
+      { q: 'Isoler $v$ i $s = v \\cdot t$:',
+        opts: ['$v = s + t$','$v = s - t$','$v = s/t$','$v = s \\cdot t$'], ans: 2 },
+      { q: 'Isoler $h$ i $V = \\pi r^2 h$:',
+        opts: ['$h = V - \\pi r^2$','$h = V \\cdot \\pi r^2$','$h = \\pi r^2/V$','$h = V/(\\pi r^2)$'], ans: 3 },
+      { q: 'Isoler $x$ i $y = ax + b$:',
+        opts: ['$x = y - b - a$','$x = ay - b$','$x = (y-b)/a$','$x = y/(a+b)$'], ans: 2 }
+    ],
+    // S4: Eksamen — item 0
+    '4-0': [
+      { q: 'Løs: $3x + 7 = 22$',
+        opts: ['$x = 4$','$x = 5$','$x = 6$','$x = 29/3$'], ans: 1 },
+      { q: 'Løs: $\\frac{x}{4} + 2 = 5$',
+        opts: ['$x = 28$','$x = 12$','$x = 3$','$x = 7/4$'], ans: 1 },
+      { q: 'Løs systemet: $2x + 3y = 12$ og $x = y + 1$',
+        opts: ['$x=3,\\; y=2$','$x=2,\\; y=3$','$x=4,\\; y=1$','$x=5,\\; y=0$'], ans: 0 },
+      { q: 'Isoler $m$ i $F = m \\cdot a$:',
+        opts: ['$m = F - a$','$m = F + a$','$m = F/a$','$m = F \\cdot a$'], ans: 2 },
+      { q: 'Løs: $5(x - 2) = 3x + 4$',
+        opts: ['$x = 3$','$x = 5$','$x = 7$','$x = 9$'], ans: 2 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // PROCENT OG RENTE
+  // ────────────────────────────────────────────────────
+  'procent-og-rentesregning': {
+    '0-1': [
+      { q: 'Hvad er 25% af 200?',
+        opts: ['25','40','50','75'], ans: 2 },
+      { q: 'Hvad er 120 som procent af 150?',
+        opts: ['70%','75%','80%','85%'], ans: 2 },
+      { q: 'Hvad er 15% som decimaltal?',
+        opts: ['0,015','0,15','1,5','15'], ans: 1 },
+      { q: 'En vare koster 400 kr. Du får 20% rabat. Hvad betaler du?',
+        opts: ['320 kr','360 kr','380 kr','280 kr'], ans: 0 },
+      { q: '30 er hvad % af 120?',
+        opts: ['20%','25%','30%','40%'], ans: 1 }
+    ],
+    '1-1': [
+      { q: 'En pris stiger fra 200 til 250 kr. Hvad er den procentvise stigning?',
+        opts: ['20%','25%','50%','30%'], ans: 1 },
+      { q: 'Fremskrivningsfaktoren ved 15% stigning er:',
+        opts: ['0,85','1,15','0,15','1,5'], ans: 1 },
+      { q: 'En pris nedsættes med 30%. Hvad er fremskrivningsfaktoren?',
+        opts: ['0,30','1,30','0,70','0,03'], ans: 2 },
+      { q: 'En pris stiger med 10% og derefter 10%. Total stigning?',
+        opts: ['20%','21%','22%','110%'], ans: 1 },
+      { q: 'En temperatur falder fra 20°C til 15°C. Procentvis fald?',
+        opts: ['20%','25%','30%','5%'], ans: 1 }
+    ],
+    '2-1': [
+      { q: 'Formlen for renters rente er:',
+        opts: ['$K_n = K_0 + n \\cdot r$','$K_n = K_0 \\cdot r^n$','$K_n = K_0 \\cdot n \\cdot r$','$K_n = K_0^n$'], ans: 1 },
+      { q: '5000 kr til 4% p.a. Hvad er beløbet efter 3 år?',
+        opts: ['5600 kr','5624 kr','5200 kr','5624,32 kr'], ans: 3 },
+      { q: 'Hvad er halveringstid?',
+        opts: ['Den tid det tager en størrelse at blive halveret','Halvdelen af en periode','Den tid en størrelse fordobles','Renten halveret'], ans: 0 },
+      { q: 'En bakteriekultur vokser med 20% pr. time fra 1000. Hvad er der efter 2 timer?',
+        opts: ['1200','1400','1440','2000'], ans: 2 },
+      { q: 'Nutidsværdi: Hvad er nutidsværdien af 1000 kr om 3 år ved 5% rente?',
+        opts: ['≈ 864 kr','900 kr','800 kr','1150 kr'], ans: 0 }
+    ],
+    '3-0': [
+      { q: 'En vare koster 350 kr ex. moms. Med 25% moms, hvad koster den?',
+        opts: ['400 kr','425 kr','437,50 kr','440 kr'], ans: 2 },
+      { q: 'Procentvis stigning fra 80 til 100:',
+        opts: ['20%','25%','30%','80%'], ans: 1 },
+      { q: '20.000 kr til 8% sammensat rente i 10 år ≈',
+        opts: ['36.000 kr','40.000 kr','43.178 kr','45.000 kr'], ans: 2 },
+      { q: 'Halveringstid for en substans der aftager med 10% pr. år ≈',
+        opts: ['5 år','6,6 år','10 år','2 år'], ans: 1 },
+      { q: 'En investering vokser fra 5000 til 6655 på 3 år. Hvad er den årlige vækstrate?',
+        opts: ['5%','8%','10%','15%'], ans: 2 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // LINEÆRE FUNKTIONER
+  // ────────────────────────────────────────────────────
+  'lineaer-funktioner': {
+    '0-1': [
+      { q: 'Hæld­ningen $a$ i $y = 3x - 5$ er:',
+        opts: ['-5','3','-3','5'], ans: 1 },
+      { q: 'Skæring med y-aksen for $y = 2x + 7$ er:',
+        opts: ['$(0,\\,2)$','$(0,\\,7)$','$(7,\\,0)$','$(-7,\\,0)$'], ans: 1 },
+      { q: 'En lineær funktion med $a = 0$ er:',
+        opts: ['En konstant funktion','Umulig','Voksende','Faldende'], ans: 0 },
+      { q: 'Hvad fortæller hæld­ningskoefficienten $a$?',
+        opts: ['Hvad $y$ er når $x=0$','Hvor meget $y$ stiger pr. enhed $x$ stiger','Hvor grafen skærer x-aksen','Funktionens maksimum'], ans: 1 },
+      { q: '$y = -2x + 3$ er:',
+        opts: ['Voksende','Faldende','Konstant','Ikke-lineær'], ans: 1 }
+    ],
+    '1-1': [
+      { q: 'Hæld­ningen af linjen gennem $(1,\\,3)$ og $(3,\\,7)$:',
+        opts: ['1','2','3','4'], ans: 1 },
+      { q: 'Skæring med x-aksen for $y = 2x - 6$:',
+        opts: ['$(3,\\,0)$','$(0,\\,-6)$','$(6,\\,0)$','$(0,\\,3)$'], ans: 0 },
+      { q: 'To linjer med samme hæld­ningskoefficient er:',
+        opts: ['Vinkelrette','Parallelle','Sammenfaldende','Altid skærende'], ans: 1 },
+      { q: 'Hæld­ningen af en vandret linje er:',
+        opts: ['Udefineret','1','0','-1'], ans: 2 },
+      { q: 'Hæld­ningen af en lodret linje er:',
+        opts: ['0','1','Udefineret','-1'], ans: 2 }
+    ],
+    '2-1': [
+      { q: 'Find $a$ og $b$ i $y=ax+b$ når grafen går igennem $(0,\\,4)$ og $(2,\\,10)$:',
+        opts: ['$a=3,\\; b=4$','$a=4,\\; b=3$','$a=2,\\; b=4$','$a=3,\\; b=2$'], ans: 0 },
+      { q: 'Hvad er $b$ for linjen $y = 5x + b$ der går igennem $(2,\\,-3)$?',
+        opts: ['$b = -13$','$b = 7$','$b = -7$','$b = 13$'], ans: 0 },
+      { q: '$y = 3x + 1$ og $y = 3x - 5$. Forholdet?',
+        opts: ['Skærer i $(0,\\,0)$','Parallelle','Identiske','Vinkelrette'], ans: 1 },
+      { q: 'Formel for linjen med hæld­ning 2 igennem $(1,\\,5)$:',
+        opts: ['$y = 2x + 7$','$y = 2x + 5$','$y = 2x + 3$','$y = 2x - 3$'], ans: 2 },
+      { q: 'Skæringspunktet for $y = 2x + 1$ og $y = -x + 7$:',
+        opts: ['$(2,\\,5)$','$(3,\\,4)$','$(1,\\,6)$','$(2,\\,3)$'], ans: 0 }
+    ],
+    '3-1': [
+      { q: 'Hvad er monotoni for $y = -3x + 2$?',
+        opts: ['Strengt voksende','Strengt faldende','Konstant','Hverken'], ans: 1 },
+      { q: 'Væksten i $y$ fra $x=1$ til $x=4$ for $y = 2x + 1$:',
+        opts: ['3','6','9','12'], ans: 1 },
+      { q: 'Skæringspunkt for $y = 4x - 8$ og $y = 2x - 2$:',
+        opts: ['$(3,\\,4)$','$(4,\\,3)$','$(2,\\,0)$','$(3,\\,6)$'], ans: 0 },
+      { q: 'Hvad er $f(3)$ for $f(x) = -x + 5$?',
+        opts: ['2','8','-2','3'], ans: 0 },
+      { q: 'Grafen $y = x$ går igennem:',
+        opts: ['Punktet $(1,\\,0)$','Punktet $(0,\\,1)$','Origo med hæld­ning 1','Y-aksen i $(0,\\,5)$'], ans: 2 }
+    ],
+    '4-0': [
+      { q: 'Hæld­ningen af linjen igennem $(-2,\\,3)$ og $(4,\\,9)$:',
+        opts: ['0,5','1','2','3'], ans: 1 },
+      { q: 'Formel for linje igennem $(0,\\,-3)$ med hæld­ning 4:',
+        opts: ['$y = 4x + 3$','$y = -3x + 4$','$y = 4x - 3$','$y = -4x + 3$'], ans: 2 },
+      { q: 'Skæringspunktet for $y = x + 2$ og $y = 3x - 4$:',
+        opts: ['$(3,\\,5)$','$(5,\\,3)$','$(3,\\,3)$','$(1,\\,3)$'], ans: 0 },
+      { q: '$y = -0{,}5x + 2$. Hvad er $y$ ved $x = 6$?',
+        opts: ['-1','1','5','-3'], ans: 0 },
+      { q: '$a = -2,\\; b = 5$. Skæring med x-aksen?',
+        opts: ['$(2,\\,0)$','$(2{,}5,\\,0)$','$(0,\\,5)$','$(5,\\,0)$'], ans: 1 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // EKSPONENTIELLE FUNKTIONER
+  // ────────────────────────────────────────────────────
+  'eksponentielle-funktioner': {
+    '0-1': [
+      { q: 'En eksponentiel funktion skrives som:',
+        opts: ['$f(x) = ax + b$','$f(x) = b \\cdot a^x$','$f(x) = x^a$','$f(x) = a \\cdot x^b$'], ans: 1 },
+      { q: 'For $f(x) = 2 \\cdot 3^x$: hvad er $f(2)$?',
+        opts: ['12','18','24','36'], ans: 1 },
+      { q: 'Hvad er grundtallet $a$ i $f(x) = 5 \\cdot 0{,}8^x$?',
+        opts: ['5','0,8','0,2','1'], ans: 1 },
+      { q: 'Når $a > 1$ i $f(x) = b \\cdot a^x$ er funktionen:',
+        opts: ['Faldende','Voksende','Konstant','Lineær'], ans: 1 },
+      { q: 'Startværdien $b$ i $f(x) = b \\cdot a^x$ svarer til:',
+        opts: ['$f(1)$','$f(0)$','$f(-1)$','$f(a)$'], ans: 1 }
+    ],
+    '1-1': [
+      { q: 'Hvad er vækstraten $r$ for $f(x) = 3 \\cdot 1{,}2^x$?',
+        opts: ['1,2','20%','3%','12%'], ans: 1 },
+      { q: 'En størrelse vokser med 5% pr. år. Fremskrivningsfaktoren er:',
+        opts: ['0,95','1,5','1,05','5'], ans: 2 },
+      { q: 'En størrelse aftager med 8% pr. år. Fremskrivningsfaktoren er:',
+        opts: ['0,92','1,08','0,08','0,8'], ans: 0 },
+      { q: 'For $f(x) = 1000 \\cdot 0{,}75^x$: vækstraten er:',
+        opts: ['75%','-25%','25%','-75%'], ans: 1 },
+      { q: 'Procentvis vækst pr. x-enhed for $a = 1{,}06$:',
+        opts: ['6%','60%','1,6%','0,6%'], ans: 0 }
+    ],
+    '2-1': [
+      { q: 'Fordoblingstiden $T_2$ beregnes med:',
+        opts: ['$T_2 = 2/a$','$T_2 = \\log(a)/\\log(2)$','$T_2 = \\log(2)/\\log(a)$','$T_2 = a/2$'], ans: 2 },
+      { q: '$f(x) = 3 \\cdot 2^x$. Fordoblingstiden er:',
+        opts: ['1','2','3','0,5'], ans: 0 },
+      { q: 'En funktion halveres hvert 5. år. Hvad er grundtallet?',
+        opts: ['0,5','≈ 0,87','0,75','2'], ans: 1 },
+      { q: 'En substans aftager med 20% pr. dag. Halveringstiden ≈',
+        opts: ['2 dage','3,1 dage','5 dage','10 dage'], ans: 1 },
+      { q: 'For $f(x) = b \\cdot a^x$ med halveringstid $T_{1/2}$:',
+        opts: ['$f(x + T_{1/2}) = 2f(x)$','$f(x + T_{1/2}) = f(x)/2$','$f(T_{1/2}) = 0$','$a^{T_{1/2}} = 2$'], ans: 1 }
+    ],
+    '3-1': [
+      { q: 'Hvad er eksponentiel regression?',
+        opts: ['Find en lineær model','Tilpas en eksponentiel model til datapunkter','Integration af eksponentielle funktioner','Differentiering'], ans: 1 },
+      { q: 'Til eksponentiel regression bruges:',
+        opts: ['Lineær regression direkte','Log-lineær regression ($\\ln y$ og $x$ lineært relaterede)','Polynomiel regression','Ingen regression er mulig'], ans: 1 },
+      { q: '$f(x) = 2 \\cdot 1{,}5^x$. Hvad er $f(3)$?',
+        opts: ['6','6,5','6,75','9'], ans: 2 },
+      { q: 'To eksponentielle funktioner med samme grundtal $a$ men $b_1 \\neq b_2$:',
+        opts: ['Skærer aldrig hinanden','Skærer én gang','Skærer to gange','Er altid identiske'], ans: 0 },
+      { q: '$f(x) = 1000 \\cdot 1{,}1^x$. Hvad er $f(5) \\approx ?$',
+        opts: ['1500','1600','1610','1100'], ans: 2 }
+    ],
+    '4-0': [
+      { q: '$f(x) = 3 \\cdot 2^x$. Hvad er $f(4)$?',
+        opts: ['24','48','96','16'], ans: 1 },
+      { q: 'En population starter med 500 og vokser med 6% pr. år. Hvad er der efter 10 år ≈?',
+        opts: ['800','895','1000','300'], ans: 1 },
+      { q: 'Fordoblingstid for $f(x) = 5 \\cdot 1{,}1^x \\approx$',
+        opts: ['7,27','10','5','2'], ans: 0 },
+      { q: 'Vækstrate for $a = 0{,}85$:',
+        opts: ['15% vækst','85% vækst','-15% (fald)','−85%'], ans: 2 },
+      { q: '$f(x) = b \\cdot a^x$ med $f(0) = 4$ og $f(1) = 6$. Hvad er $a$?',
+        opts: ['1,2','1,4','1,5','2'], ans: 2 }
+    ]
+  },
+  'eksponentielle-funktioner-stx': null, // sættes nedenfor
+
+  // ────────────────────────────────────────────────────
+  // GEOMETRI OG TRIGONOMETRI
+  // ────────────────────────────────────────────────────
+  'geometri-og-trigonometri': {
+    '0-1': [
+      { q: 'Pythagoras\' sætning siger:',
+        opts: ['$a + b = c$','$a^2 + b^2 = c^2$','$a^2 - b^2 = c^2$','$a \\cdot b = c^2$'], ans: 1 },
+      { q: 'Kateterne er 3 og 4. Hvad er hypotenusen?',
+        opts: ['5','6','7','12'], ans: 0 },
+      { q: 'En stige på 5 m. Bunden er 3 m fra muren. Højden er:',
+        opts: ['3 m','4 m','6 m','8 m'], ans: 1 },
+      { q: 'Hypotenusen i en retvinklet trekant er altid:',
+        opts: ['Den korteste side','Den midterste side','Den længste side','En katet'], ans: 2 },
+      { q: 'Er trekanten med sider 5, 12, 13 retvinklet?',
+        opts: ['Ja','Nej','Kun ved 90°','Det kan ikke afgøres'], ans: 0 }
+    ],
+    '1-1': [
+      { q: 'I en retvinklet trekant med vinkel $\\theta$: $\\sin\\theta = ?$',
+        opts: ['hosliggende/hypotenusen','modstående/hypotenusen','modstående/hosliggende','hypotenusen/modstående'], ans: 1 },
+      { q: '$\\cos(60°) = ?$',
+        opts: ['1','0,5','$\\sqrt{3}/2$','0'], ans: 1 },
+      { q: '$\\tan(45°) = ?$',
+        opts: ['0','0,5','1','$\\sqrt{2}$'], ans: 2 },
+      { q: 'Hypotenusen = 10, vinkel = 30°. Modstående side = ?',
+        opts: ['5','7','8,66','10'], ans: 0 },
+      { q: 'Hvad er $\\theta$ hvis $\\cos(\\theta) = 0{,}5$?',
+        opts: ['30°','45°','60°','90°'], ans: 2 }
+    ],
+    '2-1': [
+      { q: 'Sinusrelationen siger:',
+        opts: ['$\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C}$','$a^2 = b^2 + c^2 - 2bc\\cos A$','$a = b \\cdot \\sin A$','$\\sin A = a/c$'], ans: 0 },
+      { q: 'Cosinusrelationen bruges ved:',
+        opts: ['SSS eller SAS','To vinkler og én side','Kun retvinklede trekanter','Aldrig'], ans: 0 },
+      { q: 'Areal af trekant med $a=5$, $b=8$ og mellemliggende vinkel $C=30°$:',
+        opts: ['10','20','40','5'], ans: 0 },
+      { q: 'Summen af vinkler i en trekant er:',
+        opts: ['90°','180°','270°','360°'], ans: 1 },
+      { q: 'I trekant med $A=40°$, $B=60°$. Hvad er $C$?',
+        opts: ['60°','70°','80°','90°'], ans: 2 }
+    ],
+    '3-1': [
+      { q: 'Arealet af en cirkel med radius 5:',
+        opts: ['$5\\pi$','$10\\pi$','$25\\pi$','$50\\pi$'], ans: 2 },
+      { q: 'Volumen af en terning med sidelængde 4:',
+        opts: ['16','48','64','96'], ans: 2 },
+      { q: 'Areal af trekant med grundlinje 8 og højde 5:',
+        opts: ['40','20','13','80'], ans: 1 },
+      { q: 'Volumen af kegle med $r=3$ og $h=4$:',
+        opts: ['$9\\pi$','$12\\pi$','$36\\pi$','$4\\pi$'], ans: 1 },
+      { q: 'Areal af rombe med diagonaler 6 og 8:',
+        opts: ['24','12','48','36'], ans: 0 }
+    ],
+    '4-0': [
+      { q: 'Kateterne er 6 og 8. Hvad er hypotenusen?',
+        opts: ['10','14','12','8'], ans: 0 },
+      { q: 'Areal af trekant med to sider 6 og 8 og mellemliggende vinkel 90°:',
+        opts: ['24','48','12','36'], ans: 0 },
+      { q: 'Volumen af en kube med sidelængde 3:',
+        opts: ['9','18','27','36'], ans: 2 },
+      { q: '$\\cos(30°) = ?$',
+        opts: ['0,5','$\\sqrt{2}/2$','$\\sqrt{3}/2$','1'], ans: 2 },
+      { q: 'En cirkel har radius 7. Hvad er omkredsen?',
+        opts: ['$7\\pi$','$14\\pi$','$49\\pi$','$\\pi/7$'], ans: 1 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // DESKRIPTIV STATISTIK
+  // ────────────────────────────────────────────────────
+  'deskriptiv-statistik': {
+    '0-1': [
+      { q: 'Hvad er relativ frekvens?',
+        opts: ['Antal observationer i alt','En observations antal divideret med totalt antal','Summen af alle observationer','Middelværdien'], ans: 1 },
+      { q: 'Datasættet [2, 4, 4, 4, 5, 5, 7, 9]. Hyppighed for 4:',
+        opts: ['1','2','3','4'], ans: 2 },
+      { q: 'Hvilken type variabel er hårfarve?',
+        opts: ['Kvantitativ diskret','Kvantitativ kontinuert','Kvalitativ nominalt','Kvantitativ ordinal'], ans: 2 },
+      { q: 'En frekvenstabel viser:',
+        opts: ['Kun gennemsnittet','Antallet af gange hver værdi optræder','Standardafvigelsen','Kun max og min'], ans: 1 },
+      { q: 'Hvad er summen af alle relative frekvenser?',
+        opts: ['0','0,5','1','Varierer'], ans: 2 }
+    ],
+    '1-1': [
+      { q: 'Gennemsnit af [3, 5, 7, 9, 11]:',
+        opts: ['6','7','8','9'], ans: 1 },
+      { q: 'Median af [1, 3, 5, 7, 9]:',
+        opts: ['3','5','7','6'], ans: 1 },
+      { q: 'Median af [2, 4, 6, 8] (lige antal):',
+        opts: ['4','5','6','4,5'], ans: 1 },
+      { q: 'Hvornår er medianen bedre end gennemsnittet?',
+        opts: ['Aldrig','Når data er symmetrisk fordelt','Når der er ekstreme værdier (outliers)','Altid'], ans: 2 },
+      { q: 'Gennemsnit af [10, 20, 30, 40, 50]:',
+        opts: ['25','30','35','40'], ans: 1 }
+    ],
+    '2-1': [
+      { q: 'Nedre kvartil $Q_1$ er:',
+        opts: ['Medianen af den øverste halvdel','25%-percentilen','75%-percentilen','Middelværdien'], ans: 1 },
+      { q: 'Interkvartilbredde $IQR = ?$',
+        opts: ['$Q_1 - Q_3$','$Q_3 - Q_1$','$Q_2 - Q_1$','$Q_3 - Q_2$'], ans: 1 },
+      { q: 'I et boksplot er "boksen" afgrænset af:',
+        opts: ['Min og max','$Q_1$ og $Q_3$','$Q_1$ og medianen','Medianen og $Q_3$'], ans: 1 },
+      { q: 'En outlier er typisk:',
+        opts: ['Medianen','En observation < $Q_1 - 1{,}5 \\cdot IQR$ eller > $Q_3 + 1{,}5 \\cdot IQR$','Gennemsnittet','$Q_3$'], ans: 1 },
+      { q: 'Hvad viser "halen" i et boksplot?',
+        opts: ['Gennemsnittet','Spredningen af de midterste 50%','Data uden for kvartilerne','Medianen'], ans: 2 }
+    ],
+    '3-1': [
+      { q: 'Standardafvigelse $s$ måler:',
+        opts: ['Den mest hyppige værdi','Middel afstand fra gennemsnittet','Max minus min','Antal observationer'], ans: 1 },
+      { q: 'Hvis alle observationer er identiske, er standardafvigelsen:',
+        opts: ['1','Uendelig','0','Gennemsnittet'], ans: 2 },
+      { q: 'Varians = ?',
+        opts: ['$s$','$s^2$','$2s$','$s/2$'], ans: 1 },
+      { q: 'En stor standardafvigelse betyder:',
+        opts: ['Data er tæt samlet om gennemsnittet','Data er meget spredt','Gennemsnittet er stort','Ingen variation'], ans: 1 },
+      { q: 'For [2, 2, 2, 2, 2]: standardafvigelsen er:',
+        opts: ['0','1','2','4'], ans: 0 }
+    ],
+    '4-0': [
+      { q: 'Datasæt: [4, 8, 6, 5, 3, 2, 8, 9, 2, 5]. Hvad er medianen?',
+        opts: ['5','5,5','6','4,5'], ans: 0 },
+      { q: 'Hvad er $Q_1$ for [1, 2, 3, 4, 5, 6, 7, 8]?',
+        opts: ['2','2,5','3','3,5'], ans: 1 },
+      { q: 'IQR for datasæt med $Q_1=10$ og $Q_3=25$:',
+        opts: ['10','15','25','35'], ans: 1 },
+      { q: 'Gennemsnit for [12, 15, 11, 14, 13]:',
+        opts: ['12','13','14','15'], ans: 1 },
+      { q: 'Hvad er typetallet (mode) for [3, 5, 5, 7, 3, 5, 2]?',
+        opts: ['3','5','7','2'], ans: 1 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // SANDSYNLIGHEDSREGNING
+  // ────────────────────────────────────────────────────
+  'sandsynlighedsregning': {
+    '0-1': [
+      { q: 'Udfaldsrummet er:',
+        opts: ['Det ønskede udfald','Mængden af alle mulige udfald','Antallet af forsøg','Sandsynligheden for succes'], ans: 1 },
+      { q: 'Kaster vi en terning. Hvad er udfaldsrummet?',
+        opts: ['{1,2,3}','{1,2,3,4,5,6}','{1,6}','{3,4}'], ans: 1 },
+      { q: 'En hændelse er:',
+        opts: ['Altid hele udfaldsrummet','En delmængde af udfaldsrummet','Et enkelt forsøg','Sandsynlighedsmålet'], ans: 1 },
+      { q: 'P(A) = 0,3. Hvad er $P(A^c)$ (komplementhændelse)?',
+        opts: ['0,3','0,5','0,7','1'], ans: 2 },
+      { q: 'Hvad er sandsynlighed for at slå 6 med en fair terning?',
+        opts: ['$1/3$','$1/4$','$1/5$','$1/6$'], ans: 3 }
+    ],
+    '1-1': [
+      { q: 'Relativ hyppighed =',
+        opts: ['Antal gunstige / antal forsøg','Antal gunstige · antal forsøg','Antal forsøg − antal gunstige','Antal forsøg + antal gunstige'], ans: 0 },
+      { q: 'Sandsynlighed er:',
+        opts: ['Altid > 1','Et tal mellem 0 og 1 (inkl.)','Altid 0,5','Altid et helt tal'], ans: 1 },
+      { q: 'P(sikker hændelse) =',
+        opts: ['0','0,5','1','Varierer'], ans: 2 },
+      { q: 'P(umulig hændelse) =',
+        opts: ['0','0,5','1','Varierer'], ans: 0 },
+      { q: 'Kastes en mønt 100 gange og plat ses 55 gange. Relativ hyppighed af plat?',
+        opts: ['0,45','0,50','0,55','0,60'], ans: 2 }
+    ],
+    '2-1': [
+      { q: 'Multiplikationsprincippet: 3 skjorter og 4 bukser giver:',
+        opts: ['7 kombinationer','12 kombinationer','16 kombinationer','24 kombinationer'], ans: 1 },
+      { q: 'Antal permutationer af 5 objekter taget 2 ad gangen:',
+        opts: ['10','20','25','30'], ans: 1 },
+      { q: 'Binomialkoefficienten $\\binom{5}{2} = ?$',
+        opts: ['5','10','15','20'], ans: 1 },
+      { q: 'En PIN-kode har 4 cifre (0-9). Antal mulige koder:',
+        opts: ['40','400','1000','10000'], ans: 3 },
+      { q: '$\\binom{n}{0} = ?$',
+        opts: ['0','1','$n$','$n!$'], ans: 1 }
+    ],
+    '3-1': [
+      { q: 'Betinget sandsynlighed $P(A|B) = ?$',
+        opts: ['$P(A \\cap B) / P(A)$','$P(A \\cap B) / P(B)$','$P(A) \\cdot P(B)$','$P(A) + P(B)$'], ans: 1 },
+      { q: 'A og B er uafhængige hvis:',
+        opts: ['$P(A \\cap B) = 0$','$P(A|B) = P(A)$','$P(A) = P(B)$','$P(A \\cup B) = 1$'], ans: 1 },
+      { q: 'P(A ∩ B) for uafhængige A og B:',
+        opts: ['$P(A) + P(B)$','$P(A) - P(B)$','$P(A) \\cdot P(B)$','$P(A) / P(B)$'], ans: 2 },
+      { q: 'P(A ∪ B) = ?',
+        opts: ['$P(A) + P(B)$','$P(A) + P(B) - P(A \\cap B)$','$P(A) \\cdot P(B)$','$P(A) - P(B)$'], ans: 1 },
+      { q: 'P(A)=0,4, P(B)=0,3, P(A∩B)=0,12. Er A og B uafhængige?',
+        opts: ['Ja, $0{,}4 \\cdot 0{,}3 = 0{,}12$','Nej, summen er ikke 1','Ja, fordi begge < 0,5','Nej, P(A∩B)≠0'], ans: 0 }
+    ],
+    '4-0': [
+      { q: 'Hvad er P(mindst ét plat) ved 2 møntkast?',
+        opts: ['0,25','0,50','0,75','1'], ans: 2 },
+      { q: 'Antal måder at vælge 3 ud af 6 objekter (orden ligegyldig):',
+        opts: ['18','20','15','30'], ans: 1 },
+      { q: 'P(A)=0,6, P(B|A)=0,3. P(A∩B)=?',
+        opts: ['0,18','0,30','0,90','0,3'], ans: 0 },
+      { q: 'En pose med 3 røde og 5 blå kugler. P(rød) = ?',
+        opts: ['$1/3$','$3/8$','$3/5$','$5/8$'], ans: 1 },
+      { q: 'P(slå to seksere i træk med fair terning) = ?',
+        opts: ['$1/6$','$1/12$','$1/36$','$1/72$'], ans: 2 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // LOGARITMER
+  // ────────────────────────────────────────────────────
+  '10-tals-logaritme': {
+    '0-1': [
+      { q: '$\\log(100) = ?$',
+        opts: ['1','2','10','100'], ans: 1 },
+      { q: 'Hvad er definitionen på $\\log(x)$?',
+        opts: ['$\\log(x) = x^{10}$','$10^{\\log(x)} = x$','$\\log(x) = x/10$','$\\log(x) = 10x$'], ans: 1 },
+      { q: '$\\log(10^5) = ?$',
+        opts: ['10','50','5','100000'], ans: 2 },
+      { q: '$10^{\\log(7)} = ?$',
+        opts: ['7','70','$\\log(7)$','$10 \\cdot 7$'], ans: 0 },
+      { q: '$\\log(1) = ?$',
+        opts: ['1','10','0','Udefineret'], ans: 2 }
+    ],
+    '1-1': [
+      { q: '$\\log(a \\cdot b) = ?$',
+        opts: ['$\\log(a) \\cdot \\log(b)$','$\\log(a) + \\log(b)$','$\\log(a) - \\log(b)$','$\\log(a+b)$'], ans: 1 },
+      { q: '$\\log(a/b) = ?$',
+        opts: ['$\\log(a) + \\log(b)$','$\\log(a) \\cdot \\log(b)$','$\\log(a) - \\log(b)$','$\\log(a)/\\log(b)$'], ans: 2 },
+      { q: '$\\log(a^n) = ?$',
+        opts: ['$\\log(a)^n$','$n \\cdot \\log(a)$','$\\log(n \\cdot a)$','$a \\cdot \\log(n)$'], ans: 1 },
+      { q: 'Beregn $\\log(1000)$:',
+        opts: ['2','3','4','10'], ans: 1 },
+      { q: '$\\log(10^3 \\cdot 10^2) = ?$',
+        opts: ['5','6','25','6'], ans: 0 }
+    ],
+    '2-1': [
+      { q: 'Løs: $\\log(x) = 3$',
+        opts: ['$x = 30$','$x = 100$','$x = 1000$','$x = 3$'], ans: 2 },
+      { q: 'Løs: $10^x = 500$',
+        opts: ['$x = 50$','$x = \\log(500) \\approx 2{,}70$','$x = 5000$','$x = 5$'], ans: 1 },
+      { q: 'Løs: $\\log(x) + \\log(3) = \\log(12)$',
+        opts: ['$x = 4$','$x = 9$','$x = 36$','$x = 3$'], ans: 0 },
+      { q: 'Hvad bruges logaritmer til i eksponentielle sammenhænge?',
+        opts: ['At lægge tal sammen','At isolere eksponenten','At differentiere','At integrere'], ans: 1 },
+      { q: 'Løs: $2 \\cdot 10^x = 200$',
+        opts: ['$x = 100$','$x = 1$','$x = 2$','$x = 10$'], ans: 2 }
+    ],
+    '3-0': [
+      { q: '$\\log(50) + \\log(2) = ?$',
+        opts: ['$\\log(52)$','$\\log(48)$','$\\log(100) = 2$','$\\log(25)$'], ans: 2 },
+      { q: 'Løs: $3 \\cdot 10^x = 3000$',
+        opts: ['$x = 1$','$x = 2$','$x = 3$','$x = 1000$'], ans: 2 },
+      { q: '$\\log(8^3) = ?$',
+        opts: ['$3 \\cdot \\log(8) \\approx 2{,}71$','$\\log(3)$','$8^3$','$24$'], ans: 0 },
+      { q: 'Hvad er log-papirets fordel?',
+        opts: ['Eksponentielle funktioner vises som rette linjer','Det er nemmere at farvelægge','Det giver bedre afrunding','Ingen fordel'], ans: 0 },
+      { q: 'Løs: $\\log(x^2) = 4$',
+        opts: ['$x = 2$','$x = 100$','$x = \\pm 100$','$x = 4$'], ans: 2 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // ANDENGRADSPOLYNOMIER (HF B)
+  // ────────────────────────────────────────────────────
+  'andengradspolynomier-hf': {
+    '0-1': [
+      { q: 'Toppunktets $x$-koordinat i $f(x) = ax^2 + bx + c$:',
+        opts: ['$x_T = -b/a$','$x_T = -b/(2a)$','$x_T = b/(2a)$','$x_T = -2b/a$'], ans: 1 },
+      { q: 'For $f(x) = 2x^2 - 8x + 3$: $x$-koordinaten for toppunktet?',
+        opts: ['$x = 1$','$x = 2$','$x = 4$','$x = -2$'], ans: 1 },
+      { q: '$y$-koordinaten for toppunktet beregnes ved:',
+        opts: ['$y_T = c$','$y_T = -b/(2a)$','$y_T = f(x_T)$','$y_T = b/(4a)$'], ans: 2 },
+      { q: 'Når $a < 0$ i $f(x) = ax^2 + bx + c$ åbner parablen:',
+        opts: ['Opad (smilende)','Nedad (grædende)','Er en linje','Er en cirkel'], ans: 1 },
+      { q: '$f(x) = x^2 - 4x + 4 = ?$',
+        opts: ['$(x-2)^2$','$(x+2)^2$','$(x-4)^2$','$(x-2)(x+2)$'], ans: 0 }
+    ],
+    '1-1': [
+      { q: 'Diskriminanten $\\Delta = ?$',
+        opts: ['$b^2 + 4ac$','$b^2 - 4ac$','$-b^2 - 4ac$','$4ac - b^2$'], ans: 1 },
+      { q: '$\\Delta > 0$ betyder:',
+        opts: ['Ingen rødder','Én rod','To reelle rødder','Parabel i origo'], ans: 2 },
+      { q: '$\\Delta = 0$ betyder:',
+        opts: ['Ingen reelle rødder','Præcis én rod (dobbeltrod)','To reelle rødder','Ingen information'], ans: 1 },
+      { q: 'Rødderne i $x^2 - 5x + 6 = 0$:',
+        opts: ['$x=1$ og $x=6$','$x=2$ og $x=3$','$x=-2$ og $x=-3$','$x=5$ og $x=6$'], ans: 1 },
+      { q: 'Rødderne for $ax^2 + bx + c = 0$:',
+        opts: ['$x = -b/(2a)$','$x = (b \\pm \\sqrt{\\Delta})/(2a)$','$x = (-b \\pm \\sqrt{\\Delta})/(2a)$','$x = (b \\pm \\sqrt{-\\Delta})/(2a)$'], ans: 2 }
+    ],
+    '2-1': [
+      { q: '$f(x) = (x-2)(x+3)$ skærer x-aksen i:',
+        opts: ['$x=2$ og $x=3$','$x=2$ og $x=-3$','$x=-2$ og $x=3$','$x=-2$ og $x=-3$'], ans: 1 },
+      { q: 'Toppunktet for $f(x) = (x-2)^2 - 5$:',
+        opts: ['$(2,\\,-5)$','$(-2,\\,5)$','$(2,\\,5)$','$(-2,\\,-5)$'], ans: 0 },
+      { q: '$f(x) = x^2 - 6x + 5$ med rødder $x=1$ og $x=5$. Aksesymmetrilinjen er:',
+        opts: ['$x = 1$','$x = 3$','$x = 5$','$x = 2$'], ans: 1 },
+      { q: 'Parabel med toppunkt $(3,\\,-4)$ og $a=1$:',
+        opts: ['$f(x) = (x-3)^2 + 4$','$f(x) = (x+3)^2 - 4$','$f(x) = (x-3)^2 - 4$','$f(x) = (x-4)^2 - 3$'], ans: 2 },
+      { q: '$y$-skæringen for $f(x) = 2x^2 - 3x + 1$:',
+        opts: ['0','-3','1','2'], ans: 2 }
+    ],
+    '3-1': [
+      { q: 'Løs: $x^2 - 9 = 0$',
+        opts: ['$x = 3$','$x = -3$','$x = \\pm 3$','$x = \\pm 9$'], ans: 2 },
+      { q: 'Løs: $x^2 + 2x - 8 = 0$',
+        opts: ['$x=2$ og $x=-4$','$x=-2$ og $x=4$','$x=4$ og $x=2$','$x=1$ og $x=-8$'], ans: 0 },
+      { q: 'Løs: $2x^2 - x - 1 = 0$',
+        opts: ['$x=1$ og $x=-0{,}5$','$x=2$ og $x=-1$','$x=0{,}5$ og $x=-1$','$x=1$ og $x=0{,}5$'], ans: 0 },
+      { q: '$f(x) = x^2 - 4$. Nulpunkter ved:',
+        opts: ['$x = 4$','$x = \\pm 2$','$x = 2$','$x = \\pm 4$'], ans: 1 },
+      { q: 'Løs: $(x+1)^2 = 9$',
+        opts: ['$x=2$ og $x=-4$','$x=3$ og $x=-3$','$x=8$ og $x=-8$','$x=2$ og $x=4$'], ans: 0 }
+    ],
+    '4-0': [
+      { q: 'Rødderne i $x^2 - 5x + 6 = 0$:',
+        opts: ['$x=1$ og $x=6$','$x=2$ og $x=3$','$x=-2$ og $x=-3$','$x=5$ og $x=1$'], ans: 1 },
+      { q: 'Toppunkt for $f(x) = x^2 - 6x + 8$:',
+        opts: ['$(3,\\,-1)$','$(-3,\\,1)$','$(3,\\,1)$','$(6,\\,8)$'], ans: 0 },
+      { q: '$\\Delta$ for $2x^2 + 3x + 5 = 0$:',
+        opts: ['-31','31','1','-1'], ans: 0 },
+      { q: '$f(x) = -2(x-1)^2 + 8$. Toppunktet er:',
+        opts: ['$(1,\\,8)$','$(-1,\\,8)$','$(1,\\,-8)$','$(2,\\,8)$'], ans: 0 },
+      { q: 'Løs: $x^2 = 16$',
+        opts: ['$x=4$','$x=-4$','$x=\\pm4$','$x=8$'], ans: 2 }
+    ]
+  },
+
+  // ────────────────────────────────────────────────────
+  // DIFFERENTIALREGNING (HF B)
+  // ────────────────────────────────────────────────────
+  'differentialregning-hf-b': {
+    '0-1': [
+      { q: 'Differentialkvotienten $f\'(x)$ beskriver:',
+        opts: ['Arealet under kurven','Hæld­ningen af tangenten til kurven','Funktionens maksimale værdi','Kurvelængden'], ans: 1 },
+      { q: 'Definition af $f\'(x)$:',
+        opts: ['$\\lim_{h\\to0}\\frac{f(x+h)-f(x-h)}{2h}$','$\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$','$f(x+1)-f(x)$','$\\int f(x)\\,dx$'], ans: 1 },
+      { q: '$f(x) = x^2$. Hvad er $f\'(x)$?',
+        opts: ['$2$','$x$','$2x$','$x^2$'], ans: 2 },
+      { q: '$f(x) = 5$ (konstant). Hvad er $f\'(x)$?',
+        opts: ['5','1','0','Udefineret'], ans: 2 },
+      { q: 'Et punkt hvor $f\'(x) = 0$ kaldes:',
+        opts: ['Skæringspunkt','Stationært punkt','Infleksionspunkt','Asymptote'], ans: 1 }
+    ],
+    '1-1': [
+      { q: 'Differentiér $f(x) = x^3$:',
+        opts: ['$x^2$','$3x^2$','$3x$','$x^4$'], ans: 1 },
+      { q: 'Differentiér $f(x) = 4x^5$:',
+        opts: ['$4x^4$','$20x^4$','$20x^5$','$4x^6$'], ans: 1 },
+      { q: 'Differentiér $f(x) = \\sqrt{x}$:',
+        opts: ['$\\sqrt{x}/2$','$1/(2\\sqrt{x})$','$2\\sqrt{x}$','$x^{-1}$'], ans: 1 },
+      { q: 'Differentiér $f(x) = e^x$:',
+        opts: ['$x \\cdot e^{x-1}$','$e^x$','$e^{x+1}$','$x \\cdot e^x$'], ans: 1 },
+      { q: 'Differentiér $f(x) = \\ln(x)$:',
+        opts: ['$\\ln(x)/x$','$1/\\ln(x)$','$1/x$','$x/\\ln(x)$'], ans: 2 }
+    ],
+    '2-1': [
+      { q: '$f\'(x) > 0$ i et interval betyder at $f$ er:',
+        opts: ['Faldende','Konstant','Voksende','Har et maksimum'], ans: 2 },
+      { q: '$f\'(x) < 0$ i et interval betyder at $f$ er:',
+        opts: ['Voksende','Konstant','Har et minimum','Faldende'], ans: 3 },
+      { q: '$f(x) = x^3 - 3x$. Stationære punkter ved:',
+        opts: ['$x = 0$','$x = \\pm 1$','$x = \\pm 3$','$x = 1$'], ans: 1 },
+      { q: '$f(x) = x^2$. Er $x=0$ et lokalt minimum eller maksimum?',
+        opts: ['Lokalt maksimum','Lokalt minimum','Hverken','Globalt maksimum'], ans: 1 },
+      { q: 'En funktion skifter fra voksende til faldende i $x=3$. Hvad er $x=3$?',
+        opts: ['Lokalt minimum','Lokalt maksimum','Infleksionspunkt','Asymptote'], ans: 1 }
+    ],
+    '3-1': [
+      { q: 'Tangentlinjens ligning i $(x_0, f(x_0))$:',
+        opts: ['$y = f(x_0) + f\'(x_0)(x-x_0)$','$y = f\'(x_0) \\cdot x + f(x_0)$','$y = f(x_0) \\cdot x$','$y = f\'(x_0) - x_0$'], ans: 0 },
+      { q: '$f(x) = x^2$. Tangentligning i $x=2$:',
+        opts: ['$y = 4x - 4$','$y = 2x + 4$','$y = 4x + 4$','$y = 2x - 4$'], ans: 0 },
+      { q: 'Hæld­ningen af tangenten til $f(x) = x^3$ i $x=1$:',
+        opts: ['1','2','3','6'], ans: 2 },
+      { q: 'Tangentlinjen og kurven:',
+        opts: ['Har altid to skæringspunkter','Rører kurven i tangentpunktet','Er altid parallel med x-aksen','Er aldrig parallel'], ans: 1 },
+      { q: 'Normallinjen i et punkt er:',
+        opts: ['Parallel med tangenten','Vinkelret på tangenten','Det samme som tangenten','Parallel med x-aksen'], ans: 1 }
+    ],
+    '4-1': [
+      { q: 'For at finde globalt maksimum på $[a,b]$:',
+        opts: ['Find kun $f(a)$ og $f(b)$','Find kun stationære punkter','Undersøg stationære punkter OG randpunkter','Differentiér to gange'], ans: 2 },
+      { q: '$f(x) = -x^2 + 4x$. Maksimumspunktet er:',
+        opts: ['$(1,\\,3)$','$(2,\\,4)$','$(4,\\,0)$','$(0,\\,4)$'], ans: 1 },
+      { q: 'Rektangel med omkreds 20. Max areal ved bredde:',
+        opts: ['$b = 4$','$b = 5$','$b = 6$','$b = 10$'], ans: 1 },
+      { q: 'Hvad er $f\'\'(x)$ for $f(x) = x^3$?',
+        opts: ['$6$','$6x$','$3x$','$x^2$'], ans: 1 },
+      { q: 'Hvis $f\'(x_0)=0$ og $f\'\'(x_0)>0$, er $x_0$:',
+        opts: ['Lokalt maksimum','Infleksionspunkt','Lokalt minimum','Ikke stationært'], ans: 2 }
+    ],
+    '5-0': [
+      { q: 'Differentiér $f(x) = 3x^4 - 2x^2 + 5$:',
+        opts: ['$12x^3 - 4x$','$12x^3 - 2x$','$12x^4 - 4x$','$3x^3 - 2x$'], ans: 0 },
+      { q: 'Stationære punkter for $f(x) = x^2 - 4x + 3$:',
+        opts: ['$x = 0$','$x = 1$','$x = 2$','$x = 3$'], ans: 2 },
+      { q: 'Tangentligning til $f(x) = x^3$ i $x=1$:',
+        opts: ['$y = x + 1$','$y = 3x - 2$','$y = 3x + 2$','$y = 3x$'], ans: 1 },
+      { q: '$f\'(x_0)=0$ og $f\'\'(x_0)<0$. Hvad er $x_0$?',
+        opts: ['Lokalt minimum','Lokalt maksimum','Infleksionspunkt','Asymptote'], ans: 1 },
+      { q: 'Maksimum af $f(x) = -x^2 + 6x - 5$:',
+        opts: ['$f = 3$','$f = 4$','$f = 5$','$f = 6$'], ans: 1 }
+    ]
+  }
+};
+
+// Sæt cross-referencer
+ALL_QUIZ_DATA['tal-og-algebra-b-niveau'] = ALL_QUIZ_DATA['tal-og-algebra'];
+ALL_QUIZ_DATA['eksponentielle-funktioner-stx'] = ALL_QUIZ_DATA['eksponentielle-funktioner'];
+ALL_CURRICULA['vektorer-matematik-b-stx-2aar'] = null; // håndteres i getCurriculum
+
+// ── KURS-BESKRIVELSER ──
+const COURSE_DESC = {
+  'tal-og-algebra':             'Grundlæggende talsystemet, regningsarterne og simpel algebra. Bygger et fundament til al matematik.',
+  'ligninger-1-aar-hf-2':       'Løsning af ligninger med én og to ubekendte, formler og omskrivning.',
+  'procent-og-rentesregning':   'Procentberegning, fremskrivningsfaktor, simpel og sammensat rente.',
+  'lineaer-funktioner':         'Den lineære funktion y = ax + b — hæld­ning, skæring og bestemmelse af forskrift.',
+  'eksponentielle-funktioner':  'Eksponentielle funktioner, vækstrate, halverings- og fordoblingstid.',
+  'geometri-og-trigonometri':   'Pythagoras, trigonometri (sin/cos/tan), sinus- og cosinusrelation, arealer og rumfang.',
+  'deskriptiv-statistik':       'Statistisk beskrivelse: frekvens, gennemsnit, median, kvartiler og boksplot.',
+  'sandsynlighedsregning':      'Sandsynlighed, kombinatorik og betinget sandsynlighed.',
+  '10-tals-logaritme':          'Logaritmens definition, regneregler og ligninger med log.',
+  'andengradspolynomier-hf':    'Andengradspolynomier, toppunkt, diskriminant og løsning af andengradsligninger.',
+  'differentialregning-hf-b':   'Differentialkvotienten, differentieringsregler, monotoni, tangent og optimering.',
+  'vektorer-matematik-b-stx-2aar': 'Vektorer i planen — skalarprodukt, projektion, determinanter, linjens ligning og cirkler.',
+};
+
 // Quiz tilstand
 let quizState = null; // { questions, current, answers, submitted }
 
@@ -434,7 +1621,7 @@ let openLessonSections = new Set([0]);
 // ── NAVIGATION ──
 function navigate(page, data) {
   currentPage = page;
-  currentCourse = data || null;
+  if (arguments.length > 1) currentCourse = data || null;
   closeMobileMenu();
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -460,26 +1647,26 @@ function closeMobileMenu() {
 }
 
 // ── LESSON HELPERS ──
-// Kurser med fuldt indhold (resten er "kommer snart")
-const FULL_COURSES = new Set(['vektorer-matematik-b-stx-2aar']);
-
 function getCurriculum() {
-  if (!currentCourse || FULL_COURSES.has(currentCourse.slug)) {
-    return VEKTORER_CURRICULUM;
-  }
-  // Placeholder-curriculum til kurser under opbygning
-  return [
+  const slug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
+  if (slug === 'vektorer-matematik-b-stx-2aar') return VEKTORER_CURRICULUM;
+  return ALL_CURRICULA[slug] || [
     { title: '1. Introduktion', items: [
-      { type: 'lesson', title: 'Introduktion til ' + currentCourse.title, dur: 'Kommer snart' }
+      { type: 'lesson', title: 'Introduktion til ' + (currentCourse?.title || slug), dur: 'Kommer snart' }
     ]},
     { title: '2. Grundlæggende begreber', items: [
       { type: 'lesson', title: 'Teori og definitioner', dur: 'Kommer snart' },
-      { type: 'quiz', title: 'Test dig selv', dur: '5 spørgsmål' }
+      { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
     ]},
     { title: '3. Øvelser og eksamen', items: [
-      { type: 'quiz', title: 'Eksamensforberedelse', dur: 'Kommer snart' }
+      { type: 'quiz', title: 'Eksamensforberedelse', dur: '5 spørgsmål' }
     ]}
   ];
+}
+
+function getQuizData(key) {
+  const slug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
+  return (ALL_QUIZ_DATA[slug] || QUIZ_DATA)[key] || null;
 }
 
 function getFlatItems() {
@@ -707,7 +1894,8 @@ function openCourse(slug, titleEncoded) {
 // ── KURSUSSIDE ──
 function renderCourse() {
   const c = currentCourse || { slug: 'tal-og-algebra', title: 'Tal og Algebra' };
-  const isFull = !currentCourse || FULL_COURSES.has(currentCourse.slug);
+  const slug = c.slug || '';
+  const isFull = !currentCourse || !!ALL_CURRICULA[slug] || slug === 'vektorer-matematik-b-stx-2aar';
   const curriculum = getCurriculum();
   const totalLessons = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='lesson').length, 0);
   const totalQuizzes = curriculum.reduce((n,s) => n + s.items.filter(i=>i.type==='quiz').length, 0);
@@ -768,16 +1956,13 @@ function renderCourse() {
 
         <div class="course-tab-panel active" id="tab-desc">
           <div class="course-desc">
-            <h3>Tal og Algebra:</h3>
-            <p>Dette kursus giver dig en grundlæggende forståelse af talsystemet, regningsarterne og simpel algebra. Vi bygger et stærkt fundament, der gør det lettere for dig at arbejde med matematik og problemløsning.</p>
-            <p><strong>Hvad lærer du?</strong></p>
+            <h3>${c.title}</h3>
+            <p>${COURSE_DESC[c.slug] || 'Dette kursus giver dig en solid forståelse af emnet med videoer, quizzer og øvelser.'}</p>
+            <p><strong>Kurset indeholder:</strong></p>
             <ul>
-              <li>Talsystemet — naturlige, hele, rationale og reelle tal</li>
-              <li>Regningsarternes hierarki</li>
-              <li>Simpel algebra</li>
-              <li>Potens og rod</li>
+              ${curriculum.map(s => `<li>${s.title}</li>`).join('')}
             </ul>
-            <p><strong>Kurset er for:</strong> dig der ønsker at bygge en stærk matematisk base til dagligdagen og fremtidige studier.</p>
+            <p><strong>Kurset er for:</strong> dig der ønsker at mestre emnet og klare dig godt til eksamen.</p>
           </div>
         </div>
 
@@ -870,7 +2055,7 @@ function renderLessonViewer() {
   // ── CONTENT ──
   const isQuiz = item.type === 'quiz';
   const quizKey = `${currentSection}-${currentItem}`;
-  const quizQuestions = QUIZ_DATA[quizKey] || null;
+  const quizQuestions = getQuizData(quizKey);
   const alreadyDone = isCompleted(currentSection, currentItem);
 
   // Init quiz state when entering a new quiz
@@ -1057,7 +2242,7 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
 
 function selectQuizAnswer(optIdx) {
   if (!quizState || quizState.answers[quizState.current] !== null) return;
-  const questions = QUIZ_DATA[quizState.key];
+  const questions = getQuizData(quizState.key);
   quizState.answers[quizState.current] = optIdx;
   if (optIdx === questions[quizState.current].ans) quizState.score++;
 
@@ -1073,7 +2258,7 @@ function selectQuizAnswer(optIdx) {
 
 function nextQuizQuestion() {
   if (!quizState) return;
-  const questions = QUIZ_DATA[quizState.key];
+  const questions = getQuizData(quizState.key);
   if (quizState.current < questions.length - 1) {
     quizState.current++;
   } else {
@@ -1091,7 +2276,7 @@ function nextQuizQuestion() {
 
 function retryQuiz() {
   if (!quizState) return;
-  const questions = QUIZ_DATA[quizState.key];
+  const questions = getQuizData(quizState.key);
   quizState = { key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0 };
   const content = document.querySelector('.lesson-content');
   if (content) {
@@ -1215,7 +2400,10 @@ function saveCompleted() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedLessons]));
 }
 
-function getLessonKey(si, ii) { return `${si}-${ii}`; }
+function getLessonKey(si, ii) {
+  const slug = currentCourse?.slug || 'default';
+  return `${slug}:${si}-${ii}`;
+}
 
 function isCompleted(si, ii) { return completedLessons.has(getLessonKey(si, ii)); }
 
