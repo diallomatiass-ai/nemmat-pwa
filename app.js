@@ -865,69 +865,70 @@ const ALL_QUIZ_DATA = {
         opts: ['integral()','solve()','plot()','diff()'], ans: 1 }
     ],
     // S6: BRØKREGNING item 1 — hvad er en brøk
+    // S6: BRØKREGNING item 1 — forkort og forlæng (nemmat.dk quiz)
     '6-1': [
-      { q: 'Hvad betyder brøken $\\frac{3}{4}$?',
-        opts: ['3 divideret med 4','Tredje potens af 4','Summen af 3 og 4','4 divideret med 3'], ans: 0 },
-      { q: 'Forlæng $\\frac{2}{3}$ med 4:',
-        opts: ['$\\frac{8}{12}$','$\\frac{6}{7}$','$\\frac{2}{12}$','$\\frac{6}{12}$'], ans: 0 },
-      { q: 'Forkort $\\frac{6}{9}$ mest muligt:',
-        opts: ['$\\frac{3}{4}$','$\\frac{2}{3}$','$\\frac{1}{2}$','$\\frac{6}{9}$'], ans: 1 },
-      { q: 'Hvilke brøker er ækvivalente?',
-        opts: ['$\\frac{2}{3}$ og $\\frac{4}{5}$','$\\frac{1}{2}$ og $\\frac{3}{6}$','$\\frac{3}{4}$ og $\\frac{4}{5}$','$\\frac{2}{5}$ og $\\frac{3}{4}$'], ans: 1 },
-      { q: 'Hvad er 0,5 som brøk (forkortet)?',
-        opts: ['$\\frac{5}{10}$','$\\frac{1}{2}$','Begge er korrekte','Ingen af dem'], ans: 2 }
+      { q: 'Forkort mest muligt $\\frac{24}{36}$',
+        opts: ['$\\frac{2}{3}$','$\\frac{4}{5}$','$\\frac{3}{4}$','$\\frac{5}{9}$'], ans: 0 },
+      { q: 'Forlæng brøken så nævneren bliver 20: $\\frac{3}{5}$',
+        opts: ['$\\frac{3}{20}$','$\\frac{6}{20}$','$\\frac{12}{20}$','$\\frac{23}{20}$'], ans: 2 },
+      { q: 'Forkort mest muligt $\\frac{10}{45}$',
+        opts: ['$\\frac{5}{9}$','$\\frac{2}{9}$','$\\frac{2}{45}$','$\\frac{10}{9}$'], ans: 1 },
+      { q: 'Forlæng brøken så nævneren bliver 28: $\\frac{2}{7}$',
+        opts: ['$\\frac{2}{7}$','$\\frac{12}{28}$','$\\frac{2}{28}$','$\\frac{8}{28}$'], ans: 3 },
+      { q: 'Forkort mest muligt $\\frac{20}{100}$',
+        opts: ['$\\frac{1}{10}$','$\\frac{1}{5}$','$\\frac{2}{10}$','$\\frac{1}{4}$'], ans: 1 }
     ],
-    // S6: BRØKREGNING item 3 — addition og subtraktion
+    // S6: BRØKREGNING item 3 — addition og subtraktion (nemmat.dk quiz)
     '6-3': [
-      { q: '$\\frac{1}{3} + \\frac{1}{6} = ?$',
-        opts: ['$\\frac{2}{9}$','$\\frac{3}{9}$','$\\frac{1}{2}$','$\\frac{2}{6}$'], ans: 2 },
-      { q: '$\\frac{3}{4} - \\frac{1}{2} = ?$',
-        opts: ['$\\frac{1}{4}$','$\\frac{2}{2}$','$\\frac{1}{2}$','$\\frac{3}{8}$'], ans: 0 },
-      { q: '$\\frac{5}{6} + \\frac{1}{4} = ?$',
-        opts: ['$\\frac{6}{10}$','$\\frac{13}{12}$','$\\frac{6}{24}$','$\\frac{1}{2}$'], ans: 1 },
-      { q: 'Hvad er fælles nævner for $\\frac{1}{3}$ og $\\frac{1}{4}$?',
-        opts: ['7','12','1','3'], ans: 1 },
-      { q: '$2\\frac{1}{3} + 1\\frac{2}{3} = ?$',
-        opts: ['$3\\frac{1}{3}$','$4$','$3\\frac{3}{6}$','$3\\frac{2}{3}$'], ans: 1 }
+      { q: 'Reducer mest muligt $\\frac{3}{5} + \\frac{2}{10}$',
+        opts: ['$\\frac{4}{5}$','$\\frac{5}{15}$','$\\frac{3}{5}$','$\\frac{7}{10}$'], ans: 0 },
+      { q: 'Reducer mest muligt $\\frac{5}{4} - \\frac{3}{5}$',
+        opts: ['$\\frac{4}{5}$','$\\frac{2}{-1}$','$\\frac{13}{20}$','$\\frac{7}{9}$'], ans: 2 },
+      { q: 'Reducer mest muligt $\\frac{2}{7} + \\frac{4}{3}$',
+        opts: ['$\\frac{6}{10}$','$\\frac{34}{21}$','$\\frac{6}{21}$','$\\frac{5}{10}$'], ans: 1 },
+      { q: 'Reducer mest muligt $\\frac{1}{2} - \\frac{3}{4}$',
+        opts: ['$-\\frac{1}{4}$','$\\frac{2}{5}$','$\\frac{3}{2}$','$\\frac{3}{4}$'], ans: 0 },
+      { q: 'Reducer mest muligt $\\frac{1}{2} + \\frac{4}{9}$',
+        opts: ['$\\frac{6}{15}$','$\\frac{3}{18}$','$\\frac{7}{15}$','$\\frac{17}{18}$'], ans: 3 }
     ],
-    // S6: BRØKREGNING item 5 — multiplikation og division
+    // S6: BRØKREGNING item 5 — multiplikation og division (nemmat.dk quiz)
     '6-5': [
-      { q: '$\\frac{2}{3} \\cdot \\frac{3}{4} = ?$',
-        opts: ['$\\frac{5}{7}$','$\\frac{6}{12}$','$\\frac{1}{2}$','$\\frac{6}{7}$'], ans: 2 },
-      { q: '$\\frac{4}{5} \\div \\frac{2}{3} = ?$',
-        opts: ['$\\frac{8}{15}$','$\\frac{2}{15}$','$\\frac{6}{5}$','$\\frac{3}{8}$'], ans: 2 },
-      { q: '$\\frac{3}{8} \\cdot 4 = ?$',
-        opts: ['$\\frac{7}{8}$','$\\frac{3}{2}$','$\\frac{12}{32}$','$\\frac{4}{8}$'], ans: 1 },
-      { q: 'Hvad er den reciproke (omvendte) til $\\frac{3}{5}$?',
-        opts: ['$\\frac{5}{3}$','$-\\frac{3}{5}$','$\\frac{3}{-5}$','$\\frac{1}{15}$'], ans: 0 },
-      { q: '$\\frac{1}{2} \\div \\frac{1}{4} = ?$',
-        opts: ['$\\frac{1}{8}$','$2$','$\\frac{1}{2}$','$4$'], ans: 1 }
+      { q: 'Reducer mest muligt $\\frac{3}{4} \\cdot \\frac{4}{5}$',
+        opts: ['$\\frac{7}{6}$','$\\frac{7}{9}$','$\\frac{7}{5}$','$\\frac{3}{5}$'], ans: 3 },
+      { q: 'Reducer mest muligt $\\frac{1}{4} \\div \\frac{4}{5}$',
+        opts: ['$\\frac{7}{5}$','$\\frac{5}{16}$','$\\frac{4}{20}$','$\\frac{17}{16}$'], ans: 1 },
+      { q: 'Reducer mest muligt $\\frac{2}{5} \\cdot \\frac{7}{9}$',
+        opts: ['$\\frac{2}{45}$','$\\frac{9}{5}$','$\\frac{1}{14}$','$\\frac{14}{45}$'], ans: 3 },
+      { q: 'Reducer mest muligt $\\frac{6}{5} \\div \\frac{7}{2}$',
+        opts: ['$\\frac{3}{2}$','$\\frac{12}{35}$','$\\frac{13}{7}$','$\\frac{6}{15}$'], ans: 1 },
+      { q: 'Reducer mest muligt $\\frac{5}{6} \\cdot \\frac{3}{2}$',
+        opts: ['$\\frac{3}{4}$','$\\frac{7}{8}$','$\\frac{5}{4}$','$\\frac{7}{3}$'], ans: 2 }
     ],
-    // S6: BRØKREGNING item 7 — sammenhæng tal og brøker
+    // S6: BRØKREGNING item 7 — brøk med heltal (nemmat.dk quiz)
     '6-7': [
-      { q: 'Omskriv 0,75 til en forkortet brøk:',
-        opts: ['$\\frac{75}{100}$','$\\frac{7}{10}$','$\\frac{3}{4}$','$\\frac{3}{5}$'], ans: 2 },
-      { q: 'Hvad er $\\frac{3}{8}$ som decimaltal?',
-        opts: ['0,35','0,375','0,38','0,3'], ans: 1 },
-      { q: 'Omskriv $2\\frac{3}{4}$ til uægte brøk:',
-        opts: ['$\\frac{5}{4}$','$\\frac{11}{4}$','$\\frac{8}{4}$','$\\frac{6}{4}$'], ans: 1 },
-      { q: 'Hvad er $\\frac{7}{3}$ som blandet tal?',
-        opts: ['$2\\frac{1}{3}$','$2\\frac{2}{3}$','$3\\frac{1}{3}$','$1\\frac{4}{3}$'], ans: 0 },
-      { q: 'Hvad svarer 125% til som forkortet brøk?',
-        opts: ['$\\frac{12}{5}$','$\\frac{5}{4}$','$\\frac{1}{4}$','$\\frac{5}{8}$'], ans: 1 }
+      { q: 'Reducer mest muligt $2 \\cdot \\frac{4}{3}$',
+        opts: ['$\\frac{8}{3}$','$\\frac{10}{3}$','$\\frac{5}{3}$','$\\frac{2}{3}$'], ans: 0 },
+      { q: 'Reducer mest muligt $\\frac{4}{5} \\cdot (-2)$',
+        opts: ['$\\frac{4}{-1}$','$\\frac{8}{-2}$','$-\\frac{8}{5}$','$\\frac{4}{-2}$'], ans: 2 },
+      { q: 'Reducer mest muligt $3 + \\frac{5}{2}$',
+        opts: ['$\\frac{9}{2}$','$\\frac{11}{2}$','$\\frac{7}{2}$','$\\frac{5}{2}$'], ans: 1 },
+      { q: 'Reducer mest muligt $\\frac{1}{4} - 6$',
+        opts: ['$\\frac{19}{4}$','$\\frac{23}{4}$','$-\\frac{19}{4}$','$\\frac{23}{-4}$'], ans: 3 },
+      { q: 'Reducer mest muligt $2 \\div \\frac{4}{5}$',
+        opts: ['$\\frac{5}{2}$','$\\frac{10}{4}$','$\\frac{6}{5}$','$\\frac{6}{2}$'], ans: 0 }
     ],
-    // S7: EKSAMENSØVELSE 2 — item 0
+    // S7: EKSAMENSØVELSE 2 — item 0 (nemmat.dk quiz)
     '7-0': [
-      { q: 'Hvad er $3 \\cdot 4^2 - 2 \\cdot 3 + 1$?',
-        opts: ['43','145','7','42'], ans: 0, hint: 'Husk: potens før multiplikation' },
-      { q: 'Forenkl $4(2x - 3) - 3(x - 1)$:',
-        opts: ['$5x - 9$','$5x + 9$','$11x - 9$','$5x - 15$'], ans: 0 },
-      { q: 'Løs: $3x - 5 = 10$',
-        opts: ['$x = 5$','$x = 15$','$x = 3$','$x = 1$'], ans: 0 },
-      { q: '$\\frac{1}{3} + \\frac{1}{4} = ?$',
-        opts: ['$\\frac{1}{7}$','$\\frac{2}{7}$','$\\frac{7}{12}$','$\\frac{1}{12}$'], ans: 2 },
-      { q: 'Hvad er 40% af 250?',
-        opts: ['50','75','100','125'], ans: 2 }
+      { q: 'Reducer $5 \\cdot (3x - 2)$',
+        opts: ['$3x - 10$','$15x - 2$','$15x - 10$','$8x - 2$'], ans: 2 },
+      { q: 'Beregn $6^2 - 4 \\cdot 5$',
+        opts: ['$16$','$20$','$8$','$13$'], ans: 0 },
+      { q: 'Reducer mest muligt udtrykket $7x + 3 \\cdot (3 - 2x)$',
+        opts: ['$6x + 9$','$7x + 9$','$3x + 3$','$x + 9$'], ans: 3 },
+      { q: 'Beregn $\\sqrt{16} + 2 \\cdot 5$',
+        opts: ['$10$','$14$','$8$','$4$'], ans: 1 },
+      { q: 'Reducer udtrykket $-3(-2x + 3)$',
+        opts: ['$3x + 9$','$-6x + 9$','$6x - 9$','$6x + 3$'], ans: 2 }
     ]
   },
   'tal-og-algebra-b-niveau': null, // sættes nedenfor
@@ -1000,6 +1001,88 @@ const ALL_QUIZ_DATA = {
         opts: ['$m = F - a$','$m = F + a$','$m = F/a$','$m = F \\cdot a$'], ans: 2 },
       { q: 'Løs: $5(x - 2) = 3x + 4$',
         opts: ['$x = 3$','$x = 5$','$x = 7$','$x = 9$'], ans: 2 }
+    ],
+    // S2: Multiplikation og Division — item 1 (nemmat.dk)
+    '2-1': [
+      { q: 'Løs ligningen: $2x = 4$', opts: ['$x=4$','$x=12$','$x=3$','$x=2$'], ans: 3 },
+      { q: 'Løs ligningen: $3x = -9$', opts: ['$x=2$','$x=3$','$x=5$','$x=-3$'], ans: 3 },
+      { q: 'Løs ligningen: $5 \\cdot x = -25$', opts: ['$x=-5$','$x=20$','$x=5$','$x=-3$'], ans: 0 },
+      { q: 'Løs ligningen: $18 = 3x$', opts: ['$x=5$','$x=-15$','$x=15$','$x=6$'], ans: 3 },
+      { q: 'Løs ligningen: $4x = 24$', opts: ['$x=-6$','$x=20$','$x=6$','$x=13$'], ans: 2 },
+      { q: 'Løs ligningen: $\\frac{x}{2} = 10$', opts: ['$x=5$','$x=8$','$x=20$','$x=-8$'], ans: 2 },
+      { q: 'Løs ligningen: $\\frac{6}{x} = 3$', opts: ['$x=9$','$x=2$','$x=5$','$x=-6$'], ans: 1 },
+      { q: 'Løs ligningen: $12 = \\frac{x}{3}$', opts: ['$x=-10$','$x=15$','$x=9$','$x=36$'], ans: 3 },
+      { q: 'Løs ligningen: $2 = \\frac{10}{x}$', opts: ['$x=-5$','$x=4$','$x=-6$','$x=5$'], ans: 3 },
+      { q: 'Løs ligningen: $\\frac{x}{5} = 3$', opts: ['$x=3$','$x=12$','$x=15$','$x=-8$'], ans: 2 }
+    ],
+    // S4: Ubekendt på begge sider — item 1 (nemmat.dk)
+    '4-1': [
+      { q: 'Løs ligning: $5x + 6 = 3x + 12$', opts: ['$x=7$','$x=12$','$x=3$','$x=-11$'], ans: 2 },
+      { q: 'Løs ligning: $3x + 5 = 2x + 10$', opts: ['$x=3$','$x=12$','$x=5$','$x=15$'], ans: 2 },
+      { q: 'Løs ligning: $-4x + 8 = 2x + 20$', opts: ['$x=9$','$x=11$','$x=-2$','$x=8$'], ans: 2 },
+      { q: 'Løs ligning: $4x - 9 = -2x + 3$', opts: ['$x=2$','$x=-2$','$x=0$','$x=4$'], ans: 0 },
+      { q: 'Løs ligning: $-3x - 9 = 4x + 12$', opts: ['$x=3$','$x=2$','$x=-3$','$x=4$'], ans: 2 }
+    ],
+    // S5: Parenteser i ligninger — item 1 (nemmat.dk)
+    '5-1': [
+      { q: 'Løs ligningen: $5(x - 2) = 20$', opts: ['$x=7$','$x=12$','$x=3$','$x=6$'], ans: 3 },
+      { q: 'Løs ligningen: $3(x + 4) = 18$', opts: ['$x=2$','$x=-3$','$x=0$','$x=-2$'], ans: 0 },
+      { q: 'Løs ligningen: $2 \\cdot (2x + 3) = 18$', opts: ['$x=9$','$x=11$','$x=3$','$x=4$'], ans: 2 },
+      { q: 'Løs ligningen: $4(x + 1) - 3 = 17$', opts: ['$x=4$','$x=3$','$x=2$','$x=-5$'], ans: 0 },
+      { q: 'Løs ligningen: $6(x - 5) + 4 = 10$', opts: ['$x=-6$','$x=5$','$x=8$','$x=6$'], ans: 3 }
+    ],
+    // S6: Potens og Rødder — item 1 (nemmat.dk)
+    '6-1': [
+      { q: 'Løs ligningen: $x^2 = 4$', opts: ['$x=2$','$x=-3$','$x=3$','$x=-2$'], ans: 0 },
+      { q: 'Løs ligningen: $x^5 = 1$', opts: ['$x=-5$','$x=5$','$x=-1$','$x=1$'], ans: 3 },
+      { q: 'Løs ligningen: $2x^2 = 18$', opts: ['$x=-5$','$x=-3$','$x=5$','$x=3$'], ans: 3 },
+      { q: 'Løs ligningen: $\\sqrt{x} = 9$', opts: ['$x=6$','$x=3$','$x=9$','$x=81$'], ans: 3 },
+      { q: 'Løs ligningen: $\\sqrt{x} + 5 = 9$', opts: ['$x=15$','$x=36$','$x=16$','$x=14$'], ans: 2 }
+    ],
+    // S7: Ligning i tekst — item 1 (nemmat.dk)
+    '7-1': [
+      { q: 'Forklar 1. trin i ligningløsning $8 - 4x = 32 - 8x$',
+        opts: ['Læg $8x$ til på begge sider','Træk $16x$ fra på begge sider','Læg $5x$ til på begge sider','Læg $3x$ til på begge sider'], ans: 0 },
+      { q: 'Forklar 2. trin: $8x + 8 - 4x = 32$',
+        opts: ['Lægger 8 til på begge sider og reducer','Trækker $8x$ fra på begge sider og reducer','Trækker 8 fra på begge sider og reducer','Trækker 32 fra på begge sider og reducer'], ans: 2 },
+      { q: 'Forklar 3. trin: $4x = 24$',
+        opts: ['Ganger med 24 på begge sider','Ganger med 4 på begge sider','Divider med 24 på begge sider','Divider med 4 på begge sider'], ans: 3 },
+      { q: 'Forklar 4. trin: $x = 6$',
+        opts: ['Reducere og får isoleret $x$ og resultatet','Svaret er forkert','Plussede med 6 på begge sider','Ligningen har ingen løsning'], ans: 0 }
+    ],
+    // S8: Logaritmiske ligninger — item 1 (nemmat.dk)
+    '8-1': [
+      { q: 'Beregn $\\log_{10}(1000)$', opts: ['$7$','$12$','$3$','$2$'], ans: 2 },
+      { q: 'Beregn $\\log_{10}(10)$', opts: ['$1$','$0$','$-1$','$2$'], ans: 0 },
+      { q: 'Beregn $\\log_{10}(0{,}01)$', opts: ['$9$','$-2$','$3$','$-1$'], ans: 1 },
+      { q: 'Løs ligningen: $10^x = 1000$', opts: ['$x=2$','$x=3$','$x=-1$','$x=-3$'], ans: 1 },
+      { q: 'Løs ligningen: $10^{x+1} = 100$', opts: ['$x=0$','$x=2$','$x=-2$','$x=1$'], ans: 3 }
+    ],
+    // S9: Formler (tekst) — item 2 (nemmat.dk)
+    '9-2': [
+      { q: 'Arealet $A = \\frac{1}{2} \\cdot h \\cdot g$. Find $A$ når $h=4$ og $g=12$.',
+        opts: ['$A=16$','$A=48$','$A=12$','$A=24$'], ans: 3 },
+      { q: 'Find $h$ i $A = \\frac{1}{2} \\cdot h \\cdot g$ når $A=50$ og $g=5$.',
+        opts: ['$h=25$','$h=20$','$h=30$','$h=40$'], ans: 1 }
+    ],
+    // S10: Eksamensøvelse — item 0 (nemmat.dk)
+    '10-0': [
+      { q: 'Løs: $2x - 5 = 15$', opts: ['$x=9$','$x=5$','$x=10$','$x=12$'], ans: 2 },
+      { q: 'Løs: $\\frac{x}{3} + 4 = 9$', opts: ['$x=10$','$x=25$','$x=6$','$x=15$'], ans: 3 },
+      { q: 'Løs: $5x - 9 = 3x + 5$', opts: ['$x=0$','$x=5$','$x=7$','$x=8$'], ans: 2 },
+      { q: 'Løs: $3 \\cdot (2x - 1) = 4x + 5$', opts: ['$x=4$','$x=3$','$x=1$','$x=5$'], ans: 0 },
+      { q: 'Bestem $S$ når $F=15$ i $S = \\frac{4 \\cdot F}{5}$',
+        opts: ['$S=8$','$S=12$','$S=10$','$S=6$'], ans: 1 },
+      { q: 'Emma maler 200 m stakit med 8 m/time. Formel for rest $y$ efter $x$ timer:',
+        opts: ['$y=200+10x$','$y=200+8x$','$y=-8x+300$','$y=200-8x$'], ans: 3 },
+      { q: 'Hvad er 1. og 2. trin for at løse $3x - 4 = 11$?',
+        opts: ['Gang med 3, læg 4 til','Divider med 3, læg 4 til','Læg 4 til, divider med 3','Træk 4 fra, divider med 3'], ans: 2 },
+      { q: '$V = \\pi r^2 h$ med $r=1{,}2$ og $h=1{,}5$. Hvad er $V$?',
+        opts: ['$V=8\\,\\text{m}^3$','$V=7{,}03\\,\\text{m}^3$','$V=7{,}79\\,\\text{m}^3$','$V=6{,}79\\,\\text{m}^3$'], ans: 3 },
+      { q: '$V = \\pi r^2 h = 8$, $r=1{,}2$. Bestem $h$.',
+        opts: ['$h=1{,}88\\,\\text{m}$','$h=1{,}77\\,\\text{m}$','$h=3{,}05\\,\\text{m}$','$h=4{,}5\\,\\text{m}$'], ans: 1 },
+      { q: '$W = L \\cdot B \\cdot H \\cdot 2400$ med $L=2{,}5$, $B=1{,}2$, $H=0{,}8$. Kan fundamentet bruges (max 5000 kg)?',
+        opts: ['Ja, 4900 kg < 5000 kg','Ja, præcis 5000 kg','Nej, 5550 kg > 5000 kg','Nej, 5760 kg > 5000 kg'], ans: 3 }
     ]
   },
 
@@ -1054,6 +1137,141 @@ const ALL_QUIZ_DATA = {
         opts: ['5 år','6,6 år','10 år','2 år'], ans: 1 },
       { q: 'En investering vokser fra 5000 til 6655 på 3 år. Hvad er den årlige vækstrate?',
         opts: ['5%','8%','10%','15%'], ans: 2 }
+    ],
+    // S0: PROCENTBEGREBET item 2 — omregning (nemmat.dk)
+    '0-2': [
+      { q: 'Omregn 25% til decimaltal',
+        opts: ['$0{,}30$','$0{,}25$','$0{,}45$','$0{,}2$'], ans: 1 },
+      { q: 'Omregn 75% til decimaltal',
+        opts: ['$0{,}75$','$\\frac{3}{4}$','$0{,}7$','$\\frac{75}{100}$'], ans: 0 },
+      { q: 'Omregn 12,5% til et decimaltal',
+        opts: ['$0{,}12$','$0{,}2$','$1{,}25$','$0{,}125$'], ans: 3 },
+      { q: 'Omregn 20% til en brøk (simpleste form)',
+        opts: ['$\\frac{3}{4}$','$\\frac{1}{5}$','$0{,}2$','$\\frac{20}{100}$'], ans: 1 },
+      { q: 'Omregn 50% til en brøk (simpleste form)',
+        opts: ['$\\frac{3}{6}$','$\\frac{1}{2}$','$\\frac{5}{10}$','$\\frac{50}{100}$'], ans: 1 },
+      { q: 'Omregn 0,75 til procent',
+        opts: ['$73\\%$','$7\\%$','$75\\%$','$80\\%$'], ans: 2 },
+      { q: 'Omregn $\\frac{1}{5}$ til procent',
+        opts: ['$25\\%$','$20\\%$','$10\\%$','$30\\%$'], ans: 1 },
+      { q: 'Omregn 1,25 til procent',
+        opts: ['$0{,}125\\%$','$1{,}25\\%$','$12{,}5\\%$','$125\\%$'], ans: 3 },
+      { q: 'Omregn $\\frac{1}{10}$ til procent',
+        opts: ['$0{,}1\\%$','$15\\%$','$10\\%$','$1\\%$'], ans: 2 },
+      { q: 'Omregn 2 til procent',
+        opts: ['$200\\%$','$159\\%$','$100\\%$','$160\\%$'], ans: 0 }
+    ],
+    // S1: TILVÆKST item 3 (FIB q1 skipped) (nemmat.dk)
+    '1-3': [
+      { q: 'Et træ var 150 cm højt. I år er det 165 cm. Hvad er den absolutte tilvækst?',
+        opts: ['$2$','$10$','$5$','$15$'], ans: 3 },
+      { q: 'En medarbejder: løn stiger fra 25.000 til 26.250 kr. Hvad er den relative tilvækst?',
+        opts: ['$6\\%$','$5\\%$','$4\\%$','$3\\%$'], ans: 1 },
+      { q: 'En mobiltelefon: pris falder fra 10.000 til 8.500 kr. Hvad er den absolutte tilvækst?',
+        opts: ['$-1500$','$-1200$','$-1100$','$-1000$'], ans: 0 },
+      { q: 'En løbekonkurrence: 400 deltagere sidste år, 320 i år. Hvad er den relative tilvækst?',
+        opts: ['$-5\\%$','$10\\%$','$-10\\%$','$-20\\%$'], ans: 3 }
+    ],
+    // S2: FREMSKRIVNINGSFAKTOR item 3 (nemmat.dk)
+    '2-3': [
+      { q: 'En biograf sætter priser op med 8%. En billet kostede 120 kr. Beregn den nye pris med fremskrivningsfaktor.',
+        opts: ['$129{,}60\\text{ kr}$','$130\\text{ kr}$','$112\\text{ kr}$','$128{,}00\\text{ kr}$'], ans: 0 },
+      { q: 'Du får 5% lønforhøjelse. Din løn var 25.000 kr. Beregn din nye løn.',
+        opts: ['$25.450\\text{ kr}$','$27.450\\text{ kr}$','$26.250\\text{ kr}$','$28.540\\text{ kr}$'], ans: 2 },
+      { q: 'En mobiltelefon falder 12% i pris. Prisen var 6.000 kr. Beregn ny pris med fremskrivningsfaktor.',
+        opts: ['$6.000\\text{ kr}$','$5.400\\text{ kr}$','$5.280\\text{ kr}$','$5.540\\text{ kr}$'], ans: 2 },
+      { q: 'Du har 10.000 kr. med 2% rente. Beregn beløbet efter ét år med fremskrivningsfaktor.',
+        opts: ['$10.350\\text{ kr}$','$11.450\\text{ kr}$','$10.200\\text{ kr}$','$10.900\\text{ kr}$'], ans: 2 },
+      { q: 'En liter mælk koster 12 kr. Priser stiger 3% om året. Beregn prisen efter ét år.',
+        opts: ['$11{,}95\\text{ kr}$','$12{,}36\\text{ kr}$','$13\\text{ kr}$','$12{,}50\\text{ kr}$'], ans: 1 }
+    ],
+    // S3: SLUTKAPITAL item 2 (nemmat.dk)
+    '3-2': [
+      { q: '10.000 kr. indsættes til 2,5% p.a. Hvad er beløbet efter 5 år?',
+        opts: ['$10.500{,}38\\text{ kr}$','$11.000\\text{ kr}$','$11.314{,}08\\text{ kr}$','$12.000\\text{ kr}$'], ans: 2 },
+      { q: 'En aktie vokser med 12% hvert år i 4 år. Startkursen var 780. Hvad er kursen efter 4 år?',
+        opts: ['$1227{,}35$','$1225{,}54$','$1350{,}39$','$1425{,}45$'], ans: 0 },
+      { q: 'Fridas forældre sætter 40.000 kr. ind til 3,3% p.a. Frida hæver dem som 18-årig. Hvor mange penge?',
+        opts: ['$89.563{,}25\\text{ kr}$','$71.757{,}25\\text{ kr}$','$72.589{,}60\\text{ kr}$','$75.000\\text{ kr}$'], ans: 1 },
+      { q: 'Niklas har 63.385 kr. til 2,9% p.a. i 7 år. Hvad er beløbet?',
+        opts: ['$78.956{,}30\\text{ kr}$','$75.000\\text{ kr}$','$76.000\\text{ kr}$','$77.427{,}30\\text{ kr}$'], ans: 3 },
+      { q: 'Adam indsætter 35.000 kr. til 5% i 3 år, derefter 6% til han fylder 30 (fra 18). Hvad hæver han?',
+        opts: ['$71.456{,}30\\text{ kr}$','$70.350{,}50\\text{ kr}$','$68.452{,}41\\text{ kr}$','$71.328{,}30\\text{ kr}$'], ans: 2 }
+    ],
+    // S3: STARTBELØB item 4 (nemmat.dk)
+    '3-4': [
+      { q: 'Lukas har 25.000 kr. efter 3 år til 2% p.a. Hvad var startbeløbet?',
+        opts: ['$22.534{,}04\\text{ kr}$','$23.000{,}05\\text{ kr}$','$23.558{,}06\\text{ kr}$','$25.000\\text{ kr}$'], ans: 2 },
+      { q: 'Sara: 5.600 kr. efter 4 år til 3,5% p.a. Hvad satte forældrene ind?',
+        opts: ['$4.800{,}05\\text{ kr}$','$4.880{,}08\\text{ kr}$','$5.200{,}50\\text{ kr}$','$5.400{,}25\\text{ kr}$'], ans: 1 },
+      { q: 'Simon: 90.000 kr. efter 6 år til 4% p.a. Hvad var startbeløbet?',
+        opts: ['$70.837{,}35\\text{ kr}$','$71.128{,}31\\text{ kr}$','$72.837{,}45\\text{ kr}$','$73.837{,}50\\text{ kr}$'], ans: 1 },
+      { q: 'Maria: 12.000 kr. efter 2 år til 1,8% p.a. Hvad var det oprindelige beløb?',
+        opts: ['$11.579{,}39\\text{ kr}$','$12.200{,}55\\text{ kr}$','$12.500{,}45\\text{ kr}$','$12.700{,}38\\text{ kr}$'], ans: 0 },
+      { q: 'Jonas: 7.350 kr. efter 5 år til 2,75% p.a. Hvad var startbeløbet?',
+        opts: ['$6.300{,}86\\text{ kr}$','$6.000{,}05\\text{ kr}$','$6.600{,}49\\text{ kr}$','$6.417{,}68\\text{ kr}$'], ans: 3 }
+    ],
+    // S3: RENTEBESTEMMELSE item 6 (nemmat.dk)
+    '3-6': [
+      { q: '14.000 kr. vokser til 25.400 kr. på 9 år. Hvad er den årlige rente?',
+        opts: ['$6{,}84\\%$','$6{,}54\\%$','$9{,}34\\%$','$6{,}10\\%$'], ans: 0 },
+      { q: 'Et hus stiger fra 850.000 til 2.200.000 kr. på 7 år. Hvad er den årlige stigning?',
+        opts: ['$14{,}04\\%$','$16{,}25\\%$','$13{,}65\\%$','$14{,}55\\%$'], ans: 3 },
+      { q: 'Nanna: 3.000 kr. vokser til 8.000 kr. på 5 år. Hvad er den årlige rente?',
+        opts: ['$21{,}67\\%$','$21{,}56\\%$','$22{,}79\\%$','$20{,}35\\%$'], ans: 0 },
+      { q: 'David: 10.000 kr. skal fordobles på 12 år. Hvilken rente kræves?',
+        opts: ['$9{,}65\\%$','$8{,}30\\%$','$5{,}95\\%$','$5{,}54\\%$'], ans: 2 },
+      { q: '15.000 kr. vokser til 18.976,95 kr. på 5 år. Hvad er den årlige rente?',
+        opts: ['$4{,}82\\%$','$4{,}24\\%$','$4{,}00\\%$','$4{,}83\\%$'], ans: 0 }
+    ],
+    // S3: ANTAL TERMINER item 8 (nemmat.dk)
+    '3-8': [
+      { q: '10.000 kr. til 5% p.a. Hvor mange år skal der gå, før beløbet er 12.155 kr.?',
+        opts: ['$2$','$3$','$4$','$5$'], ans: 2 },
+      { q: '5.000 kr. til 6% p.a. Hvor mange år går der, før pengene er fordoblet?',
+        opts: ['$11$','$12$','$13$','$15$'], ans: 1 },
+      { q: '15.000 kr. til 3% p.a. Hvor mange terminer inden du når 18.000 kr.?',
+        opts: ['$5$','$6$','$7$','$8$'], ans: 2 },
+      { q: '20.000 kr. til 4% p.a. Efter hvor mange år er beløbet ca. 24.320 kr.?',
+        opts: ['$3$','$4$','$5$','$6$'], ans: 2 },
+      { q: '150.000 kr. til 2,5% p.a. Hvor mange terminer til 200.000 kr.?',
+        opts: ['$10$','$11$','$12$','$13$'], ans: 2 }
+    ],
+    // S3: VÆKSTRATE SAMMENLIGNING item 10 (nemmat.dk)
+    '3-10': [
+      { q: 'Du skal vælge et mobilabonnement. Abonnement A: 2,5% pr. måned. Abonnement B: 28% om året. Hvilket er billigst på årsbasis?',
+        opts: ['De koster det samme','Abonnement B','Abonnement A','Det kan ikke beregnes'], ans: 1 },
+      { q: 'Emma overvejer to lån. Lån A: 2,5% pr. måned. Lån B: 28% om året. Hvilket lån er billigst?',
+        opts: ['Lån A, hun sparer 0 kr.','Lån B, hun sparer ca. 2,65% rente','Lån A, hun sparer ca. 2%','De koster det samme'], ans: 1 },
+      { q: 'Du indsætter 5.000 kr. Konto A giver 12% effektiv rente, Konto B 12% nominel rente. Hvad giver mest efter 1 år?',
+        opts: ['Konto A: 5.634,13 kr.','Konto B: 5.600,00 kr.','Konto A og B giver det samme','Konto B: 5.634,13 kr.'], ans: 0 },
+      { q: 'Butik A tilbyder 2,5% pr. måned. Butik B tilbyder 28% om året. Hvilken er billigst?',
+        opts: ['Butik A, fordi 2,5% pr. måned er lavere','Butik B, fordi 28% < effektiv rente 34,49% fra Butik A','De koster det samme','Det afhænger af beløbet'], ans: 1 },
+      { q: 'Udbyder A: 3% pr. måned. Udbyder B: 42% om året. Hvilken streamingtjeneste er billigst?',
+        opts: ['Udbyder A, fordi 3% pr. måned er lavere','Udbyder B, fordi årlig rente < effektiv rente 42,58% fra Udbyder A','De koster det samme','Udbyder A, fordi samlet rente ikke overstiger 36%'], ans: 1 }
+    ],
+    // S4: EKSAMENSØVELSER item 0 (FIB q9 skipped) (nemmat.dk)
+    '4-0': [
+      { q: 'Emma indsætter 7.500 kr. til 2,5% p.a. Beregn hendes opsparing efter 6 år.',
+        opts: ['ca. 8.700 kr.','ca. 8.698 kr.','ca. 8.800 kr.','ca. 9.000 kr.'], ans: 1 },
+      { q: 'Emma: 7.500 kr. til 2,5% p.a. Hvor mange år inden opsparingen når 10.000 kr.?',
+        opts: ['ca. 11 år','ca. 12 år','ca. 13 år','ca. 14 år'], ans: 1 },
+      { q: 'Caroline indsætter 100.000 kr. til 5% p.a. Hvad er opsparingen værd efter 10 år?',
+        opts: ['$139.899\\text{ kr.}$','$150.000\\text{ kr.}$','$180.000\\text{ kr.}$','$162.889\\text{ kr.}$'], ans: 3 },
+      { q: 'Caroline: 100.000 kr. til 5% p.a. Hvor mange år til beløbet er fordoblet?',
+        opts: ['20 år','13,5 år','14,21 år','16 år'], ans: 2 },
+      { q: '15.000 kr. vokser til 17.349 kr. på 7 år. Bestem den faste årlige rente.',
+        opts: ['$10\\%$','$2\\%$','$6\\%$','$7\\%$'], ans: 1 },
+      { q: 'En skitur koster 10.000 kr. om 4 år. Renten er 2% p.a. Hvad skal indsættes nu?',
+        opts: ['$9.000\\text{ kr.}$','$8.676{,}98\\text{ kr.}$','$9.500\\text{ kr.}$','$9.238{,}45\\text{ kr.}$'], ans: 3 },
+      { q: 'Bank A: 2% pr. måned. Bank B: 24% om året. Hvilken er mest attraktiv for din investering?',
+        opts: ['Bank B, da Bank A svarer til 23% i årlig rente','Det afhænger af beløbet','Bank A, da de svarer til ca. 27% i årlig rente','Begge banker svarer til 24% om året'], ans: 2 },
+      { q: 'Beløbet på en konto beskrives ved $K = 5000 \\cdot 1{,}05^n$. Hvad er den årlige procentvise rente?',
+        opts: ['$5\\%$','$5000\\%$','$1{,}05\\%$','$150\\%$'], ans: 0 },
+      { q: 'Maria og Emil: løs $15000 \\cdot 1{,}03^x = 18000 \\cdot 1{,}02^x$',
+        opts: ['$x=18$','$x=16{,}5$','$x=18{,}7$','$x=18{,}5$'], ans: 2 },
+      { q: 'Løsningen på ligningen er $x = 18{,}7$. Hvad fortæller dette?',
+        opts: ['Maria og Emil har 0 kr. efter 18,7 år','Emil har mere end Maria efter 18,7 år','Maria og Emil har samme beløb på kontoen efter 18,7 år','Maria har mere end Emil efter 18,7 år'], ans: 2 }
     ]
   },
 
