@@ -1698,6 +1698,70 @@ const ALL_QUIZ_DATA = {
         opts: ['12','13','14','15'], ans: 1 },
       { q: 'Hvad er typetallet (mode) for [3, 5, 5, 7, 3, 5, 2]?',
         opts: ['3','5','7','2'], ans: 1 }
+    ],
+    '2-2': [
+      { q: 'En webshop registrerer profit per produkt: $200,300,200,400,300,300,200,200,400,300$. Procentdel med profit $200$?',
+        opts: ['$25\\%$','$30\\%$','$35\\%$','$40\\%$'], ans: 3 },
+      { q: 'Bagerbutik: $12,18,12,12,15,18,12,15$. Procentdel af varer med profit $12$?',
+        opts: ['$40\\%$','$50\\%$','$45\\%$','$60\\%$'], ans: 1 },
+      { q: 'Yndlingsfag: Mat,Dansk,Mat,Mat,Eng,Dansk,Mat,Dansk,Mat,Eng. Frekvens for Matematik?',
+        opts: ['$30\\%$','$40\\%$','$50\\%$','$70\\%$'], ans: 2 },
+      { q: 'Kantinesnacks: Chips,Frugt,Chips,Chokolade,Chips,Chips,Frugt,Chips. Frekvens for Frugt?',
+        opts: ['$45\\%$','$50\\%$','$20\\%$','$25\\%$'], ans: 3 },
+      { q: 'Lektietimer: $2,3,2,4,3,2,5,3,2,4,3$. Frekvens for $4$?',
+        opts: ['$15\\%$','$\\approx 18\\%$','$30\\%$','$35\\%$'], ans: 1 }
+    ],
+    '3-2': [
+      { q: 'Datasæt: $100,150,200,250,300,350,400,450,500$. Bestem øvre kvartil $Q_3$.',
+        opts: ['$250$','$425$','$400$','$300$'], ans: 1 },
+      { q: 'Løbertider (sorteret): $185,190,195,200,210,215,225,230,240$. Bestem kvartilsættet.',
+        opts: ['$Q_1=192{,}5,\\ Q_2=210,\\ Q_3=227{,}5$','$Q_1=192{,}5,\\ Q_2=220,\\ Q_3=227{,}5$','$Q_1=200,\\ Q_2=210,\\ Q_3=227{,}5$','$Q_1=192{,}5,\\ Q_2=210,\\ Q_3=210$'], ans: 0 },
+      { q: 'Karakterer: $2,4,7,7,7,10,10,12,12,12,12$. Boksplot: min=2, $Q_1=?$, max=12.',
+        opts: ['$Q_1=4$','$Q_1=10$','$Q_1=7$','$Q_1=12$'], ans: 2 },
+      { q: 'By A (median 15°C) og By B (median 18°C). Hvad kan konkluderes fra boksplottene?',
+        opts: ['By B er varmere på de fleste dage','By A er varmere på de fleste dage','Ingen forskel','Det kan ikke afgøres'], ans: 0 }
+    ],
+    '4-3': [
+      { q: 'Cyklede km: $12,15,14,10,11,13,15$. Hvad er middelværdien?',
+        opts: ['$12{,}5$','$13$','$13{,}5$','$14$'], ans: 1 },
+      { q: 'Karakterer: $4,7,7,10,2,12,7,10,7,4$. Hvad er gennemsnittet?',
+        opts: ['$6{,}5$','$7{,}0$','$7{,}5$','$8{,}0$'], ans: 1 },
+      { q: 'Hvornår er middelværdi (gennemsnit) og median ens?',
+        opts: ['Aldrig','Kun ved 2 observationer','Når datasættet er symmetrisk fordelt','Altid'], ans: 2 },
+      { q: 'I et boksplot udgør "boksen" (fra $Q_1$ til $Q_3$):',
+        opts: ['De midterste 25% af data','De midterste 50% af data','De midterste 75% af data','Al data'], ans: 1 }
+    ],
+    '5-5': [
+      { q: 'I et frekvenshistogram for klassedelte data: hvad viser y-aksen?',
+        opts: ['De præcise observationsværdier','Frekvens (hyppighed) per interval','Kumuleret sum','Alle observationer'], ans: 1 },
+      { q: 'Interval $[10; 20[$. Hvilken observation tilhører dette interval?',
+        opts: ['$9$','$10$','$20$','$25$'], ans: 1 },
+      { q: 'Turistdata: interval [30-39] har frekvens 30% og kumuleret frekvens 60%. Hvad betyder "60%"?',
+        opts: ['30% af turisterne er i [30-39]','60% er i [30-39]','60% af turisterne er under 40 år','40% er over 30 år'], ans: 2 },
+      { q: 'Klasse: lektietimer fordelt i intervaller. Interval [2;4[ har 8 ud af 20 elever. Frekvensen er:',
+        opts: ['$8\\%$','$20\\%$','$40\\%$','$4\\%$'], ans: 2 }
+    ],
+    '6-4': [
+      { q: 'Karakterer: $2,4,4,7,8,10,12,12,20$. Er 20 en outlier ($Q_1=4$, $Q_3=12$, $IQR=8$)?',
+        opts: ['Ja, grænse er $Q_3+1{,}5\\cdot IQR=24>20$ — nej, men tæt på','Ja, 20 er en outlier ifølge kurset','Nej, 20 er ikke en outlier','Kun hvis $n>10$'], ans: 1 },
+      { q: 'Skærmtid: $1,2,2,3,3,3,4,5,6,10$. $Q_1=2$, $Q_3=5$, $IQR=3$. Er 10 en outlier?',
+        opts: ['Ja, øvre grænse $= 5+1{,}5\\cdot 3=9{,}5 < 10$','Nej, 10 er indenfor grænsen','Kun hvis $n>15$','Det kan ikke afgøres'], ans: 0 },
+      { q: 'Standardafvigelse $s=0$ betyder:',
+        opts: ['Gennemsnittet er 0','Alle observationer er ens','Datasættet har mange outliers','Variansen er negativ'], ans: 1 },
+      { q: 'Hvad er variansen, hvis $s=4$?',
+        opts: ['$2$','$4$','$8$','$16$'], ans: 3 }
+    ],
+    '7-1': [
+      { q: 'Datasæt: $5,8,8,9,10,12,15$. Median?',
+        opts: ['$8$','$9$','$10$','$12$'], ans: 1 },
+      { q: 'Datasæt: $5,8,8,9,10,12,15$. $Q_1$?',
+        opts: ['$5$','$8$','$9$','$10$'], ans: 1 },
+      { q: 'Datasæt: $5,8,8,9,10,12,15$. $Q_3$?',
+        opts: ['$10$','$11$','$12$','$15$'], ans: 1 },
+      { q: 'Gennemsnit af $5,8,8,9,10,12,15$?',
+        opts: ['$9$','$9{,}57$','$10$','$8{,}5$'], ans: 1 },
+      { q: 'Er middeltallet altid lig medianen?',
+        opts: ['Ja, altid','Nej — middeltallet påvirkes mere af ekstreme værdier','Kun ved store datasæt','Kun ved ulige antal observationer'], ans: 1 }
     ]
   },
 
