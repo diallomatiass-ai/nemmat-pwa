@@ -2202,6 +2202,72 @@ const ALL_QUIZ_DATA = {
         opts: ['Lokalt minimum','Lokalt maksimum','Infleksionspunkt','Asymptote'], ans: 1 },
       { q: 'Maksimum af $f(x) = -x^2 + 6x - 5$:',
         opts: ['$f = 3$','$f = 4$','$f = 5$','$f = 6$'], ans: 1 }
+    ],
+    '5-2': [
+      { q: '$f\'(x) > 0$ på et interval — $f$ er:',
+        opts: ['Faldende','Konstant','Voksende','Har minimum'], ans: 2 },
+      { q: '$f\'(x) < 0$ på et interval — $f$ er:',
+        opts: ['Voksende','Faldende','Konstant','Har maksimum'], ans: 1 },
+      { q: 'Find de stationære punkter for $f(x) = x^2 - 6x + 5$',
+        opts: ['$x = 3$','$x = 5$','$x = 1$','$x = 0$'], ans: 0 },
+      { q: '$f(x) = x^3 - 3x^2$. Find stationære punkter',
+        opts: ['$x = 0$ og $x = 2$','$x = 1$ og $x = 3$','$x = 0$ og $x = 3$','$x = -1$ og $x = 2$'], ans: 0 },
+      { q: '$f(x) = x^3 - 3x^2$: er $x = 0$ et lokalt maksimum eller minimum?',
+        opts: ['Lokalt minimum','Lokalt maksimum','Infleksionspunkt','Ingen af delene'], ans: 1 },
+      { q: 'Fortegnsskema: $f\'(x)$ skifter fra $-$ til $+$ i $x=2$. Hvad er $x=2$?',
+        opts: ['Lokalt maksimum','Infleksionspunkt','Lokalt minimum','Skæring med $x$-aksen'], ans: 2 },
+      { q: '$f(x) = -x^2 + 4x$: på hvilket interval er $f$ voksende?',
+        opts: ['$x > 2$','$x < 2$','$x > 4$','$x < 0$'], ans: 1 },
+      { q: 'Hvad bruger man til at bestemme $f$\'s monotoniforhold?',
+        opts: ['$f(x) = 0$','$f\'(x) = 0$ og fortegnsskema for $f\'(x)$','$f\'\'(x)$','Nulpunkterne for $f$'], ans: 1 },
+      { q: '$f(x) = x^3$: $f\'(x) = 3x^2 \geq 0$ for alle $x$. Hvad betyder det?',
+        opts: ['$f$ er faldende overalt','$f$ er voksende overalt','$f$ har et minimum i $x=0$','$f$ er konstant'], ans: 1 },
+      { q: 'Find intervaller hvor $f(x) = x^3 - 12x$ er voksende',
+        opts: ['$x < -2$ og $x > 2$','$-2 < x < 2$','$x > 0$','$x < 0$'], ans: 0 },
+      { q: '$f(x) = -2x^2 + 8x - 3$: hvornår er $f$ faldende?',
+        opts: ['$x < 2$','$x > 2$','$x > 4$','$x < 0$'], ans: 1 }
+    ],
+    '6-1': [
+      { q: 'Hvad er formålet med optimering?',
+        opts: ['At differentiere en funktion','At finde det størst eller mindst mulige af en størrelse','At løse en ligning','At tegne grafen'], ans: 1 },
+      { q: 'Hvilken betingelse gælder altid for et stationært punkt?',
+        opts: ['$f(x) = 0$','$f\'\'(x) = 0$','$f\'(x) = 0$','$f(x) = f\'(x)$'], ans: 2 },
+      { q: '$f(x) = -x^2 + 10x$. Find maksimum',
+        opts: ['$f(5) = 25$','$f(5) = 20$','$f(10) = 0$','$f(0) = 0$'], ans: 0 },
+      { q: 'Et rektangel har fast omkreds 40 cm. Hvad er bredden der giver max areal?',
+        opts: ['$b = 5$','$b = 8$','$b = 10$','$b = 20$'], ans: 2 },
+      { q: 'Rektangel med omkreds 40: max areal er:',
+        opts: ['$50\\text{ cm}^2$','$75\\text{ cm}^2$','$100\\text{ cm}^2$','$200\\text{ cm}^2$'], ans: 2 },
+      { q: '$f(x) = x^3 - 6x^2 + 9x + 1$ på $[0,4]$. Lokalt max ved:',
+        opts: ['$x = 1$','$x = 2$','$x = 3$','$x = 4$'], ans: 0 },
+      { q: 'Hvornår skal man undersøge randpunkter ved optimering?',
+        opts: ['Aldrig','Kun ved minimum','Når $f$ er defineret på et lukket interval $[a,b]$','Kun når $f\'\'(x)>0$'], ans: 2 },
+      { q: '$f(x) = 2x^3 - 9x^2 + 12x$. Find lokalt minimum',
+        opts: ['$x = 1$','$x = 2$','$x = 3$','$x = 0$'], ans: 1 },
+      { q: 'En boks (uden låg) laves af en 24×24 kvadrat. Hjørnerne klippes $x$. Max volumen ved:',
+        opts: ['$x = 2$','$x = 3$','$x = 4$','$x = 6$'], ans: 2 },
+      { q: 'Fortolkning: $f\'(x_0) = 0$ og $f\'\'(x_0) > 0$ — hvad er $x_0$?',
+        opts: ['Lokalt maksimum','Infleksionspunkt','Lokalt minimum','Intet stationært punkt'], ans: 2 }
+    ],
+    '7-1': [
+      { q: 'Væksthastighed for $f$ i $x_0$ er:',
+        opts: ['$f(x_0)$','$f\'(x_0)$','$f\'\'(x_0)$','$\\frac{f(x_0)}{x_0}$'], ans: 1 },
+      { q: '$f(t) = 500 \\cdot 1{,}03^t$ (kr/år). Væksthastighed i $t=0$?',
+        opts: ['Ca. $14{,}4$ kr/år','Ca. $500$ kr/år','Ca. $1{,}03$ kr/år','Ca. $50$ kr/år'], ans: 0 },
+      { q: '$f(x) = x^2 + 3x$. Øjeblikkelig væksthastighed i $x=2$:',
+        opts: ['$7$','$10$','$4$','$3$'], ans: 0 },
+      { q: 'Hvad fortæller en negativ væksthastighed?',
+        opts: ['Funktionen vokser','Funktionen er konstant','Funktionen aftager','Funktionen er nul'], ans: 2 },
+      { q: 'En populations størrelse er $P(t) = 1000 + 5t^2$. Vækstrate i $t=3$:',
+        opts: ['$15$ individer/år','$30$ individer/år','$45$ individer/år','$5$ individer/år'], ans: 1 },
+      { q: '$f(x) = \\ln(x)$. Væksthastighed i $x=5$:',
+        opts: ['$5$','$\\ln(5)$','$\\frac{1}{5}$','$\\frac{1}{\\ln 5}$'], ans: 2 },
+      { q: 'Hvad er enhederne for væksthastighed hvis $f(t)$ måler kr og $t$ måler år?',
+        opts: ['Kr','År','Kr per år','Kr per kr'], ans: 2 },
+      { q: '$f\'(x) = 0$ betyder at:',
+        opts: ['Funktionen er nul','Væksthastigheden er nul (stationært punkt)','Funktionen vokser maksimalt','Funktionen ikke er differentiabel'], ans: 1 },
+      { q: 'Gennemsnitlig væksthastighed fra $x=1$ til $x=3$ for $f(x)=x^2$ er:',
+        opts: ['$2$','$3$','$4$','$6$'], ans: 2 }
     ]
   }
 };
@@ -2853,6 +2919,19 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
           <div class="quiz-feedback ${answered === q.ans ? 'feedback-correct' : 'feedback-wrong'}">
             ${answered === q.ans ? '✅ Korrekt!' : `❌ Forkert. Svaret er: ${q.opts[q.ans]}`}
           </div>
+          ${q.ytId ? `
+          <div class="quiz-explanation-video">
+            <div class="quiz-explanation-label">📹 Forklaring</div>
+            <div class="quiz-video-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/${q.ytId}?rel=0&modestbranding=1"
+                title="Forklaring"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>` : ''}
           <button class="btn-quiz-next" onclick="nextQuizQuestion()">
             ${quizState.current < total - 1 ? 'Næste spørgsmål →' : 'Se resultat →'}
           </button>` : ''}
