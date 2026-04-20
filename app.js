@@ -521,8 +521,7 @@ const DIFFERENTIAL_CURRICULUM = [
   ]},
   { title: '2. 3-trins metoden og Grænseværdi', items: [
     { type: 'lesson', title: 'Teori – 3-trins metoden', dur: '6 min', ytId: '9YODXFNkwco' },
-    { type: 'lesson', title: 'Teori – Grænseværdi', dur: '5 min', ytId: 'O29TgeO5JiM' },
-    { type: 'quiz',   title: 'Test dig selv', dur: '5 spørgsmål' }
+    { type: 'lesson', title: 'Teori – Grænseværdi', dur: '5 min', ytId: 'O29TgeO5JiM' }
   ]},
   { title: '3. Afledte funktioner og tangenthældning', items: [
     { type: 'lesson', title: 'Teori – Afledte funktioner og tangenthældning', dur: '6 min', ytId: 'hToGdQQMmbU' },
@@ -780,6 +779,7 @@ const ALL_CURRICULA = {
   '10-tals-logaritme': LOG_CURRICULUM,
   'andengradspolynomier-hf': ANDENGRADS_CURRICULUM,
   'differentialregning-hf-b': DIFFERENTIAL_CURRICULUM,
+  'vektorer-i-planen-stx-a': VEKTORER_CURRICULUM,
 };
 
 // ── ALLE QUIZ-DATA (slug → {key → spørgsmål}) ──
