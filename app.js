@@ -2753,6 +2753,25 @@ function renderLessonViewer() {
   let contentHtml;
   if (isQuiz && quizQuestions) {
     contentHtml = renderQuizContent(quizQuestions, sec, item, alreadyDone);
+  } else if (isQuiz) {
+    contentHtml = `
+    <div class="lesson-content-body" style="max-width:720px;margin:40px auto;text-align:center">
+      <div class="lesson-breadcrumb-mini">📚 ${sec.title}</div>
+      <h2>${item.title}</h2>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:24px;margin:24px 0;text-align:left">
+        <div style="font-weight:600;color:#9a3412;margin-bottom:8px">📝 Eksamens-forberedelse</div>
+        <p style="color:#7c2d12;margin:0 0 12px 0">Denne quiz består af officielle eksamensopgaver med eksterne figurer og gengives derfor ikke i appen.</p>
+        <p style="color:#7c2d12;margin:0"><strong>Tip:</strong> Øv disse opgaver direkte på <a href="https://nemmat.dk" target="_blank" rel="noopener" style="color:#356df1">nemmat.dk</a> eller i det officielle eksamenssæt fra <a href="https://emu.dk" target="_blank" rel="noopener" style="color:#356df1">emu.dk</a>.</p>
+      </div>
+    </div>
+    <div class="lesson-complete-area">
+      <button id="btn-complete"
+        class="btn-mark-complete${alreadyDone ? ' done' : ''}"
+        onclick="markComplete()"
+        ${alreadyDone ? 'disabled' : ''}>
+        ${alreadyDone ? '✅ Gennemført!' : '✅ Markér som gennemført'}
+      </button>
+    </div>`;
   } else {
     contentHtml = `
     <div class="lesson-video-wrap">
