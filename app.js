@@ -2275,6 +2275,7 @@ const ALL_QUIZ_DATA = {
 // Sæt cross-referencer
 ALL_QUIZ_DATA['tal-og-algebra-b-niveau'] = ALL_QUIZ_DATA['tal-og-algebra'];
 ALL_QUIZ_DATA['eksponentielle-funktioner-stx'] = ALL_QUIZ_DATA['eksponentielle-funktioner'];
+ALL_QUIZ_DATA['statistik-stx-c'] = ALL_QUIZ_DATA['deskriptiv-statistik'];
 ALL_CURRICULA['vektorer-matematik-b-stx-2aar'] = null; // håndteres i getCurriculum
 
 // ── KURS-BESKRIVELSER ──
