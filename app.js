@@ -3836,23 +3836,37 @@ function renderOpret() {
 
 function renderKonto() {
   const flat = [];
+  const perCourse = {};
   for (const [slug, curr] of Object.entries(ALL_CURRICULA)) {
     const c = curr || VEKTORER_CURRICULUM;
     if (!c) continue;
+    perCourse[slug] = { total: 0, done: 0 };
     c.forEach((sec, si) => (sec.items||[]).forEach((it, ii) => {
       flat.push({slug, si, ii});
+      perCourse[slug].total++;
+      if (completedLessons.has(`${slug}:${si}-${ii}`)) perCourse[slug].done++;
     }));
   }
-  // Simple completion tracking via localStorage (scoped per slug)
-  let totalDone = 0;
-  for (const f of flat) {
-    const key = `nemmat_progress_${f.slug}`;
-    try {
-      const d = JSON.parse(localStorage.getItem(key) || '{}');
-      if (d[`${f.si}-${f.ii}`]) totalDone++;
-    } catch(e) {}
-  }
+  const totalDone = Object.values(perCourse).reduce((n,c) => n + c.done, 0);
   const pct = flat.length ? Math.round(100*totalDone/flat.length) : 0;
+  // Top 3 kurser med mest fremgang
+  const allCourses = _allCourses();
+  const topCourses = Object.entries(perCourse)
+    .filter(([_, p]) => p.done > 0)
+    .sort((a, b) => b[1].done - a[1].done)
+    .slice(0, 3)
+    .map(([slug, p]) => {
+      const meta = allCourses.find(c => c.slug === slug) || { title: slug };
+      const cPct = Math.round(100 * p.done / p.total);
+      return `
+        <div class="info-card" onclick="openCourse('${slug}', encodeURIComponent(${JSON.stringify(meta.title)}))" style="cursor:pointer">
+          <h3>${meta.title}</h3>
+          <div class="konto-progress-bar" style="margin:8px 0">
+            <div class="konto-progress-fill" style="width:${cPct}%"></div>
+          </div>
+          <p style="margin:0;color:var(--muted);font-size:14px">${p.done} / ${p.total} (${cPct}%)</p>
+        </div>`;
+    }).join('');
   return `
     ${renderBreadcrumb([{label:'Min konto', page:'konto'}])}
     <div class="info-page">
@@ -3869,6 +3883,10 @@ function renderKonto() {
         </div>
         <div class="konto-progress-pct">${pct}%</div>
       </div>
+      ${topCourses ? `
+      <h2 style="margin-top:32px;font-size:20px">Dine kurser i gang</h2>
+      <div class="info-grid">${topCourses}</div>` : ''}
+      <h2 style="margin-top:32px;font-size:20px">${topCourses ? 'Mere' : 'Kom i gang'}</h2>
       <div class="info-grid">
         <div class="info-card">
           <div class="info-icon">📚</div>
