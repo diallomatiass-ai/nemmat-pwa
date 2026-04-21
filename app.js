@@ -635,6 +635,140 @@ const FUNKTIONER_B_CURRICULUM = [
   ]}
 ];
 
+// ── BEVISER HF (C + B) — ingen scraped, placeholder curriculum ──
+const BEVISER_CURRICULUM = [
+  { title: '1. Introduktion til beviser', items: [
+    { type: 'lesson', title: 'Teori – Hvad er et bevis?', dur: '5 min' }
+  ]},
+  { title: '2. Direkte bevis', items: [
+    { type: 'lesson', title: 'Teori – Direkte bevis', dur: '5 min' }
+  ]},
+  { title: '3. Kontraponeret bevis', items: [
+    { type: 'lesson', title: 'Teori – Kontraposition', dur: '5 min' }
+  ]},
+  { title: '4. Modstridsbevis', items: [
+    { type: 'lesson', title: 'Teori – Modstridsbevis', dur: '5 min' }
+  ]},
+  { title: '5. Induktionsbevis', items: [
+    { type: 'lesson', title: 'Teori – Induktionsbevis', dur: '5 min' }
+  ]}
+];
+
+// ── POTENS-FUNKTIONER HF-B — ingen scraped, placeholder ──
+const POTENS_CURRICULUM = [
+  { title: '1. Potensfunktioner', items: [
+    { type: 'lesson', title: 'Teori – Hvad er en potensfunktion?', dur: '5 min' },
+    { type: 'lesson', title: 'Teori – Grafisk billede', dur: '5 min' }
+  ]},
+  { title: '2. Regneregler', items: [
+    { type: 'lesson', title: 'Teori – Regneregler for potenser', dur: '5 min' }
+  ]},
+  { title: '3. Potensregression', items: [
+    { type: 'lesson', title: 'Teori – Potensregression', dur: '5 min' }
+  ]}
+];
+
+// ── SANDSYNLIGHED OG STATISTIK B-NIVEAU — ingen scraped, placeholder ──
+const SANDSTAT_B_CURRICULUM = [
+  { title: '1. Stokastiske variable', items: [
+    { type: 'lesson', title: 'Teori – Stokastiske variable', dur: '5 min' }
+  ]},
+  { title: '2. Binomialfordeling', items: [
+    { type: 'lesson', title: 'Teori – Binomialfordeling', dur: '6 min' }
+  ]},
+  { title: '3. Normalfordeling', items: [
+    { type: 'lesson', title: 'Teori – Normalfordeling', dur: '6 min' }
+  ]},
+  { title: '4. Hypotesetest', items: [
+    { type: 'lesson', title: 'Teori – Hypotesetest', dur: '6 min' }
+  ]},
+  { title: '5. Konfidensintervaller', items: [
+    { type: 'lesson', title: 'Teori – Konfidensintervaller', dur: '5 min' }
+  ]}
+];
+
+// ── FUNKTIONS-BEGREBET HF-C (fra scraped data) ──
+const FUNKTIONS_BEGREBET_CURRICULUM = [
+  { title: '1. Hvad er en funktion?', items: [
+    { type: 'lesson', title: 'Teori – Funktionsbegrebet', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '2. Graf og forskrift', items: [
+    { type: 'lesson', title: 'Teori – Graf og forskrift', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Funktioners egenskaber', items: [
+    { type: 'lesson', title: 'Teori – Egenskaber', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '4. Definitions- og værdimængde', items: [
+    { type: 'lesson', title: 'Teori – Definitions- og værdimængde', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '3 spørgsmål' }
+  ]},
+  { title: '5. Eksamensforberedelse', items: [
+    { type: 'quiz',   title: 'Eksamensøvelser', dur: '7 spørgsmål' }
+  ]}
+];
+
+// ── ANNUITETSREGNING HF-B (fra scraped data) ──
+const ANNUITETSREGNING_CURRICULUM = [
+  { title: '1. Annuitetsopsparing', items: [
+    { type: 'lesson', title: 'Teori – Annuitetsopsparing', dur: '6 min' },
+    { type: 'quiz',   title: 'Øvelser om AnnuitetsOpsparing', dur: '10 spørgsmål' }
+  ]},
+  { title: '2. Annuitetslån', items: [
+    { type: 'lesson', title: 'Teori – Annuitetslån', dur: '6 min' },
+    { type: 'quiz',   title: 'Øvelser om AnnuitetsLån', dur: '11 spørgsmål' }
+  ]}
+];
+
+// ── LIGNINGER OG FORMLER STX-C (fra scraped data) ──
+const LIGNINGER_STX_CURRICULUM = [
+  { title: '1. Introduktion til ligninger', items: [
+    { type: 'lesson', title: 'Teori – Ligningsløsning', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt: Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '2. Lineære ligninger', items: [
+    { type: 'lesson', title: 'Teori – Lineære ligninger', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '3. Uligheder', items: [
+    { type: 'lesson', title: 'Teori – Uligheder', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '10 spørgsmål' }
+  ]},
+  { title: '4. To ligninger med to ubekendte', items: [
+    { type: 'lesson', title: 'Teori – To ligninger med to ubekendte', dur: '6 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '5. Kvadratsætninger', items: [
+    { type: 'lesson', title: 'Teori – Kvadratsætninger', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '6. Faktorisering', items: [
+    { type: 'lesson', title: 'Teori – Faktorisering', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '7. Nulreglen', items: [
+    { type: 'lesson', title: 'Teori – Nulreglen', dur: '4 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '8. Isolering af variable', items: [
+    { type: 'lesson', title: 'Teori – Isolering af variable', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '7 spørgsmål' }
+  ]},
+  { title: '9. Andengradsligninger', items: [
+    { type: 'lesson', title: 'Teori – Andengradsligninger', dur: '5 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '10. Formelregning', items: [
+    { type: 'lesson', title: 'Teori – Formelregning', dur: '4 min' },
+    { type: 'quiz',   title: 'Læringstelt – Test din forståelse', dur: '4 spørgsmål' }
+  ]},
+  { title: '11. Eksamensforberedelse', items: [
+    { type: 'quiz',   title: 'Gør dig klar til den skriftlige Eksamen!', dur: '10 spørgsmål' }
+  ]}
+];
+
 // ── VEKTORER 2D CURRICULUM (13 sektioner — rigtige data fra nemmat.dk) ──
 const VEKTORER_CURRICULUM = [
   { title: '1. Motivation og Indledning', items: [
@@ -954,7 +1088,22 @@ const ALL_CURRICULA = {
   'differentialregning-hf-b': DIFFERENTIAL_CURRICULUM,
   'analytisk-plan-geometri-hf-b': ANALYTISK_CURRICULUM,
   'funktioner-b-niveau': FUNKTIONER_B_CURRICULUM,
+  'funktions-begrebet': FUNKTIONS_BEGREBET_CURRICULUM,
+  'annuitetsregning': ANNUITETSREGNING_CURRICULUM,
+  'ligninger-og-formlerstx-c': LIGNINGER_STX_CURRICULUM,
+  // STX-C genbruger HF-C curricula (samme pensum)
+  'tal-og-algebrastx-1aar': TAL_ALGEBRA_CURRICULUM,
+  'lineaer-funktion-stx': LINEAER_CURRICULUM,
+  'procent-og-rente-stx': PROCENT_CURRICULUM,
+  // HHX-C genbruger HF-C curricula
+  'tal-hhx-c': TAL_ALGEBRA_CURRICULUM,
+  'ligninger-hhx-c': LIGNINGER_CURRICULUM,
   'vektorer-i-planen-stx-a': VEKTORER_CURRICULUM,
+  // Placeholder curricula (lesson-only — scraped data findes ikke endnu)
+  'beviserhf1': BEVISER_CURRICULUM,
+  'beviser-hf-mat-b': BEVISER_CURRICULUM,
+  'potens-funktioner-hf-b': POTENS_CURRICULUM,
+  'sandstat-b-gym': SANDSTAT_B_CURRICULUM,
 };
 
 // ── ALLE QUIZ-DATA (slug → {key → spørgsmål}) ──
@@ -2682,6 +2831,15 @@ const SCRAPED_SLUG_MAP = {
   'andengradspolynomier-hf': 'andengradspolynomier-hf-b',
   'analytisk-plan-geometri-hf-b': 'analytisk-plan-geometri-hf-b',
   'funktioner-b-niveau': 'funktioner-b-niveau-hf',
+  'funktions-begrebet': 'funktions-begrebet',
+  'annuitetsregning': 'annuitetsregning',
+  'ligninger-og-formlerstx-c': 'ligninger-og-formlerstx-c',
+  // STX/HHX-dubletter genbruger samme scraped-data som HF-C
+  'tal-og-algebrastx-1aar': 'tal-og-algebra-hf-c',
+  'lineaer-funktion-stx': 'lineaer-funktioner-hf-c',
+  'procent-og-rente-stx': 'procent-og-rentesregning',
+  'tal-hhx-c': 'tal-og-algebra-hf-c',
+  'ligninger-hhx-c': 'ligninger-hf-c',
 };
 
 // Returnér quiz-index (0,1,2…) for section-item key ved at tælle forudgående quiz-items i curriculum
