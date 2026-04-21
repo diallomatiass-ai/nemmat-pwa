@@ -2703,18 +2703,59 @@ function _quizIndexFromKey(slug, key) {
   return -1;
 }
 
+function _mapScrapedQuestions(scrapedQuiz) {
+  if (!scrapedQuiz?.questions?.length) return null;
+  const qs = scrapedQuiz.questions
+    .filter(q => q.type === 'single_choice' && q.ans >= 0 && q.opts?.length >= 2)
+    .map(q => ({ q: q.q, opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
+  return qs.length ? qs : null;
+}
+
 function getQuizData(key) {
   const slug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
   // 1. Forsøg scraped data først (nemmat.dk — har videoer)
   const nemmatSlug = SCRAPED_SLUG_MAP[slug];
   if (nemmatSlug && window.SCRAPED_QUIZZES?.[nemmatSlug]) {
-    const qIdx = _quizIndexFromKey(slug, key);
-    const scraped = window.SCRAPED_QUIZZES[nemmatSlug][qIdx];
-    if (scraped && scraped.questions?.length) {
-      return scraped.questions
-        .filter(q => q.type === 'single_choice' && q.ans >= 0 && q.opts?.length >= 2)
-        .map(q => ({ q: q.q, opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
+    const scrapedAll = window.SCRAPED_QUIZZES[nemmatSlug];
+    const [si, ii] = key.split('-').map(Number);
+    const curr = ALL_CURRICULA[slug];
+    const item = curr?.[si]?.items?.[ii];
+    const title = (item?.title || '').toLowerCase();
+
+    // 1a. Title-based: "Eksamensøvelse N" → find scraped med samme nummer
+    const mNum = title.match(/eksamensøvelse\s*(\d+)/i);
+    if (mNum) {
+      const num = parseInt(mNum[1], 10);
+      const match = scrapedAll.find(q => {
+        const m = (q.title || '').match(/eksamensøvelse\s*(\d+)/i);
+        return m && parseInt(m[1], 10) === num;
+      });
+      const mapped = _mapScrapedQuestions(match);
+      if (mapped) return mapped;
     }
+
+    // 1b. Title-based: bundlet eksamens-quiz ("Eksamenspørgsmål", "Gør dig klar til eksamen",
+    //     "Skriftlig forberedelse", "Eksamensøvelser delprøve") → merge alle eksamens-scraped
+    const isBundled = /eksamenspørg|eksamensforbered|gør dig klar.*eksamen|skriftlig|delprøve|eksamensøvelser\b(?!\s*\d)/i.test(title)
+                      || (/eksamen/i.test(title) && !mNum);
+    if (isBundled) {
+      const examQs = [];
+      scrapedAll.forEach(q => {
+        if (/eksamen|delprøve/i.test(q.title || '')) {
+          (q.questions || []).forEach(qq => {
+            if (qq.type === 'single_choice' && qq.ans >= 0 && qq.opts?.length >= 2) {
+              examQs.push({ q: qq.q, opts: qq.opts, ans: qq.ans, ytId: qq.ytId || null });
+            }
+          });
+        }
+      });
+      if (examQs.length) return examQs;
+    }
+
+    // 1c. Default: sequential mapping (fallback)
+    const qIdx = _quizIndexFromKey(slug, key);
+    const mapped = _mapScrapedQuestions(scrapedAll[qIdx]);
+    if (mapped) return mapped;
   }
   // 2. Fallback til hand-written data
   return (ALL_QUIZ_DATA[slug] || QUIZ_DATA)[key] || null;
