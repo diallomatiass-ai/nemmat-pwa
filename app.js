@@ -2439,8 +2439,60 @@ function getCurriculum() {
   ];
 }
 
+// Map PWA-slug → nemmat.dk-slug for scraped-quiz-lookup
+const SCRAPED_SLUG_MAP = {
+  'tal-og-algebra': 'tal-og-algebra-hf-c',
+  'tal-og-algebra-b-niveau': 'tal-og-algebra-b-niveau-hf',
+  'ligninger-1-aar-hf-2': 'ligninger-hf-c',
+  'lineaer-funktioner': 'lineaer-funktioner-hf-c',
+  'ligninger-og-formlerstx-c': 'ligninger-og-formlerstx-c',
+  'eksponentielle-funktioner': 'eksponentielle-funktioner',
+  'eksponentielle-funktioner-stx': 'eksponentielle-funktioner',
+  'funktions-begrebet': 'funktions-begrebet',
+  'geometri-og-trigonometri': 'geometri-og-trigonometri',
+  'sandsynlighedsregning': 'sandsynlighedsregning',
+  '10-tals-logaritme': '10-tals-logaritme',
+  'differentialregning-hf-b': 'differentialregning-hf-b',
+  'annuitetsregning': 'annuitetsregning',
+  'procent-og-rentesregning': 'procent-og-rentesregning',
+  'deskriptiv-statistik': 'deskriptiv-statistik',
+  'statistik-stx-c': 'deskriptiv-statistik',
+  'andengradspolynomier-hf': 'andengradspolynomier-hf-b',
+};
+
+// Returnér quiz-index (0,1,2…) for section-item key ved at tælle forudgående quiz-items i curriculum
+function _quizIndexFromKey(slug, key) {
+  const [si, ii] = key.split('-').map(Number);
+  const curr = ALL_CURRICULA[slug];
+  if (!curr) return -1;
+  let idx = 0;
+  for (let s = 0; s <= si && s < curr.length; s++) {
+    const items = curr[s].items || [];
+    const maxI = (s === si) ? ii : items.length - 1;
+    for (let i = 0; i <= maxI && i < items.length; i++) {
+      if (s === si && i === ii) {
+        return items[i].type === 'quiz' ? idx : -1;
+      }
+      if (items[i].type === 'quiz') idx++;
+    }
+  }
+  return -1;
+}
+
 function getQuizData(key) {
   const slug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
+  // 1. Forsøg scraped data først (nemmat.dk — har videoer)
+  const nemmatSlug = SCRAPED_SLUG_MAP[slug];
+  if (nemmatSlug && window.SCRAPED_QUIZZES?.[nemmatSlug]) {
+    const qIdx = _quizIndexFromKey(slug, key);
+    const scraped = window.SCRAPED_QUIZZES[nemmatSlug][qIdx];
+    if (scraped && scraped.questions?.length) {
+      return scraped.questions
+        .filter(q => q.type === 'single_choice' && q.ans >= 0 && q.opts?.length >= 2)
+        .map(q => ({ q: q.q, opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
+    }
+  }
+  // 2. Fallback til hand-written data
   return (ALL_QUIZ_DATA[slug] || QUIZ_DATA)[key] || null;
 }
 

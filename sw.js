@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nemmat-v7';
+const CACHE_NAME = 'nemmat-v8';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE = [
@@ -6,6 +6,7 @@ const PRECACHE = [
   '/index.html',
   '/style.css',
   '/app.js',
+  '/nemmat-scraped.js',
   '/manifest.json',
   '/offline.html',
   '/icons/icon-192.png',
