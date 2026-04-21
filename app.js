@@ -2863,8 +2863,11 @@ function _quizIndexFromKey(slug, key) {
 
 function _mapScrapedQuestions(scrapedQuiz) {
   if (!scrapedQuiz?.questions?.length) return null;
+  // Understøt single_choice + true_or_false + multi_choice (alle har opts+ans)
   const qs = scrapedQuiz.questions
-    .filter(q => q.type === 'single_choice' && q.ans >= 0 && q.opts?.length >= 2)
+    .filter(q => ['single_choice','true_or_false','multi_choice'].includes(q.type)
+                 && q.ans >= 0
+                 && q.opts?.length >= 2)
     .map(q => ({ q: q.q, opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
   return qs.length ? qs : null;
 }
@@ -2901,7 +2904,8 @@ function getQuizData(key) {
       scrapedAll.forEach(q => {
         if (/eksamen|delprøve/i.test(q.title || '')) {
           (q.questions || []).forEach(qq => {
-            if (qq.type === 'single_choice' && qq.ans >= 0 && qq.opts?.length >= 2) {
+            if (['single_choice','true_or_false','multi_choice'].includes(qq.type)
+                && qq.ans >= 0 && qq.opts?.length >= 2) {
               examQs.push({ q: qq.q, opts: qq.opts, ans: qq.ans, ytId: qq.ytId || null });
             }
           });

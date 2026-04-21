@@ -44,7 +44,7 @@ for (const [slug, curr] of Object.entries(ALL_CURRICULA)) {
     const qIdx = _quizIndexFromKey(slug, `${si}-${ii}`);
     const quiz = SCRAPED[nemmatSlug][qIdx];
     if (!quiz) return;
-    const usable = quiz.questions.filter(q => q.type === 'single_choice' && q.ans >= 0 && q.opts?.length >= 2);
+    const usable = quiz.questions.filter(q => ['single_choice','true_or_false','multi_choice'].includes(q.type) && q.ans >= 0 && q.opts?.length >= 2);
     if (!usable.length) return;
     slugMatched++; matched++;
     slugQ += usable.length; totalQ += usable.length;
