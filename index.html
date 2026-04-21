@@ -73,19 +73,50 @@
       <a href="#" onclick="navigate('stx');closeMobileMenu();return false;">→ STX</a>
       <a href="#" onclick="navigate('hhx');closeMobileMenu();return false;">→ HHX</a>
     </div>
-    <a href="#" onclick="closeMobileMenu();return false;">Institutioner</a>
-    <a href="#" onclick="closeMobileMenu();return false;">Private og Forældre</a>
-    <a href="#" onclick="closeMobileMenu();return false;">Om os</a>
-    <a href="#" onclick="closeMobileMenu();return false;">Kontakt</a>
+    <a href="#" onclick="navigate('institutioner');closeMobileMenu();return false;">Institutioner</a>
+    <a href="#" onclick="navigate('private');closeMobileMenu();return false;">Private og Forældre</a>
+    <a href="#" onclick="navigate('om');closeMobileMenu();return false;">Om os</a>
+    <a href="#" onclick="navigate('kontakt');closeMobileMenu();return false;">Kontakt</a>
     <div class="mobile-menu-btns">
-      <a href="#" class="btn-min-konto" onclick="closeMobileMenu();return false;">Min konto</a>
-      <a href="#" class="btn-opret" onclick="closeMobileMenu();return false;">Opret konto</a>
+      <a href="#" class="btn-min-konto" onclick="navigate('konto');closeMobileMenu();return false;">Min konto</a>
+      <a href="#" class="btn-opret" onclick="navigate('opret');closeMobileMenu();return false;">Opret konto</a>
     </div>
   </div>
 </header>
 
 <!-- ====== MAIN ====== -->
 <main id="app"></main>
+
+<!-- ====== MOBILE BOTTOM NAV ====== -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Hovednavigation">
+  <a href="#" class="bottom-nav-item" data-page="gymnasium" onclick="navigate('gymnasium');return false;">
+    <span class="bottom-nav-icon">🏠</span>
+    <span class="bottom-nav-label">Forside</span>
+  </a>
+  <a href="#" class="bottom-nav-item" data-page="hf" onclick="navigate('hf');return false;">
+    <span class="bottom-nav-icon">📚</span>
+    <span class="bottom-nav-label">Kurser</span>
+  </a>
+  <a href="#" class="bottom-nav-item" data-page="search" onclick="openSearch();return false;">
+    <span class="bottom-nav-icon">🔍</span>
+    <span class="bottom-nav-label">Søg</span>
+  </a>
+  <a href="#" class="bottom-nav-item" data-page="konto" onclick="navigate('konto');return false;">
+    <span class="bottom-nav-icon">👤</span>
+    <span class="bottom-nav-label">Konto</span>
+  </a>
+</nav>
+
+<!-- ====== SEARCH OVERLAY ====== -->
+<div class="search-overlay" id="search-overlay" hidden>
+  <div class="search-box">
+    <div class="search-header">
+      <input type="search" id="search-input" placeholder="Søg efter kurser, lektioner eller emner..." autocomplete="off" />
+      <button class="search-close" onclick="closeSearch()" aria-label="Luk søgning">✕</button>
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
 
 <!-- ====== FOOTER ====== -->
 <footer class="site-footer">
@@ -107,9 +138,9 @@
     <div class="footer-col">
       <h3>NemMat</h3>
       <ul>
-        <li><a href="#">Om NemMat</a></li>
-        <li><a href="#">Privatpolitik</a></li>
-        <li><a href="#">Handelsbetingelser</a></li>
+        <li><a href="#" onclick="navigate('om');return false;">Om NemMat</a></li>
+        <li><a href="https://nemmat.dk/privatliv/" target="_blank" rel="noopener">Privatpolitik</a></li>
+        <li><a href="https://nemmat.dk/handelsbetingelser/" target="_blank" rel="noopener">Handelsbetingelser</a></li>
       </ul>
     </div>
   </div>

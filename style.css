@@ -1181,3 +1181,448 @@ h4 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; line
   margin: 0;
   border-radius: 0;
 }
+
+/* ============================================================
+   INFO-SIDER (Institutioner, Private, Om, Kontakt, Opret, Konto)
+   ============================================================ */
+.info-page {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.info-hero {
+  text-align: center;
+  padding: 48px 24px 40px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, rgba(53,109,241,0.05) 0%, rgba(8,38,69,0.03) 100%);
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(53,109,241,0.08);
+}
+.info-hero h1 {
+  margin: 0 0 16px;
+  font-size: 44px;
+  line-height: 1.2;
+}
+.info-hero-badge {
+  display: inline-block;
+  background: #fff;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(53,109,241,0.2);
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.info-lead {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.info-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.info-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  color: var(--title);
+}
+.info-card p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.info-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.info-cta {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--bg-light);
+  border-radius: var(--radius-card);
+  margin-top: 16px;
+}
+.info-cta h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+.info-cta p { font-size: 17px; }
+
+.info-big-link {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.info-big-link:hover { color: var(--primary-dk); }
+
+.btn-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff !important;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
+  transition: background .18s ease, transform .18s ease;
+  box-shadow: var(--shadow-sm);
+}
+.btn-cta:hover {
+  background: var(--primary-dk);
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* ── PRICING GRID (Opret konto) ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.pricing-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.pricing-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.pricing-card.pricing-pro {
+  border: 2px solid var(--primary);
+  transform: scale(1.02);
+}
+.pricing-card.pricing-pro:hover {
+  transform: scale(1.02) translateY(-3px);
+}
+.pricing-badge {
+  position: absolute;
+  top: -12px; right: 18px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  letter-spacing: .3px;
+}
+.pricing-level {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+}
+.pricing-card h3 {
+  margin: 0 0 14px;
+  color: var(--title);
+  font-size: 22px;
+}
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-amount {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Poppins', sans-serif;
+}
+.pricing-period {
+  font-size: 14px;
+  color: var(--muted);
+}
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  flex: 1;
+}
+.pricing-features li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+.btn-pricing {
+  display: block;
+  text-align: center;
+  background: transparent;
+  color: var(--primary) !important;
+  border: 2px solid var(--primary);
+  padding: 12px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 15px;
+  transition: background .18s ease, color .18s ease;
+}
+.btn-pricing:hover {
+  background: var(--primary);
+  color: #fff !important;
+}
+.btn-pricing-pro {
+  background: var(--primary);
+  color: #fff !important;
+}
+.btn-pricing-pro:hover {
+  background: var(--primary-dk);
+  color: #fff !important;
+}
+
+/* ── KONTO PROGRESS ── */
+.konto-progress {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  text-align: center;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+}
+.konto-progress-num {
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.konto-progress-label {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.konto-progress-bar {
+  height: 12px;
+  background: #eef2f7;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.konto-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--green));
+  border-radius: 999px;
+  transition: width .8s ease;
+}
+.konto-progress-pct {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--title);
+}
+
+/* Mobile info-sider */
+@media (max-width: 767px) {
+  .info-page { padding: 16px 12px 60px; }
+  .info-hero { padding: 32px 16px 28px; }
+  .info-hero h1 { font-size: 30px; }
+  .info-lead { font-size: 16px; }
+  .pricing-card.pricing-pro { transform: none; }
+  .pricing-card.pricing-pro:hover { transform: translateY(-3px); }
+  .konto-progress-num { font-size: 32px; }
+}
+
+/* ============================================================
+   MOBILE BOTTOM NAV
+   ============================================================ */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 10px rgba(0,0,0,.06);
+  z-index: 900;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 4px 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .18s ease;
+}
+.bottom-nav-item:hover,
+.bottom-nav-item.active {
+  color: var(--primary);
+}
+.bottom-nav-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.bottom-nav-label {
+  font-size: 11px;
+  letter-spacing: .2px;
+}
+
+@media (max-width: 767px) {
+  .bottom-nav {
+    display: flex;
+  }
+  /* Padding så indhold ikke skjules af bottom nav */
+  main#app { padding-bottom: 68px; }
+  .site-footer { padding-bottom: 60px; }
+}
+
+/* ============================================================
+   SEARCH OVERLAY
+   ============================================================ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 38, 69, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 80px 20px 20px;
+  animation: fadeIn .18s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.search-box {
+  background: #fff;
+  border-radius: var(--radius-card);
+  width: 100%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+.search-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.search-header input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  padding: 10px 0;
+  background: transparent;
+  color: var(--title);
+  font-family: inherit;
+}
+.search-header input::placeholder { color: var(--muted-lt); }
+.search-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background .15s ease, color .15s ease;
+}
+.search-close:hover {
+  background: #f3f4f6;
+  color: var(--title);
+}
+.search-results {
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.search-empty, .search-hint {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+.search-section {
+  padding: 6px 16px 4px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.search-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background .15s ease;
+  text-decoration: none;
+  color: inherit;
+}
+.search-result:hover {
+  background: #f8fafc;
+}
+.search-result-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.search-result-main {
+  flex: 1;
+  min-width: 0;
+}
+.search-result-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.search-result-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.search-result mark {
+  background: #fef3c7;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 767px) {
+  .search-overlay { padding: 20px 12px; align-items: stretch; }
+  .search-box { max-height: calc(100vh - 40px); }
+}

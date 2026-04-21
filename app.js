@@ -2410,6 +2410,14 @@ function updateActiveNav(page) {
     const gymLi = document.getElementById('nav-gymnasium');
     if (gymLi) gymLi.classList.add('active');
   }
+  // Bottom nav active state
+  document.querySelectorAll('.bottom-nav-item').forEach(a => {
+    const p = a.dataset.page;
+    const active = (p === 'gymnasium' && page === 'gymnasium')
+      || (p === 'hf' && ['hf','stx','hhx','course','lesson'].includes(page))
+      || (p === 'konto' && page === 'konto');
+    a.classList.toggle('active', active);
+  });
 }
 
 // ── MOBILE MENU ──
@@ -2419,6 +2427,133 @@ function toggleMobileMenu() {
 }
 function closeMobileMenu() {
   document.getElementById('mobile-menu').hidden = true;
+}
+
+// ── SEARCH ──
+let _searchIndex = null;
+function _allCourses() {
+  const map = new Map();
+  const add = (arr, exam, niveau) => {
+    for (const c of (arr || [])) {
+      if (!map.has(c.slug)) map.set(c.slug, { ...c, exam, niveau });
+    }
+  };
+  if (typeof HF_C_COURSES !== 'undefined') add(HF_C_COURSES, 'HF', 'C');
+  if (typeof HF_B_COURSES !== 'undefined') add(HF_B_COURSES, 'HF', 'B');
+  if (typeof STX_C_COURSES !== 'undefined') add(STX_C_COURSES, 'STX', 'C');
+  if (typeof HHX_C_COURSES !== 'undefined') add(HHX_C_COURSES, 'HHX', 'C');
+  // Vektorer (standalone)
+  map.set('vektorer-matematik-b-stx-2aar', {
+    slug: 'vektorer-matematik-b-stx-2aar',
+    title: 'Vektorer',
+    exam: 'STX', niveau: 'B',
+  });
+  return Array.from(map.values());
+}
+function _buildSearchIndex() {
+  if (_searchIndex) return _searchIndex;
+  const idx = [];
+  const courses = _allCourses();
+  // Kurser
+  for (const c of courses) {
+    idx.push({
+      type: 'Kursus',
+      icon: '📚',
+      title: c.title,
+      meta: [c.exam, c.niveau && c.niveau + '-niveau'].filter(Boolean).join(' · '),
+      courseMeta: c,
+    });
+  }
+  // Lektioner + quizzer (per kursus curriculum)
+  for (const [slug, curr] of Object.entries(ALL_CURRICULA || {})) {
+    const c = curr || (typeof VEKTORER_CURRICULUM !== 'undefined' ? VEKTORER_CURRICULUM : null);
+    if (!c) continue;
+    const courseMeta = courses.find(x => x.slug === slug);
+    const courseTitle = courseMeta ? courseMeta.title : slug;
+    c.forEach((sec) => (sec.items || []).forEach((it) => {
+      idx.push({
+        type: it.type === 'quiz' ? 'Quiz' : 'Lektion',
+        icon: it.type === 'quiz' ? '❓' : '▶️',
+        title: it.title,
+        meta: courseTitle + (sec.title ? ' · ' + sec.title : ''),
+        slug, courseMeta,
+      });
+    }));
+  }
+  _searchIndex = idx;
+  return idx;
+}
+
+function openSearch() {
+  const ov = document.getElementById('search-overlay');
+  const inp = document.getElementById('search-input');
+  const res = document.getElementById('search-results');
+  ov.hidden = false;
+  res.innerHTML = '<div class="search-hint">Skriv for at søge i kurser, lektioner og quizzer…</div>';
+  setTimeout(() => inp.focus(), 30);
+  document.body.style.overflow = 'hidden';
+}
+function closeSearch() {
+  document.getElementById('search-overlay').hidden = true;
+  document.getElementById('search-input').value = '';
+  document.body.style.overflow = '';
+}
+function _highlight(text, q) {
+  if (!q) return text;
+  const safe = text.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const qSafe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return safe.replace(new RegExp(qSafe, 'gi'), m => `<mark>${m}</mark>`);
+}
+function _runSearch(q) {
+  const res = document.getElementById('search-results');
+  q = (q || '').trim();
+  if (q.length < 2) {
+    res.innerHTML = '<div class="search-hint">Skriv mindst 2 bogstaver…</div>';
+    return;
+  }
+  const idx = _buildSearchIndex();
+  const qLow = q.toLowerCase();
+  const hits = idx
+    .map(e => {
+      const t = e.title.toLowerCase();
+      let score = 0;
+      if (t === qLow) score = 100;
+      else if (t.startsWith(qLow)) score = 80;
+      else if (t.includes(qLow)) score = 60;
+      else if (e.meta.toLowerCase().includes(qLow)) score = 20;
+      return score ? { e, score } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 40);
+  if (!hits.length) {
+    res.innerHTML = `<div class="search-empty">Ingen resultater for "${q.replace(/</g,'&lt;')}"</div>`;
+    return;
+  }
+  const byType = {};
+  for (const h of hits) { (byType[h.e.type] ||= []).push(h.e); }
+  const html = Object.entries(byType).map(([type, items]) => `
+    <div class="search-section">${type}</div>
+    ${items.map((e, i) => `
+      <a href="#" class="search-result" data-idx="${hits.findIndex(h => h.e === e)}" onclick="_searchGo(${hits.findIndex(h => h.e === e)});return false;">
+        <span class="search-result-icon">${e.icon}</span>
+        <div class="search-result-main">
+          <div class="search-result-title">${_highlight(e.title, q)}</div>
+          <div class="search-result-meta">${_highlight(e.meta, q)}</div>
+        </div>
+      </a>
+    `).join('')}
+  `).join('');
+  res.innerHTML = html;
+  window.__searchHits = hits;
+}
+function _searchGo(i) {
+  const hit = (window.__searchHits || [])[i];
+  if (!hit) return;
+  const e = hit.e;
+  closeSearch();
+  if (e.courseMeta) navigate('course', e.courseMeta);
+  else navigate('gymnasium');
 }
 
 // ── LESSON HELPERS ──
@@ -2556,12 +2691,12 @@ function render() {
     case 'hhx':       app.innerHTML = renderHHX(); break;
     case 'course':    app.innerHTML = renderCourse(); break;
     case 'lesson':    app.innerHTML = renderLessonViewer(); break;
-    case 'institutioner': app.innerHTML = renderSimple('Institutioner', 'Siden er under opbygning.'); break;
-    case 'private':   app.innerHTML = renderSimple('Private og Forældre', 'Siden er under opbygning.'); break;
-    case 'om':        app.innerHTML = renderSimple('Om NemMat', 'Vi hjælper gymnasieelever med matematik.'); break;
-    case 'kontakt':   app.innerHTML = renderSimple('Kontakt', 'Ring til os på <a href="tel:50435078">50435078</a> eller skriv til <a href="mailto:info@nemmat.dk">info@nemmat.dk</a>'); break;
-    case 'opret':     app.innerHTML = renderSimple('Opret konto', 'Besøg <a href="https://nemmat.dk/medlemsskabsniveauer" target="_blank">nemmat.dk</a> for at oprette konto.'); break;
-    case 'konto':     app.innerHTML = renderSimple('Min konto', 'Log ind på <a href="https://nemmat.dk/lp-profil/" target="_blank">nemmat.dk</a>.'); break;
+    case 'institutioner': app.innerHTML = renderInstitutioner(); break;
+    case 'private':   app.innerHTML = renderPrivate(); break;
+    case 'om':        app.innerHTML = renderOm(); break;
+    case 'kontakt':   app.innerHTML = renderKontakt(); break;
+    case 'opret':     app.innerHTML = renderOpret(); break;
+    case 'konto':     app.innerHTML = renderKonto(); break;
     default:          app.innerHTML = renderSimple('Side ikke fundet', ''); break;
   }
   // Fade-in animation
@@ -3128,25 +3263,25 @@ function retryQuiz() {
 }
 
 // ── STX SIDE ──
+const STX_C_COURSES = [
+  { slug: 'tal-og-algebrastx-1aar', title: 'Tal og Algebra', img: IMG_BASE+'2024/11/math.webp' },
+  { slug: 'ligninger-og-formlerstx-c', title: 'Ligninger og Formler', img: IMG_BASE+'2024/11/equality.webp' },
+  { slug: 'lineaer-funktion-stx', title: 'Lineære Funktioner', img: IMG_BASE+'2024/11/diagram-e1731763087784.png' },
+  { slug: 'eksponentielle-funktioner-stx', title: 'Eksponentielle Funktioner', img: IMG_BASE+'2024/11/statistics.webp' },
+  { slug: 'statistik-stx-c', title: 'Statistik', img: IMG_BASE+'2024/11/analytics.webp' },
+  { slug: 'procent-og-rente-stx', title: 'Procent og Rente', img: IMG_BASE+'2024/11/interest-rate.webp' },
+];
 function renderSTX() {
-  const courses = [
-    { slug: 'tal-og-algebrastx-1aar', title: 'Tal og Algebra', img: IMG_BASE+'2024/11/math.webp' },
-    { slug: 'ligninger-og-formlerstx-c', title: 'Ligninger og Formler', img: IMG_BASE+'2024/11/equality.webp' },
-    { slug: 'lineaer-funktion-stx', title: 'Lineære Funktioner', img: IMG_BASE+'2024/11/diagram-e1731763087784.png' },
-    { slug: 'eksponentielle-funktioner-stx', title: 'Eksponentielle Funktioner', img: IMG_BASE+'2024/11/statistics.webp' },
-    { slug: 'statistik-stx-c', title: 'Statistik', img: IMG_BASE+'2024/11/analytics.webp' },
-    { slug: 'procent-og-rente-stx', title: 'Procent og Rente', img: IMG_BASE+'2024/11/interest-rate.webp' },
-  ];
-  return renderNiveauPage('STX', 'C Niveau', courses, [{label:'Gymnasium',page:'gymnasium'}]);
+  return renderNiveauPage('STX', 'C Niveau', STX_C_COURSES, [{label:'Gymnasium',page:'gymnasium'}]);
 }
 
 // ── HHX SIDE ──
+const HHX_C_COURSES = [
+  { slug: 'tal-hhx-c', title: 'Tal og Algebra', img: IMG_BASE+'2024/11/math.webp' },
+  { slug: 'ligninger-hhx-c', title: 'Ligninger', img: IMG_BASE+'2024/11/equality.webp' },
+];
 function renderHHX() {
-  const courses = [
-    { slug: 'tal-hhx-c', title: 'Tal og Algebra', img: IMG_BASE+'2024/11/math.webp' },
-    { slug: 'ligninger-hhx-c', title: 'Ligninger', img: IMG_BASE+'2024/11/equality.webp' },
-  ];
-  return renderNiveauPage('HHX', 'C Niveau', courses, [{label:'Gymnasium',page:'gymnasium'}]);
+  return renderNiveauPage('HHX', 'C Niveau', HHX_C_COURSES, [{label:'Gymnasium',page:'gymnasium'}]);
 }
 
 function renderNiveauPage(exam, niveau, courses, breadcrumbs) {
@@ -3180,6 +3315,241 @@ function renderSimple(title, body) {
       <p>${body}</p>
     </div>
   `;
+}
+
+// ── INFO-SIDER (hentet fra nemmat.dk) ──
+function renderInstitutioner() {
+  return `
+    ${renderBreadcrumb([{label:'Institutioner', page:'institutioner'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">🏫 For skoler og undervisere</div>
+        <h1>Hvad tilbyder NemMat?</h1>
+        <p class="info-lead">En innovativ digital læringsplatform der styrker elevernes faglige sikkerhed i matematik — udviklet specifikt til gymnasiale uddannelser.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📚</div>
+          <h3>Strukturerede forløb</h3>
+          <p>Interaktive opgaver og AI-baseret vejledning understøtter undervisningen ved sygdom, fravær eller differentieret læring.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎯</div>
+          <h3>Klassedifferentiering</h3>
+          <p>Som lærer kan du bruge NemMat til lektiehjælp, eksamensforberedelse og som støtte til elever med særlige behov.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💡</div>
+          <h3>Pædagogisk fundament</h3>
+          <p>Alt indhold er udviklet med afsæt i pædagogiske principper og et stærkt fokus på forståelse og selvtillid.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🔄</div>
+          <h3>Vikarmateriale</h3>
+          <p>Platformen fungerer også som vikarmateriale — strukturerede forløb som eleverne selv kan arbejde videre med.</p>
+        </div>
+      </div>
+      <div class="info-cta">
+        <h2>Kontakt os for et skoletilbud</h2>
+        <p>Ring <a href="tel:50435078">50 43 50 78</a> eller skriv til <a href="mailto:info@nemmat.dk">info@nemmat.dk</a></p>
+      </div>
+    </div>`;
+}
+
+function renderPrivate() {
+  return `
+    ${renderBreadcrumb([{label:'Private og Forældre', page:'private'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">👨‍👩‍👧 For familier</div>
+        <h1>Styrk din faglige sikkerhed i matematik</h1>
+        <p class="info-lead">En digital læringsplatform der hjælper unge med at blive mere sikre og dygtige i matematik. Udviklet til gymnasieelever med fokus på forståelse og motivation.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📝</div>
+          <h3>Lektiehjælp</h3>
+          <p>Strukturerede kursusforløb og interaktive opgaver — brugt som lektiehjælp når matematikken føles svær.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎓</div>
+          <h3>Eksamensforberedelse</h3>
+          <p>Bliv klar til både skriftlig og mundtlig eksamen — på alle niveauer (C, B og A).</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📈</div>
+          <h3>Følger pensum</h3>
+          <p>Interaktive kurser der følger gymnasiets pensum — så man altid har et sted at slå op.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🏆</div>
+          <h3>Faglig selvtillid</h3>
+          <p>Med NemMat får dit barn en tryg og motiverende vej til bedre forståelse og stærkere faglig selvtillid.</p>
+        </div>
+      </div>
+      <div class="info-cta">
+        <h2>Start i dag</h2>
+        <p><a href="#" onclick="navigate('opret');return false;" class="btn-cta">Se medlemsskaber →</a></p>
+      </div>
+    </div>`;
+}
+
+function renderOm() {
+  return `
+    ${renderBreadcrumb([{label:'Om NemMat', page:'om'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">✨ Om os</div>
+        <h1>Om NemMat</h1>
+        <p class="info-lead">Vi hjælper gymnasieelever med at mestre matematik — gennem strukturerede videoforløb, interaktive quizzer og forklaringer i øjenhøjde.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">🎯</div>
+          <h3>Vores mission</h3>
+          <p>At gøre matematik tilgængeligt, forståeligt og motiverende for alle elever — uanset niveau og baggrund.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">👥</div>
+          <h3>Hvem er vi?</h3>
+          <p>Et dansk team med baggrund i undervisning, pædagogik og teknologi — dedikeret til at løfte matematikfaget i gymnasiet.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📖</div>
+          <h3>Fagligt fundament</h3>
+          <p>Alt indhold er udviklet af matematikfaglige undervisere med mangeårig gymnasieerfaring og afsæt i pensum på C-, B- og A-niveau.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🚀</div>
+          <h3>Konstant opdatering</h3>
+          <p>Vi opdaterer løbende platformen med nye forløb, videoer og quizzer — baseret på feedback fra elever og lærere.</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderKontakt() {
+  return `
+    ${renderBreadcrumb([{label:'Kontakt', page:'kontakt'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">📞 Kontakt os</div>
+        <h1>Hvordan kan vi hjælpe?</h1>
+        <p class="info-lead">Vi sidder klar til at besvare spørgsmål om vores kurser, priser eller andet. Det er helt uforpligtende og du får typisk svar samme dag.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📞</div>
+          <h3>Telefon</h3>
+          <p><a href="tel:50435078" class="info-big-link">50 43 50 78</a></p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">✉️</div>
+          <h3>Email</h3>
+          <p><a href="mailto:info@nemmat.dk" class="info-big-link">info@nemmat.dk</a></p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <h3>Adresse</h3>
+          <p>Sønder Boulevard 108<br>1720 København V</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🕐</div>
+          <h3>Åbningstider</h3>
+          <p>Mandag – Fredag<br>09:00 – 17:00</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderOpret() {
+  const tiers = [
+    { name: 'HF Basis', price: 49.95, level: 'HF', features: ['Adgang til HF C- og B-niveau', 'Quizzer og forklaringer', 'Progress tracking'] },
+    { name: 'HF Pro', price: 79.95, level: 'HF', pro: true, features: ['Alt i Basis', 'Eksamenssæt + rettevejledning', 'AI-baseret personlig hjælp'] },
+    { name: 'STX Basis', price: 49.95, level: 'STX', features: ['Adgang til STX C- og B-niveau', 'Quizzer og forklaringer', 'Progress tracking'] },
+    { name: 'STX Pro', price: 79.95, level: 'STX', pro: true, features: ['Alt i Basis', 'A-niveau eksamenssæt', 'AI-baseret personlig hjælp'] },
+    { name: 'HHX Basis', price: 49.95, level: 'HHX', features: ['Adgang til HHX C- og B-niveau', 'Quizzer og forklaringer', 'Progress tracking'] },
+    { name: 'HHX Pro', price: 79.95, level: 'HHX', pro: true, features: ['Alt i Basis', 'Eksamenssæt + rettevejledning', 'AI-baseret personlig hjælp'] },
+  ];
+  return `
+    ${renderBreadcrumb([{label:'Opret konto', page:'opret'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">🎓 Medlemsskaber</div>
+        <h1>Vælg det medlemsskab der passer dig</h1>
+        <p class="info-lead">Start i dag — alle medlemsskaber kan opsiges når som helst. Prøv gratis de første 7 dage.</p>
+      </div>
+      <div class="pricing-grid">
+        ${tiers.map(t => `
+          <div class="pricing-card${t.pro ? ' pricing-pro' : ''}">
+            ${t.pro ? '<div class="pricing-badge">Mest populær</div>' : ''}
+            <div class="pricing-level">${t.level}</div>
+            <h3>${t.name}</h3>
+            <div class="pricing-price">
+              <span class="pricing-amount">${t.price.toFixed(2).replace('.',',')} kr</span>
+              <span class="pricing-period">/ måned</span>
+            </div>
+            <ul class="pricing-features">
+              ${t.features.map(f => `<li>✓ ${f}</li>`).join('')}
+            </ul>
+            <a href="https://nemmat.dk/medlemsskabsniveauer" target="_blank" rel="noopener" class="btn-pricing${t.pro ? ' btn-pricing-pro' : ''}">Vælg ${t.name}</a>
+          </div>
+        `).join('')}
+      </div>
+      <div class="info-cta">
+        <p>Spørgsmål til medlemsskaber? Ring <a href="tel:50435078">50 43 50 78</a></p>
+      </div>
+    </div>`;
+}
+
+function renderKonto() {
+  const flat = [];
+  for (const [slug, curr] of Object.entries(ALL_CURRICULA)) {
+    const c = curr || VEKTORER_CURRICULUM;
+    if (!c) continue;
+    c.forEach((sec, si) => (sec.items||[]).forEach((it, ii) => {
+      flat.push({slug, si, ii});
+    }));
+  }
+  // Simple completion tracking via localStorage (scoped per slug)
+  let totalDone = 0;
+  for (const f of flat) {
+    const key = `nemmat_progress_${f.slug}`;
+    try {
+      const d = JSON.parse(localStorage.getItem(key) || '{}');
+      if (d[`${f.si}-${f.ii}`]) totalDone++;
+    } catch(e) {}
+  }
+  const pct = flat.length ? Math.round(100*totalDone/flat.length) : 0;
+  return `
+    ${renderBreadcrumb([{label:'Min konto', page:'konto'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">👤 Din konto</div>
+        <h1>Velkommen tilbage</h1>
+        <p class="info-lead">Her kan du se din fremgang på tværs af alle kurser — lokalt gemt i din browser.</p>
+      </div>
+      <div class="konto-progress">
+        <div class="konto-progress-num">${totalDone} / ${flat.length}</div>
+        <div class="konto-progress-label">lektioner og quizzer gennemført</div>
+        <div class="konto-progress-bar">
+          <div class="konto-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="konto-progress-pct">${pct}%</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">📚</div>
+          <h3>Fortsæt læring</h3>
+          <p><a href="#" onclick="navigate('gymnasium');return false;" class="info-big-link">Gå til kurser →</a></p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🔐</div>
+          <h3>Fuld nemmat.dk-konto</h3>
+          <p>Denne PWA gemmer fremgang lokalt. For adgang til premium-indhold: <a href="https://nemmat.dk/lp-profil/" target="_blank" rel="noopener">log ind på nemmat.dk</a>.</p>
+        </div>
+      </div>
+    </div>`;
 }
 
 // ── BREADCRUMB ──
@@ -3366,5 +3736,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.insertBefore(streakEl, document.body.firstChild);
     setTimeout(() => streakEl.style.display = 'none', 4000);
   }
+
+  // Search input hookup
+  const si = document.getElementById('search-input');
+  const so = document.getElementById('search-overlay');
+  if (si) {
+    let t;
+    si.addEventListener('input', (e) => {
+      clearTimeout(t);
+      t = setTimeout(() => _runSearch(e.target.value), 120);
+    });
+    si.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSearch();
+    });
+  }
+  if (so) {
+    so.addEventListener('click', (e) => {
+      if (e.target === so) closeSearch();
+    });
+  }
+  // Global ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('search-overlay').hidden) closeSearch();
+  });
+
   navigate('gymnasium');
 });
