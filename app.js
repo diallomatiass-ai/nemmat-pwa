@@ -2600,6 +2600,12 @@ const ALL_QUIZ_DATA = {
 ALL_QUIZ_DATA['tal-og-algebra-b-niveau'] = ALL_QUIZ_DATA['tal-og-algebra'];
 ALL_QUIZ_DATA['eksponentielle-funktioner-stx'] = ALL_QUIZ_DATA['eksponentielle-funktioner'];
 ALL_QUIZ_DATA['statistik-stx-c'] = ALL_QUIZ_DATA['deskriptiv-statistik'];
+// STX-C / HHX-C duplikater genbruger HF-C hand-written fallback
+ALL_QUIZ_DATA['tal-og-algebrastx-1aar'] = ALL_QUIZ_DATA['tal-og-algebra'];
+ALL_QUIZ_DATA['tal-hhx-c'] = ALL_QUIZ_DATA['tal-og-algebra'];
+ALL_QUIZ_DATA['lineaer-funktion-stx'] = ALL_QUIZ_DATA['lineaer-funktioner'];
+ALL_QUIZ_DATA['procent-og-rente-stx'] = ALL_QUIZ_DATA['procent-og-rentesregning'];
+ALL_QUIZ_DATA['ligninger-hhx-c'] = ALL_QUIZ_DATA['ligninger-1-aar-hf-2'];
 ALL_CURRICULA['vektorer-matematik-b-stx-2aar'] = null; // håndteres i getCurriculum
 
 // ── KURS-BESKRIVELSER ──
