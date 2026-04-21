@@ -2610,17 +2610,41 @@ ALL_CURRICULA['vektorer-matematik-b-stx-2aar'] = null; // håndteres i getCurric
 
 // ── KURS-BESKRIVELSER ──
 const COURSE_DESC = {
+  // HF-C
+  'beviserhf1':                 'Matematiske beviser og argumentation — direkte bevis, modstrid, induktion og eksempler fra gymnasiepensum.',
   'tal-og-algebra':             'Grundlæggende talsystemet, regningsarterne og simpel algebra. Bygger et fundament til al matematik.',
   'ligninger-1-aar-hf-2':       'Løsning af ligninger med én og to ubekendte, formler og omskrivning.',
   'procent-og-rentesregning':   'Procentberegning, fremskrivningsfaktor, simpel og sammensat rente.',
-  'lineaer-funktioner':         'Den lineære funktion y = ax + b — hæld­ning, skæring og bestemmelse af forskrift.',
+  'funktions-begrebet':         'Funktionsbegrebet — definitionsmængde, værdimængde, graf og funktionsforskrift.',
+  'lineaer-funktioner':         'Den lineære funktion y = ax + b — hældning, skæring og bestemmelse af forskrift.',
   'eksponentielle-funktioner':  'Eksponentielle funktioner, vækstrate, halverings- og fordoblingstid.',
   'geometri-og-trigonometri':   'Pythagoras, trigonometri (sin/cos/tan), sinus- og cosinusrelation, arealer og rumfang.',
   'deskriptiv-statistik':       'Statistisk beskrivelse: frekvens, gennemsnit, median, kvartiler og boksplot.',
   'sandsynlighedsregning':      'Sandsynlighed, kombinatorik og betinget sandsynlighed.',
   '10-tals-logaritme':          'Logaritmens definition, regneregler og ligninger med log.',
+  'potens-funktioner-hf-b':     'Potensfunktioner, væksthastighed og sammenhæng med eksponentielle funktioner.',
+  // HF-B
+  'beviser-hf-mat-b':           'Matematiske beviser på B-niveau — bevistyper, logiske slutninger og deduktive argumenter.',
+  'tal-og-algebra-b-niveau':    'Tal og algebra udvidet — reduktioner, brøker, potens- og logaritmeregler på B-niveau.',
+  'funktioner-b-niveau':        'Funktionsbegrebet på B-niveau — polynomier, rationale funktioner, sammensatte funktioner og transformationer.',
   'andengradspolynomier-hf':    'Andengradspolynomier, toppunkt, diskriminant og løsning af andengradsligninger.',
+  'analytisk-plan-geometri-hf-b': 'Analytisk plangeometri — linjens ligning, afstande, cirkler, skæringspunkter og geometriske problemer.',
   'differentialregning-hf-b':   'Differentialkvotienten, differentieringsregler, monotoni, tangent og optimering.',
+  'sandstat-b-gym':             'Sandsynlighed og statistik på B-niveau — fordelinger, stikprøver, hypotesetest og konfidensintervaller.',
+  'annuitetsregning':           'Annuitetsregning — rente, afdrag, annuitetslån og opsparing med periodiske indbetalinger.',
+  // STX-C (genbruger HF-C indhold)
+  'tal-og-algebrastx-1aar':     'Grundlæggende talsystemet, regningsarterne og simpel algebra til STX C-niveau.',
+  'ligninger-og-formlerstx-c':  'Ligninger og formler på STX C-niveau — ligningsløsning, formelregning og omskrivning.',
+  'procent-og-rente-stx':       'Procentregning og rentesregning til STX C-niveau.',
+  'lineaer-funktion-stx':       'Lineære funktioner til STX C-niveau — forskrift, graf og praktiske anvendelser.',
+  'eksponentielle-funktioner-stx': 'Eksponentielle funktioner til STX C-niveau — vækst og halveringstid.',
+  'statistik-stx-c':            'Statistik på STX C-niveau — beskrivende statistik og dataanalyse.',
+  // HHX-C
+  'tal-hhx-c':                  'Tal og algebra til HHX C-niveau — regningsarterne, brøker og simpel algebra.',
+  'ligninger-hhx-c':            'Ligninger og formler til HHX C-niveau — bruges ofte i økonomiske sammenhænge.',
+  // STX-A
+  'vektorer-i-planen-stx-a':    'Vektorer i planen på STX A-niveau — skalarprodukt, projektion, determinanter og linjens ligning.',
+  // Legacy default
   'vektorer-matematik-b-stx-2aar': 'Vektorer i planen — skalarprodukt, projektion, determinanter, linjens ligning og cirkler.',
 };
 
@@ -3192,12 +3216,22 @@ function renderCourse() {
     </div>`;
   }).join('');
 
+  // Dynamisk breadcrumb baseret på hvilket niveau kurset tilhører
+  const breadcrumbs = [{label:'Gymnasium',page:'gymnasium'}];
+  if (typeof HF_C_COURSES !== 'undefined' && HF_C_COURSES.some(x => x.slug === slug)) {
+    breadcrumbs.push({label:'HF',page:'hf'},{label:'HF C Niveau',page:'hf-c'});
+  } else if (typeof HF_B_COURSES !== 'undefined' && HF_B_COURSES.some(x => x.slug === slug)) {
+    breadcrumbs.push({label:'HF',page:'hf'},{label:'HF B Niveau',page:'hf-b'});
+  } else if (typeof STX_C_COURSES !== 'undefined' && STX_C_COURSES.some(x => x.slug === slug)) {
+    breadcrumbs.push({label:'STX',page:'stx'});
+  } else if (typeof HHX_C_COURSES !== 'undefined' && HHX_C_COURSES.some(x => x.slug === slug)) {
+    breadcrumbs.push({label:'HHX',page:'hhx'});
+  } else {
+    breadcrumbs.push({label:'HF',page:'hf'},{label:'HF C Niveau',page:'hf-c'});
+  }
+
   return `
-    ${renderBreadcrumb([
-      {label:'Gymnasium',page:'gymnasium'},
-      {label:'HF',page:'hf'},
-      {label:'HF C Niveau',page:'hf-c'}
-    ])}
+    ${renderBreadcrumb(breadcrumbs)}
     ${comingSoonBanner}
     <div class="course-detail-wrap">
       <div class="course-main">
@@ -3379,9 +3413,9 @@ function renderLessonViewer() {
           <div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:${pct}%"></div></div>
           <span class="lesson-progress-label">${pct}%</span>
         </div>
-        <div class="lesson-topbar-search">
+        <div class="lesson-topbar-search" onclick="openSearch()" style="cursor:pointer">
           <span style="color:var(--muted-lt);font-size:14px">🔍</span>
-          <input type="text" placeholder="Søg i kurset…" />
+          <input type="text" placeholder="Søg i kurser…" readonly style="cursor:pointer;pointer-events:none" />
         </div>
       </div>
 
