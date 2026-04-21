@@ -550,6 +550,91 @@ const DIFFERENTIAL_CURRICULUM = [
   ]}
 ];
 
+// ── ANALYTISK PLAN GEOMETRI HF B (fra scraped data) ──
+const ANALYTISK_CURRICULUM = [
+  { title: '1. Introduktion til Analytisk Plan Geometri', items: [
+    { type: 'lesson', title: 'Teori – Introduktion', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '8 spørgsmål' }
+  ]},
+  { title: '2. Den rette linje', items: [
+    { type: 'lesson', title: 'Teori – Den rette linje', dur: '6 min' },
+    { type: 'quiz',   title: 'Test din forståelse af den rette linje', dur: '8 spørgsmål' }
+  ]},
+  { title: '3. Ortogonale linjer og hældningsvinkel', items: [
+    { type: 'lesson', title: 'Teori – Ortogonale linjer og hældningsvinkel', dur: '6 min' },
+    { type: 'quiz',   title: 'Test din forståelse af ortogonale linjer', dur: '12 spørgsmål' }
+  ]},
+  { title: '4. Skæring mellem linjer', items: [
+    { type: 'lesson', title: 'Teori – Skæring mellem linjer', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af skæring mellem linjer', dur: '6 spørgsmål' }
+  ]},
+  { title: '5. Afstand fra punkt til linje', items: [
+    { type: 'lesson', title: 'Teori – Afstand fra punkt til linje', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af afstand fra punkt til linje', dur: '4 spørgsmål' }
+  ]},
+  { title: '6. Cirklens ligning', items: [
+    { type: 'lesson', title: 'Teori – Cirklens ligning', dur: '6 min' },
+    { type: 'quiz',   title: 'Test din forståelse af Cirklens ligning', dur: '7 spørgsmål' }
+  ]},
+  { title: '7. Punkt på cirkel', items: [
+    { type: 'lesson', title: 'Teori – Punkt på cirkel', dur: '4 min' },
+    { type: 'quiz',   title: 'Test din forståelse af punkt på cirkel', dur: '4 spørgsmål' }
+  ]},
+  { title: '8. Skæring mellem linje og cirkel', items: [
+    { type: 'lesson', title: 'Teori – Skæring mellem linje og cirkel', dur: '6 min' },
+    { type: 'quiz',   title: 'Antallet af skæring mellem linje og cirkel', dur: '5 spørgsmål' },
+    { type: 'quiz',   title: 'Skæringpunkt mellem linje og cirkel', dur: '2 spørgsmål' }
+  ]},
+  { title: '9. Tangent til cirkel', items: [
+    { type: 'lesson', title: 'Teori – Tangent til cirkel', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af tangent til cirkel', dur: '4 spørgsmål' }
+  ]},
+  { title: '10. Kvadratkomplettering', items: [
+    { type: 'lesson', title: 'Teori – Kvadratkomplettering', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af kvadratkomplettering', dur: '5 spørgsmål' }
+  ]},
+  { title: '11. Eksamensforberedelse', items: [
+    { type: 'quiz',   title: 'Eksamen uden hjælp med formelsamling', dur: '19 spørgsmål' },
+    { type: 'quiz',   title: 'Eksamen med alle tilladte hjælpemidler', dur: '15 spørgsmål' }
+  ]}
+];
+
+// ── FUNKTIONER B NIVEAU HF (fra scraped data) ──
+const FUNKTIONER_B_CURRICULUM = [
+  { title: '1. Introduktion til Funktioner', items: [
+    { type: 'lesson', title: 'Teori – Funktionsbegrebet', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '11 spørgsmål' }
+  ]},
+  { title: '2. Graf og forskrift', items: [
+    { type: 'lesson', title: 'Teori – Graf og forskrift', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '5 spørgsmål' }
+  ]},
+  { title: '3. Funktioners egenskaber', items: [
+    { type: 'lesson', title: 'Teori – Egenskaber', dur: '6 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '7 spørgsmål' }
+  ]},
+  { title: '4. Sammensatte funktioner', items: [
+    { type: 'lesson', title: 'Teori – Sammensatte funktioner', dur: '6 min' },
+    { type: 'quiz',   title: 'Test din forståelse af sammensatte funktioner', dur: '7 spørgsmål' }
+  ]},
+  { title: '5. Definitions- og værdimængde', items: [
+    { type: 'lesson', title: 'Teori – Definitions- og værdimængde', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af Definition og Værdimængde', dur: '8 spørgsmål' }
+  ]},
+  { title: '6. Monotoniforhold', items: [
+    { type: 'lesson', title: 'Teori – Monotoniforhold', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '9 spørgsmål' }
+  ]},
+  { title: '7. Parallelforskydning af grafer', items: [
+    { type: 'lesson', title: 'Teori – Parallelforskydning', dur: '5 min' },
+    { type: 'quiz',   title: 'Test din forståelse af parallelforskydning', dur: '8 spørgsmål' }
+  ]},
+  { title: '8. Eksamensforberedelse', items: [
+    { type: 'quiz',   title: 'Skriftlig forberedelse delprøve 1', dur: '16 spørgsmål' },
+    { type: 'quiz',   title: 'Skriftlig forberedelse delprøve 2', dur: '15 spørgsmål' }
+  ]}
+];
+
 // ── VEKTORER 2D CURRICULUM (13 sektioner — rigtige data fra nemmat.dk) ──
 const VEKTORER_CURRICULUM = [
   { title: '1. Motivation og Indledning', items: [
@@ -867,6 +952,8 @@ const ALL_CURRICULA = {
   '10-tals-logaritme': LOG_CURRICULUM,
   'andengradspolynomier-hf': ANDENGRADS_CURRICULUM,
   'differentialregning-hf-b': DIFFERENTIAL_CURRICULUM,
+  'analytisk-plan-geometri-hf-b': ANALYTISK_CURRICULUM,
+  'funktioner-b-niveau': FUNKTIONER_B_CURRICULUM,
   'vektorer-i-planen-stx-a': VEKTORER_CURRICULUM,
 };
 
@@ -2593,6 +2680,8 @@ const SCRAPED_SLUG_MAP = {
   'deskriptiv-statistik': 'deskriptiv-statistik',
   'statistik-stx-c': 'deskriptiv-statistik',
   'andengradspolynomier-hf': 'andengradspolynomier-hf-b',
+  'analytisk-plan-geometri-hf-b': 'analytisk-plan-geometri-hf-b',
+  'funktioner-b-niveau': 'funktioner-b-niveau-hf',
 };
 
 // Returnér quiz-index (0,1,2…) for section-item key ved at tælle forudgående quiz-items i curriculum
