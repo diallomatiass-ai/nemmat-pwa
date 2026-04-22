@@ -635,22 +635,104 @@ const FUNKTIONER_B_CURRICULUM = [
   ]}
 ];
 
-// ── BEVISER HF (C + B) — ingen scraped, placeholder curriculum ──
+// ── BEVISER HF (C + B) — scraped fra nemmat.dk (7 sub-kurser merged, 33 lektioner) ──
 const BEVISER_CURRICULUM = [
-  { title: '1. Introduktion til beviser', items: [
-    { type: 'lesson', title: 'Teori – Hvad er et bevis?', dur: '5 min' }
+  { title: 'Procent og Rente — Renteformlen (Slutkapital)', items: [
+    { type: 'lesson', title: 'Bevis for slutkapital', dur: '5 min' }
   ]},
-  { title: '2. Direkte bevis', items: [
-    { type: 'lesson', title: 'Teori – Direkte bevis', dur: '5 min' }
+  { title: 'Procent og Rente — Renteformlen (Startkapital)', items: [
+    { type: 'lesson', title: 'Bevis for startkapital', dur: '3 min' }
   ]},
-  { title: '3. Kontraponeret bevis', items: [
-    { type: 'lesson', title: 'Teori – Kontraposition', dur: '5 min' }
+  { title: 'Procent og Rente — Renteformlen (Renten)', items: [
+    { type: 'lesson', title: 'Bevis for renten', dur: '5 min' }
   ]},
-  { title: '4. Modstridsbevis', items: [
-    { type: 'lesson', title: 'Teori – Modstridsbevis', dur: '5 min' }
+  { title: 'Procent og Rente — Renteformlen (Termin)', items: [
+    { type: 'lesson', title: 'Bevis for termin', dur: '4 min' }
   ]},
-  { title: '5. Induktionsbevis', items: [
-    { type: 'lesson', title: 'Teori – Induktionsbevis', dur: '5 min' }
+  { title: 'Lineære Funktioner — Hældningstallet (a)', items: [
+    { type: 'lesson', title: 'Bevis for hvorfor a kaldes hældningskoefficient', dur: '6 min', ytId: 'N7H9i11_PVY' }
+  ]},
+  { title: 'Lineære Funktioner — Beregning af hældningskoefficienten', items: [
+    { type: 'lesson', title: 'Bevis for beregning af a', dur: '8 min', ytId: 'mai2pc_4R-s' }
+  ]},
+  { title: 'Lineære Funktioner — To punkts formel (tallet b)', items: [
+    { type: 'lesson', title: 'Bevis for beregning af tallet b i to punkts formlen', dur: '3 min', ytId: 'miJNYaT-uI8' }
+  ]},
+  { title: 'Lineære Funktioner — Skæring med akserne', items: [
+    { type: 'lesson', title: 'Bevis for skæring med akserne', dur: '5 min', ytId: 'XdM_Y1I00U0' }
+  ]},
+  { title: 'Lineære Funktioner — Kendt punkt og hældningstal', items: [
+    { type: 'lesson', title: 'Bevis for formlen for kendt punkt og hældningstallet', dur: '3 min', ytId: 'pwGkXva1thM' }
+  ]},
+  { title: 'Lineære Funktioner — Generel bevis for lineær tilvækst', items: [
+    { type: 'lesson', title: 'Bevis for lineær tilvækst', dur: '5 min', ytId: 'eeAJaH8idu8' },
+    { type: 'lesson', title: 'Bevis gennemgang med eksempler', dur: '5 min', ytId: 'k7m1h2pM1UA' }
+  ]},
+  { title: 'Lineære Funktioner — Fif til mundtlig eksamen', items: [
+    { type: 'lesson', title: 'Råd og fif til eksamen', dur: '6 min', ytId: 'Buz6Fu6RDAw' }
+  ]},
+  { title: 'Eksponentielle Funktioner — a\'s betydning (tilvækst)', items: [
+    { type: 'lesson', title: 'Bevis for a\'s betydning for grafen', dur: '8 min', ytId: 'StoboBCFDk0' }
+  ]},
+  { title: 'Eksponentielle Funktioner — To punkts formel for tallet a', items: [
+    { type: 'lesson', title: 'Beregning af tallet a givet to punkter', dur: '4 min', ytId: 'V6y3aHGRBK0' }
+  ]},
+  { title: 'Eksponentielle Funktioner — b\'s betydning', items: [
+    { type: 'lesson', title: 'Bevis for b\'s betydning og beregning ud fra to punkter', dur: '4 min', ytId: '49bdY49eEyE' }
+  ]},
+  { title: 'Eksponentielle Funktioner — Skæring med akserne', items: [
+    { type: 'lesson', title: 'Bevis for skæring med akserne', dur: '4 min', ytId: '837dzEHlz3s' }
+  ]},
+  { title: 'Eksponentielle Funktioner — Fordoblingskonstanten', items: [
+    { type: 'lesson', title: 'Bevis for fordoblingskonstanten', dur: '6 min', ytId: 'EHkfkEESk7M' }
+  ]},
+  { title: 'Eksponentielle Funktioner — Halveringskonstanten', items: [
+    { type: 'lesson', title: 'Bevis for halveringskonstanten', dur: '5 min', ytId: 'EHhYZJbMZt0' }
+  ]},
+  { title: 'Eksponentielle Funktioner — Fif til mundtlig eksamen', items: [
+    { type: 'lesson', title: 'FIF og råd til mundtlig eksamen', dur: '7 min', ytId: 'Pss4YvjYV-k' }
+  ]},
+  { title: 'Geometri og Trigonometri — Vinkelsum i trekant', items: [
+    { type: 'lesson', title: 'Bevis for vinkelsummen i en trekant er 180 grader', dur: '4 min', ytId: 'RGYpvoHdReE' }
+  ]},
+  { title: 'Geometri og Trigonometri — Pythagoras sætning', items: [
+    { type: 'lesson', title: 'Pythagoras sætning for retvinklede trekanter', dur: '9 min', ytId: 'JM48jWoVyZQ' }
+  ]},
+  { title: 'Geometri og Trigonometri — Cos, Sin og Tan-formlerne', items: [
+    { type: 'lesson', title: 'Bevis for Cos, Sin og Tan-formlerne', dur: '8 min', ytId: 'LnIRO2EGuaU' }
+  ]},
+  { title: 'Geometri og Trigonometri — Areal af trekant med sinus', items: [
+    { type: 'lesson', title: 'Bevis for areal med sinusformlen', dur: '4 min', ytId: 'U1YKi_a0St8' }
+  ]},
+  { title: 'Geometri og Trigonometri — Fif til eksamen', items: [
+    { type: 'lesson', title: 'Gode råd og fif til eksamen', dur: '10 min', ytId: 'FcSYEFpe0UM' }
+  ]},
+  { title: 'Sandsynlighed — Symmetrisk sandsynlighedsfelt', items: [
+    { type: 'lesson', title: 'Bevis for sandsynlighed i et symmetrisk sandsynlighedsfelt', dur: '3 min', ytId: 'G7xe-R2fitA' }
+  ]},
+  { title: 'Sandsynlighed — Hændelse', items: [
+    { type: 'lesson', title: 'Bevis for hændelse-sandsynlighed', dur: '3 min', ytId: 'NVzgElxgBss' }
+  ]},
+  { title: 'Sandsynlighed — Permutation og kombination', items: [
+    { type: 'lesson', title: 'Bevis for sammenhæng mellem permutation og kombination', dur: '9 min', ytId: 'l65lX-K10rs' }
+  ]},
+  { title: 'Sandsynlighed — Fif til mundtlig eksamen', items: [
+    { type: 'lesson', title: 'Råd og fif til mundtlig eksamen', dur: '8 min', ytId: 'JKeUjcE5bmY' }
+  ]},
+  { title: '10-tals Logaritmer — Regneregler', items: [
+    { type: 'lesson', title: 'Logaritmeregneregler — beviserne', dur: '8 min', ytId: 'k5lEkpp-vNg' }
+  ]},
+  { title: 'Potens-funktioner — a og b grafisk betydning', items: [
+    { type: 'lesson', title: 'a og b grafisk betydning samt bevis for x-tilvækst', dur: '6 min', ytId: 'tI6NmdwT284' }
+  ]},
+  { title: 'Potens-funktioner — To punkts formel', items: [
+    { type: 'lesson', title: 'Bevis for to punkts formlen', dur: '5 min', ytId: 'jA8Ov3N3iXs' }
+  ]},
+  { title: 'Potens-funktioner — Vækstrate', items: [
+    { type: 'lesson', title: 'Bevis for procent-procent vækstrate', dur: '3 min', ytId: 'biKcNOnIU1M' }
+  ]},
+  { title: 'Potens-funktioner — Fif til mundtlig eksamen', items: [
+    { type: 'lesson', title: 'Råd og fif til mundtlig eksamen', dur: '6 min', ytId: 'RB95bG10XOM' }
   ]}
 ];
 
