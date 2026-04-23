@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nemmat-v17';
+const CACHE_NAME = 'nemmat-v18';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE = [

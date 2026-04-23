@@ -736,36 +736,75 @@ const BEVISER_CURRICULUM = [
   ]}
 ];
 
-// ── POTENS-FUNKTIONER HF-B — ingen scraped, placeholder ──
+// ── POTENS-FUNKTIONER HF-B — scraped fra nemmat.dk (6 lektioner, tekst-only) ──
 const POTENS_CURRICULUM = [
-  { title: '1. Potensfunktioner', items: [
-    { type: 'lesson', title: 'Teori – Hvad er en potensfunktion?', dur: '5 min' },
-    { type: 'lesson', title: 'Teori – Grafisk billede', dur: '5 min' }
+  { title: '1. Motivation, Forskrift og Graf', items: [
+    { type: 'lesson', title: 'Motivation', dur: '3 min' },
+    { type: 'lesson', title: 'Forskrift og Graf', dur: '6 min' }
   ]},
-  { title: '2. Regneregler', items: [
-    { type: 'lesson', title: 'Teori – Regneregler for potenser', dur: '5 min' }
+  { title: '2. Tallet a\'s betydning', items: [
+    { type: 'lesson', title: 'Betydning af tallet a', dur: '3 min' }
   ]},
-  { title: '3. Potensregression', items: [
-    { type: 'lesson', title: 'Teori – Potensregression', dur: '5 min' }
+  { title: '3. Beregning af forskrift ved hjælp af to punkts formlerne', items: [
+    { type: 'lesson', title: 'Beregning af forskrift givet to punkter', dur: '4 min' }
+  ]},
+  { title: '4. Relativ vækstrate', items: [
+    { type: 'lesson', title: 'Procent-procent vækstrate', dur: '6 min' }
+  ]},
+  { title: '5. Oversigt over de tre elementære funktioner', items: [
+    { type: 'lesson', title: 'Oversigt over de tre elementære funktioner', dur: '9 min' }
   ]}
 ];
 
-// ── SANDSYNLIGHED OG STATISTIK B-NIVEAU — ingen scraped, placeholder ──
+// ── SANDSYNLIGHED OG STATISTIK B-NIVEAU — scraped fra nemmat.dk (24 lektioner, alle med video) ──
 const SANDSTAT_B_CURRICULUM = [
-  { title: '1. Stokastiske variable', items: [
-    { type: 'lesson', title: 'Teori – Stokastiske variable', dur: '5 min' }
+  { title: '1. Motivation', items: [
+    { type: 'lesson', title: 'Teori – Motivation og eksperimenter med sandsynligheder', dur: '6 min', ytId: 'tVzzfK5yq_U' }
   ]},
-  { title: '2. Binomialfordeling', items: [
-    { type: 'lesson', title: 'Teori – Binomialfordeling', dur: '6 min' }
+  { title: '2. Sandsynlighedsfelt', items: [
+    { type: 'lesson', title: 'Teori – Sandsynlighedsfelt', dur: '7 min', ytId: 'UDAoi8LbPdU' }
   ]},
-  { title: '3. Normalfordeling', items: [
-    { type: 'lesson', title: 'Teori – Normalfordeling', dur: '6 min' }
+  { title: '3. Sandsynlighed med hændelser', items: [
+    { type: 'lesson', title: 'Teori – Uafhængighed og enten-eller-sandsynligheder', dur: '8 min', ytId: '8AnJmDvZ6uA' }
   ]},
-  { title: '4. Hypotesetest', items: [
-    { type: 'lesson', title: 'Teori – Hypotesetest', dur: '6 min' }
+  { title: '4. Kombinatorik', items: [
+    { type: 'lesson', title: 'Teori – Kombinatorik', dur: '8 min', ytId: '8zEVneRYe5k' }
   ]},
-  { title: '5. Konfidensintervaller', items: [
-    { type: 'lesson', title: 'Teori – Konfidensintervaller', dur: '5 min' }
+  { title: '5. Multiplikations- og additionsprincipperne', items: [
+    { type: 'lesson', title: 'Teori – Kunsten at tælle muligheder med gange og plus', dur: '4 min', ytId: '4vmI-3JXdIs' }
+  ]},
+  { title: '6. Stokastisk variabel', items: [
+    { type: 'lesson', title: 'Teori – Stokastisk variabel', dur: '6 min', ytId: '0-1O0SaVlJw' },
+    { type: 'lesson', title: 'Teori – Eksempel på sandsynlighedsfordeling for stokastisk variabel', dur: '4 min', ytId: 'bcEceISlwPE' },
+    { type: 'lesson', title: 'Teori – Middelværdi, varians og spredning for stokastisk variabel', dur: '5 min', ytId: 'UnfS4uOp0Zc' }
+  ]},
+  { title: '7. Binomialfordeling', items: [
+    { type: 'lesson', title: 'Teori – Binomialfordeling gennemgang med eksempel', dur: '9 min', ytId: '2jhFVza3FvQ' },
+    { type: 'lesson', title: 'Teori – Sandsynlighedstabel, middelværdi og spredning for binomialfordeling', dur: '5 min', ytId: 'IBZ8_7NFq1s' }
+  ]},
+  { title: '8. Binomialtest', items: [
+    { type: 'lesson', title: 'Binomialtest – Teori', dur: '5 min', ytId: 'RW8pQB3l7BM' },
+    { type: 'lesson', title: 'Teori – Binomialtest del 1 med GeoGebra', dur: '7 min', ytId: 'kkoIFt2PTYA' },
+    { type: 'lesson', title: 'Teori – Binomialtest del 2 med GeoGebra', dur: '10 min', ytId: 'A4s4YRR8q7g' }
+  ]},
+  { title: '9. Konfidensinterval for binomialfordeling', items: [
+    { type: 'lesson', title: 'Teori – Konfidensinterval for binomialfordeling', dur: '7 min', ytId: 'F1LhmKOnJvc' }
+  ]},
+  { title: '10. Betinget sandsynlighed og krydstabeller (supplerende stof)', items: [
+    { type: 'lesson', title: 'Krydstabeller og sandsynlighedsberegning', dur: '6 min', ytId: '4JDZ8qCiS-c' },
+    { type: 'lesson', title: 'Krydstabeller og uafhængighed', dur: '4 min', ytId: 'olFJD5tpiHI' }
+  ]},
+  { title: '11. Betinget sandsynlighed (supplerende stof)', items: [
+    { type: 'lesson', title: 'Intro til mængdelære', dur: '9 min', ytId: 'SCuGnCfYcQQ' },
+    { type: 'lesson', title: 'Sandsynlighedsberegning med hændelser', dur: '6 min', ytId: 'wpMlTBAWUj8' },
+    { type: 'lesson', title: 'Betinget sandsynlighed del 1/3', dur: '7 min', ytId: 'Lvnm7F1rQag' },
+    { type: 'lesson', title: 'Betinget sandsynlighed del 2/3', dur: '5 min', ytId: 'IZ0aI3iv-6g' },
+    { type: 'lesson', title: 'Betinget sandsynlighed del 3/3', dur: '5 min', ytId: 'N1G6CW--UJg' },
+    { type: 'lesson', title: 'Bayes\' formel', dur: '7 min', ytId: 'qYSPn5I32d4' }
+  ]},
+  { title: '12. Chi-i-anden og goodness-of-fit-test (supplerende stof)', items: [
+    { type: 'lesson', title: 'Goodness-of-fit-test (GOF)', dur: '8 min', ytId: 'jWdr0xDhLu8' },
+    { type: 'lesson', title: 'Uafhængighedstest', dur: '8 min', ytId: 'yJRb5txa2Bg' }
   ]}
 ];
 
