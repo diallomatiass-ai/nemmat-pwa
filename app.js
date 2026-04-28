@@ -739,62 +739,83 @@ const BEVISER_CURRICULUM = [
 // ── POTENS-FUNKTIONER HF-B — scraped fra nemmat.dk (6 lektioner, tekst-only) ──
 const POTENS_CURRICULUM = [
   { title: '1. Motivation, Forskrift og Graf', items: [
-    { type: 'lesson', title: 'Motivation', dur: '3 min' },
-    { type: 'lesson', title: 'Forskrift og Graf', dur: '6 min' }
+    { type: 'lesson', title: 'Motivation', dur: '3 min', ytId: 'ugnlvFTtV6g' },
+    { type: 'lesson', title: 'Forskrift og Graf', dur: '6 min', ytId: 'AN6aqzmD6r0' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '9 spørgsmål' }
   ]},
   { title: '2. Tallet a\'s betydning', items: [
-    { type: 'lesson', title: 'Betydning af tallet a', dur: '3 min' }
+    { type: 'lesson', title: 'Betydning af tallet a', dur: '3 min', ytId: 'x3FIBPqvACo' }
   ]},
   { title: '3. Beregning af forskrift ved hjælp af to punkts formlerne', items: [
-    { type: 'lesson', title: 'Beregning af forskrift givet to punkter', dur: '4 min' }
+    { type: 'lesson', title: 'Beregning af forskrift givet to punkter', dur: '4 min', ytId: 'voogOB81XAw' },
+    { type: 'quiz',   title: 'Test din forståelse', dur: '4 spørgsmål' }
   ]},
   { title: '4. Relativ vækstrate', items: [
-    { type: 'lesson', title: 'Procent-procent vækstrate', dur: '6 min' }
+    { type: 'lesson', title: 'Procent-procent vækstrate', dur: '6 min', ytId: 'pQflZ-vZszs' },
+    { type: 'quiz',   title: 'Test din forståelse med potens modeller og relativ vækst', dur: '6 spørgsmål' }
   ]},
   { title: '5. Oversigt over de tre elementære funktioner', items: [
-    { type: 'lesson', title: 'Oversigt over de tre elementære funktioner', dur: '9 min' }
+    { type: 'lesson', title: 'Oversigt over de tre elementære funktioner', dur: '9 min', ytId: 'zurB3tkWEug' }
+  ]},
+  { title: '6. Eksamensøvelser', items: [
+    { type: 'quiz', title: 'Delprøve 1 uden hjælpemidler', dur: '7 spørgsmål' },
+    { type: 'quiz', title: 'Delprøve 2 med hjælpemidler (potens regressions-opgaver)', dur: '15 spørgsmål' }
   ]}
 ];
 
-// ── SANDSYNLIGHED OG STATISTIK B-NIVEAU — scraped fra nemmat.dk (24 lektioner, alle med video) ──
+// ── SANDSYNLIGHED OG STATISTIK B-NIVEAU — scraped fra nemmat.dk (24 lektioner, 10 quizzer) ──
 const SANDSTAT_B_CURRICULUM = [
   { title: '1. Motivation', items: [
     { type: 'lesson', title: 'Teori – Motivation og eksperimenter med sandsynligheder', dur: '6 min', ytId: 'tVzzfK5yq_U' }
   ]},
   { title: '2. Sandsynlighedsfelt', items: [
-    { type: 'lesson', title: 'Teori – Sandsynlighedsfelt', dur: '7 min', ytId: 'UDAoi8LbPdU' }
+    { type: 'lesson', title: 'Teori – Sandsynlighedsfelt', dur: '7 min', ytId: 'UDAoi8LbPdU' },
+    { type: 'quiz',   title: 'Test din forståelse med brug af sandsynlighedsfelt', dur: '6 spørgsmål' }
   ]},
-  { title: '3. Sandsynlighed med hændelser', items: [
-    { type: 'lesson', title: 'Teori – Uafhængighed og enten-eller-sandsynligheder', dur: '8 min', ytId: '8AnJmDvZ6uA' }
+  { title: '3. Uafhængig og enten-eller-hændelser', items: [
+    { type: 'lesson', title: 'Teori – Uafhængighed og enten-eller-sandsynligheder', dur: '8 min', ytId: '8AnJmDvZ6uA' },
+    { type: 'quiz',   title: 'Test din forståelse af hændelser', dur: '2 spørgsmål' }
   ]},
-  { title: '4. Kombinatorik', items: [
-    { type: 'lesson', title: 'Teori – Kombinatorik', dur: '8 min', ytId: '8zEVneRYe5k' }
-  ]},
-  { title: '5. Multiplikations- og additionsprincipperne', items: [
-    { type: 'lesson', title: 'Teori – Kunsten at tælle muligheder med gange og plus', dur: '4 min', ytId: '4vmI-3JXdIs' }
-  ]},
-  { title: '6. Stokastisk variabel', items: [
+  { title: '4. Stokastisk variabel', items: [
     { type: 'lesson', title: 'Teori – Stokastisk variabel', dur: '6 min', ytId: '0-1O0SaVlJw' },
     { type: 'lesson', title: 'Teori – Eksempel på sandsynlighedsfordeling for stokastisk variabel', dur: '4 min', ytId: 'bcEceISlwPE' },
-    { type: 'lesson', title: 'Teori – Middelværdi, varians og spredning for stokastisk variabel', dur: '5 min', ytId: 'UnfS4uOp0Zc' }
+    { type: 'lesson', title: 'Teori – Middelværdi, varians og spredning for stokastisk variabel', dur: '5 min', ytId: 'UnfS4uOp0Zc' },
+    { type: 'quiz',   title: 'Test din viden om stokastisk variable', dur: '10 spørgsmål' }
+  ]},
+  { title: '5. Kombinatorik', items: [
+    { type: 'lesson', title: 'Teori – Kombinatorik', dur: '8 min', ytId: '8zEVneRYe5k' },
+    { type: 'quiz',   title: 'Test din forståelse af kombination og permutation', dur: '6 spørgsmål' }
+  ]},
+  { title: '6. Multiplikations- og additionsprincipperne', items: [
+    { type: 'lesson', title: 'Teori – Kunsten at tælle muligheder med gange og plus', dur: '4 min', ytId: '4vmI-3JXdIs' },
+    { type: 'quiz',   title: 'Test din viden om principperne', dur: '3 spørgsmål' }
   ]},
   { title: '7. Binomialfordeling', items: [
     { type: 'lesson', title: 'Teori – Binomialfordeling gennemgang med eksempel', dur: '9 min', ytId: '2jhFVza3FvQ' },
-    { type: 'lesson', title: 'Teori – Sandsynlighedstabel, middelværdi og spredning for binomialfordeling', dur: '5 min', ytId: 'IBZ8_7NFq1s' }
+    { type: 'lesson', title: 'Teori – Sandsynlighedstabel, middelværdi og spredning for binomialfordeling', dur: '5 min', ytId: 'IBZ8_7NFq1s' },
+    { type: 'quiz',   title: 'Test din forståelse med binomialfordeling', dur: '9 spørgsmål' }
   ]},
   { title: '8. Binomialtest', items: [
     { type: 'lesson', title: 'Binomialtest – Teori', dur: '5 min', ytId: 'RW8pQB3l7BM' },
     { type: 'lesson', title: 'Teori – Binomialtest del 1 med GeoGebra', dur: '7 min', ytId: 'kkoIFt2PTYA' },
-    { type: 'lesson', title: 'Teori – Binomialtest del 2 med GeoGebra', dur: '10 min', ytId: 'A4s4YRR8q7g' }
+    { type: 'lesson', title: 'Teori – Binomialtest del 2 med GeoGebra', dur: '10 min', ytId: 'A4s4YRR8q7g' },
+    { type: 'quiz',   title: 'Test din forståelse af binomial-test', dur: '3 spørgsmål' }
   ]},
   { title: '9. Konfidensinterval for binomialfordeling', items: [
-    { type: 'lesson', title: 'Teori – Konfidensinterval for binomialfordeling', dur: '7 min', ytId: 'F1LhmKOnJvc' }
+    { type: 'lesson', title: 'Teori – Konfidensinterval for binomialfordeling', dur: '7 min', ytId: 'F1LhmKOnJvc' },
+    { type: 'quiz',   title: 'Test din viden om konfidensinterval', dur: '3 spørgsmål' }
   ]},
-  { title: '10. Betinget sandsynlighed og krydstabeller (supplerende stof)', items: [
+  { title: '10. Eksamensøvelser uden hjælpemidler', items: [
+    { type: 'quiz', title: 'Eksamensligende opgaver u. hjælp', dur: '22 spørgsmål' }
+  ]},
+  { title: '11. Eksamensøvelser med alle tilladte hjælpemidler', items: [
+    { type: 'quiz', title: 'Eksamensligende opgaver m. hjælp', dur: '13 spørgsmål' }
+  ]},
+  { title: '12. Betinget sandsynlighed og krydstabeller (supplerende stof)', items: [
     { type: 'lesson', title: 'Krydstabeller og sandsynlighedsberegning', dur: '6 min', ytId: '4JDZ8qCiS-c' },
     { type: 'lesson', title: 'Krydstabeller og uafhængighed', dur: '4 min', ytId: 'olFJD5tpiHI' }
   ]},
-  { title: '11. Betinget sandsynlighed (supplerende stof)', items: [
+  { title: '13. Betinget sandsynlighed (supplerende stof)', items: [
     { type: 'lesson', title: 'Intro til mængdelære', dur: '9 min', ytId: 'SCuGnCfYcQQ' },
     { type: 'lesson', title: 'Sandsynlighedsberegning med hændelser', dur: '6 min', ytId: 'wpMlTBAWUj8' },
     { type: 'lesson', title: 'Betinget sandsynlighed del 1/3', dur: '7 min', ytId: 'Lvnm7F1rQag' },
@@ -802,7 +823,7 @@ const SANDSTAT_B_CURRICULUM = [
     { type: 'lesson', title: 'Betinget sandsynlighed del 3/3', dur: '5 min', ytId: 'N1G6CW--UJg' },
     { type: 'lesson', title: 'Bayes\' formel', dur: '7 min', ytId: 'qYSPn5I32d4' }
   ]},
-  { title: '12. Chi-i-anden og goodness-of-fit-test (supplerende stof)', items: [
+  { title: '14. Chi-i-anden og goodness-of-fit-test (supplerende stof)', items: [
     { type: 'lesson', title: 'Goodness-of-fit-test (GOF)', dur: '8 min', ytId: 'jWdr0xDhLu8' },
     { type: 'lesson', title: 'Uafhængighedstest', dur: '8 min', ytId: 'yJRb5txa2Bg' }
   ]}
@@ -2991,6 +3012,9 @@ const SCRAPED_SLUG_MAP = {
   'procent-og-rente-stx': 'procent-og-rentesregning',
   'tal-hhx-c': 'tal-og-algebra-hf-c',
   'ligninger-hhx-c': 'ligninger-hf-c',
+  // HF-B-kurser scraped via submit-quiz endpoint (kræver enrollment)
+  'potens-funktioner-hf-b': 'potens-funktioner-hf-b',
+  'sandstat-b-gym': 'sandsynlighedsregning-og-statistik-hf-b',
 };
 
 // Returnér quiz-index (0,1,2…) for section-item key ved at tælle forudgående quiz-items i curriculum
