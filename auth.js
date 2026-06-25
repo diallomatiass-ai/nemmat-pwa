@@ -95,6 +95,32 @@
       (data || []).forEach(r => { counts[r.user_id] = (counts[r.user_id] || 0) + 1; });
       return counts;
     },
+
+    // ── QUIZ-OVERRIDES (admin-redigeret indhold) ──
+    async loadQuizOverrides() {
+      if (!client) return;
+      try {
+        const { data } = await client.from('quiz_overrides').select('course_slug,quiz_key,questions');
+        const map = {};
+        (data || []).forEach(r => { map[r.course_slug + '::' + r.quiz_key] = r.questions; });
+        window.QUIZ_OVERRIDES = map;
+      } catch (e) { window.QUIZ_OVERRIDES = window.QUIZ_OVERRIDES || {}; }
+    },
+    async saveQuizOverride(slug, key, questions) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('quiz_overrides').upsert(
+        { course_slug: slug, quiz_key: key, questions, updated_by: this.user.id, updated_at: new Date().toISOString() },
+        { onConflict: 'course_slug,quiz_key' });
+      if (error) throw error;
+      window.QUIZ_OVERRIDES = window.QUIZ_OVERRIDES || {};
+      window.QUIZ_OVERRIDES[slug + '::' + key] = questions;
+    },
+    async deleteQuizOverride(slug, key) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('quiz_overrides').delete().eq('course_slug', slug).eq('quiz_key', key);
+      if (error) throw error;
+      if (window.QUIZ_OVERRIDES) delete window.QUIZ_OVERRIDES[slug + '::' + key];
+    },
   };
 
   async function refresh() {
@@ -104,6 +130,7 @@
         Auth.user = data.session ? data.session.user : null;
         await Auth._loadProfile();
       } catch (e) { Auth.user = null; Auth.profile = null; }
+      await Auth.loadQuizOverrides();
     }
     if (typeof window.onAuthChanged === 'function') await window.onAuthChanged();
   }

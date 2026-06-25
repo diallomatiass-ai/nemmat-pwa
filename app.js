@@ -3164,6 +3164,9 @@ function _mapScrapedQuestions(scrapedQuiz) {
 
 function getQuizData(key) {
   const slug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
+  // 0. Admin-redigeret override vinder altid
+  const ov = window.QUIZ_OVERRIDES && window.QUIZ_OVERRIDES[slug + '::' + key];
+  if (ov && ov.length) return ov;
   // 1. Forsøg scraped data først (nemmat.dk — har videoer)
   const nemmatSlug = SCRAPED_SLUG_MAP[slug];
   if (nemmatSlug && window.SCRAPED_QUIZZES?.[nemmatSlug]) {
@@ -4255,8 +4258,180 @@ function renderAdmin() {
           </tbody>
         </table>
       </div>
-      <p style="margin-top:18px;color:var(--muted);font-size:13px">Quiz-editor (redigér spørgsmål/videoer) kommer i næste trin.</p>
+      <h2 style="margin-top:40px;font-size:20px">Quiz-editor</h2>
+      <p class="info-lead" style="margin-bottom:14px">Vælg et kursus og en quiz for at tilføje eller rette spørgsmål, svar og forklaringsvideoer. Ændringer vises straks for alle elever.</p>
+      <div class="qe-pickers">
+        <label>Kursus
+          <select id="qe-course" onchange="qeSelectCourse(this.value)">
+            <option value="">— vælg kursus —</option>
+            ${_allCourses().map(c => `<option value="${c.slug}">${esc0(c.title)} (${c.exam}${c.niveau ? ' '+c.niveau : ''})</option>`).join('')}
+          </select>
+        </label>
+        <label>Quiz
+          <select id="qe-quiz" onchange="qeSelectQuiz(this.value)" disabled>
+            <option value="">— vælg kursus først —</option>
+          </select>
+        </label>
+      </div>
+      <div id="qe-editor"></div>
     </div>`;
+}
+
+// Hjælpe-escape (bruges i admin-render)
+function esc0(s) { return (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── QUIZ-EDITOR STATE ──
+let _qe = { slug: '', key: '', questions: [] };
+
+function qeQuizzesFor(slug) {
+  const cur = (slug === 'vektorer-matematik-b-stx-2aar')
+    ? (typeof VEKTORER_CURRICULUM !== 'undefined' ? VEKTORER_CURRICULUM : [])
+    : (ALL_CURRICULA[slug] || []);
+  const out = [];
+  cur.forEach((sec, si) => (sec.items || []).forEach((it, ii) => {
+    if (it.type === 'quiz') out.push({ key: si + '-' + ii, title: (sec.title ? sec.title + ' · ' : '') + it.title });
+  }));
+  return out;
+}
+
+function qeLoadQuestions(slug, key) {
+  const saved = currentCourse;
+  currentCourse = { slug, title: slug };
+  let qs = null;
+  try { qs = getQuizData(key); } catch (e) {}
+  currentCourse = saved;
+  return qs ? JSON.parse(JSON.stringify(qs)) : [];
+}
+
+function qeSelectCourse(slug) {
+  _qe = { slug, key: '', questions: [] };
+  const qSel = document.getElementById('qe-quiz');
+  const ed = document.getElementById('qe-editor');
+  if (ed) ed.innerHTML = '';
+  if (!qSel) return;
+  if (!slug) { qSel.disabled = true; qSel.innerHTML = '<option value="">— vælg kursus først —</option>'; return; }
+  const quizzes = qeQuizzesFor(slug);
+  qSel.disabled = false;
+  qSel.innerHTML = '<option value="">— vælg quiz —</option>' +
+    quizzes.map(q => `<option value="${q.key}">${esc0(q.title)}</option>`).join('');
+}
+
+function qeSelectQuiz(key) {
+  if (!key) { _qe.key = ''; _qe.questions = []; const ed = document.getElementById('qe-editor'); if (ed) ed.innerHTML = ''; return; }
+  _qe.key = key;
+  _qe.questions = qeLoadQuestions(_qe.slug, key);
+  qeRender();
+}
+
+// Læs DOM-værdier ind i _qe.questions så de overlever en re-render
+function qeSyncFromDOM() {
+  const ed = document.getElementById('qe-editor');
+  if (!ed) return;
+  ed.querySelectorAll('.qe-q').forEach((qEl, qi) => {
+    if (!_qe.questions[qi]) return;
+    const qt = qEl.querySelector('.qe-q-text');
+    if (qt) _qe.questions[qi].q = qt.value;
+    const yt = qEl.querySelector('.qe-q-yt');
+    if (yt) _qe.questions[qi].ytId = yt.value.trim() || null;
+    const opts = [];
+    let correct = _qe.questions[qi].ans || 0;
+    qEl.querySelectorAll('.qe-opt').forEach((oEl, oi) => {
+      const inp = oEl.querySelector('.qe-opt-text');
+      opts.push(inp ? inp.value : '');
+      const r = oEl.querySelector('.qe-opt-correct');
+      if (r && r.checked) correct = oi;
+    });
+    _qe.questions[qi].opts = opts;
+    _qe.questions[qi].ans = correct;
+  });
+}
+
+function qeRender() {
+  const ed = document.getElementById('qe-editor');
+  if (!ed) return;
+  if (!_qe.key) { ed.innerHTML = ''; return; }
+  const qs = _qe.questions;
+  ed.innerHTML = `
+    <div class="qe-box">
+      ${qs.map((q, qi) => `
+        <div class="qe-q" data-qi="${qi}">
+          <div class="qe-q-head">
+            <span class="qe-q-num">Spørgsmål ${qi + 1}</span>
+            <button class="qe-btn-del" onclick="qeRemoveQuestion(${qi})" title="Slet spørgsmål">🗑</button>
+          </div>
+          <textarea class="qe-q-text" rows="2" placeholder="Skriv spørgsmålet…">${esc0(q.q || '')}</textarea>
+          <div class="qe-opts">
+            ${(q.opts || []).map((o, oi) => `
+              <div class="qe-opt">
+                <input type="radio" class="qe-opt-correct" name="qe-correct-${qi}" ${q.ans === oi ? 'checked' : ''} title="Markér som rigtigt svar">
+                <input type="text" class="qe-opt-text" value="${esc0(o)}" placeholder="Svarmulighed ${oi + 1}">
+                <button class="qe-btn-del" onclick="qeRemoveOption(${qi},${oi})" title="Fjern svar">✕</button>
+              </div>`).join('')}
+          </div>
+          <button class="qe-btn-add" onclick="qeAddOption(${qi})">+ Tilføj svar</button>
+          <label class="qe-yt-label">YouTube-video-ID (forklaring, valgfri)
+            <input type="text" class="qe-q-yt" value="${esc0(q.ytId || '')}" placeholder="fx dQw4w9WgXcQ">
+          </label>
+        </div>`).join('')}
+      <button class="qe-btn-add qe-btn-addq" onclick="qeAddQuestion()">+ Tilføj spørgsmål</button>
+      <div class="qe-actions">
+        <button class="btn-auth" onclick="qeSave()">💾 Gem quiz</button>
+        ${(window.QUIZ_OVERRIDES && window.QUIZ_OVERRIDES[_qe.slug + '::' + _qe.key]) ? `<button class="btn-logout" onclick="qeReset()">↩︎ Nulstil til original</button>` : ''}
+        <span id="qe-status" class="auth-msg"></span>
+      </div>
+    </div>`;
+}
+
+function qeAddQuestion() { qeSyncFromDOM(); _qe.questions.push({ q: '', opts: ['', ''], ans: 0, ytId: null }); qeRender(); }
+function qeRemoveQuestion(qi) { qeSyncFromDOM(); _qe.questions.splice(qi, 1); qeRender(); }
+function qeAddOption(qi) { qeSyncFromDOM(); (_qe.questions[qi].opts = _qe.questions[qi].opts || []).push(''); qeRender(); }
+function qeRemoveOption(qi, oi) {
+  qeSyncFromDOM();
+  const q = _qe.questions[qi];
+  if (q.opts.length <= 2) { alert('En quiz skal have mindst 2 svarmuligheder.'); return; }
+  q.opts.splice(oi, 1);
+  if (q.ans >= q.opts.length) q.ans = 0;
+  qeRender();
+}
+
+async function qeSave() {
+  qeSyncFromDOM();
+  const status = document.getElementById('qe-status');
+  // validér
+  for (let i = 0; i < _qe.questions.length; i++) {
+    const q = _qe.questions[i];
+    if (!(q.q || '').trim()) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} mangler tekst.</span>`; return; }
+    const opts = (q.opts || []).filter(o => (o || '').trim());
+    if (opts.length < 2) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} skal have mindst 2 udfyldte svar.</span>`; return; }
+  }
+  if (!_qe.questions.length) { if (status) status.innerHTML = '<span class="auth-err">Tilføj mindst ét spørgsmål.</span>'; return; }
+  if (status) status.textContent = 'Gemmer…';
+  try {
+    // ryd tomme svar væk og normalisér
+    const clean = _qe.questions.map(q => {
+      const opts = (q.opts || []).map(o => (o || '').trim()).filter(Boolean);
+      let ans = q.ans || 0; if (ans >= opts.length) ans = 0;
+      return { q: (q.q || '').trim(), opts, ans, ytId: (q.ytId || '').trim() || null };
+    });
+    await Auth.saveQuizOverride(_qe.slug, _qe.key, clean);
+    _qe.questions = JSON.parse(JSON.stringify(clean));
+    if (status) status.innerHTML = '<span class="auth-ok">✅ Gemt! Ændringen er nu live for alle elever.</span>';
+    qeRender();
+  } catch (e) {
+    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${e.message || ''}</span>`;
+  }
+}
+
+async function qeReset() {
+  if (!confirm('Slet din redigering og vis det oprindelige indhold igen?')) return;
+  const status = document.getElementById('qe-status');
+  try {
+    await Auth.deleteQuizOverride(_qe.slug, _qe.key);
+    _qe.questions = qeLoadQuestions(_qe.slug, _qe.key);
+    qeRender();
+    const s = document.getElementById('qe-status');
+    if (s) s.innerHTML = '<span class="auth-ok">Nulstillet til original.</span>';
+  } catch (e) { if (status) status.innerHTML = `<span class="auth-err">Kunne ikke nulstille: ${e.message || ''}</span>`; }
 }
 
 async function loadAdminData() {

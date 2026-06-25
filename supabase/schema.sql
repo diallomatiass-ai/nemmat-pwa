@@ -121,10 +121,10 @@ drop policy if exists progress_write on public.progress;
 create policy progress_write on public.progress
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
--- quiz_overrides (alle indloggede læser, kun admin skriver)
+-- quiz_overrides (alle læser så indhold er universelt, kun admin skriver)
 drop policy if exists quiz_overrides_select on public.quiz_overrides;
 create policy quiz_overrides_select on public.quiz_overrides
-  for select using (auth.role() = 'authenticated');
+  for select using (true);
 
 drop policy if exists quiz_overrides_write on public.quiz_overrides;
 create policy quiz_overrides_write on public.quiz_overrides
@@ -135,6 +135,7 @@ grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on public.profiles       to authenticated;
 grant select, insert, update, delete on public.progress       to authenticated;
 grant select, insert, update, delete on public.quiz_overrides to authenticated;
+grant select on public.quiz_overrides to anon;
 
 -- ============================================================
 --  EFTER FØRSTE SIGNUP: gør din egen konto til admin.
