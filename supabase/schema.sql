@@ -79,7 +79,9 @@ language plpgsql security definer
 set search_path = public
 as $$
 begin
-  if not public.is_admin() then
+  -- Beskyt kun mod INDLOGGEDE ikke-admins. Service-role/SQL-editor
+  -- (auth.uid() er null) og admins får lov — så admin-seeding virker.
+  if auth.uid() is not null and not public.is_admin() then
     new.role       := old.role;
     new.membership := old.membership;
   end if;

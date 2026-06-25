@@ -1626,3 +1626,118 @@ h4 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; line
   .search-overlay { padding: 20px 12px; align-items: stretch; }
   .search-box { max-height: calc(100vh - 40px); }
 }
+
+/* ── AUTH (login/signup) ── */
+.auth-form {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 26px 24px;
+  box-shadow: 0 4px 18px rgba(8,38,69,.06);
+}
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dk);
+}
+.auth-form input,
+.auth-form select {
+  font: inherit;
+  font-weight: 400;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fafbfe;
+  color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+}
+.auth-form input:focus,
+.auth-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(53,109,241,.12);
+}
+.btn-auth {
+  margin-top: 4px;
+  padding: 13px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-auth:hover { background: var(--primary-dk); }
+.auth-msg { font-size: 14px; min-height: 2px; text-align: center; }
+.auth-err { color: #d93636; }
+.auth-ok  { color: #1a9b4b; }
+
+/* Konto-konto-række (medlemskab + admin + logud) */
+.konto-account-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.konto-membership {
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #eef2fb;
+  color: var(--primary);
+}
+.konto-membership-pro   { background: #fff3d6; color: #b8860b; }
+.konto-membership-basis { background: #e3f6ec; color: #1a9b4b; }
+.konto-admin-link {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 14px;
+}
+.btn-logout {
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-logout:hover { border-color: #d93636; color: #d93636; }
+
+/* ── ADMIN-PANEL ── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 14px;
+}
+.admin-table th, .admin-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-table th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+.admin-table tr:hover td { background: #fafbfe; }
+.admin-table select {
+  font: inherit;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.admin-role-admin { color: var(--primary); font-weight: 700; }

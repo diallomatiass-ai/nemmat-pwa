@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nemmat-v21';
+const CACHE_NAME = 'nemmat-v22';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE = [
@@ -6,6 +6,8 @@ const PRECACHE = [
   '/index.html',
   '/style.css',
   '/app.js',
+  '/auth.js',
+  '/supabase-config.js',
   '/nemmat-scraped.js',
   '/manifest.json',
   '/offline.html',

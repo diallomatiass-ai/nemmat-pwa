@@ -2843,6 +2843,89 @@ window.addEventListener('popstate', (e) => {
   updateActiveNav(currentPage);
 });
 
+// ── AUTH-INTEGRATION ──
+let _progressMerged = false;
+async function onAuthChanged() {
+  updateAuthUI();
+  if (window.Auth && Auth.isLoggedIn() && !_progressMerged) {
+    _progressMerged = true;
+    try {
+      const dbKeys = await Auth.loadProgressKeys();
+      const dbSet = new Set(dbKeys);
+      const localOnly = [...completedLessons].filter(k => !dbSet.has(k));
+      if (localOnly.length) await Auth.uploadLocalProgress(localOnly);
+      dbKeys.forEach(k => completedLessons.add(k));
+      saveCompleted();
+    } catch (e) { /* offline */ }
+  }
+  if (window.Auth && !Auth.isLoggedIn()) _progressMerged = false;
+  render();
+}
+
+function updateAuthUI() {
+  const acc = document.getElementById('header-account-link');
+  const opret = document.querySelector('.header-right .btn-opret');
+  const loggedIn = window.Auth && Auth.isLoggedIn();
+  if (acc) {
+    acc.innerHTML = loggedIn
+      ? `<span class="konto-icon">👤</span> ${Auth.displayName().split('@')[0]}`
+      : `<span class="konto-icon">👤</span> Min konto`;
+  }
+  if (opret) {
+    if (loggedIn) {
+      opret.textContent = 'Log ud';
+      opret.setAttribute('onclick', 'doLogout();return false;');
+    } else {
+      opret.textContent = 'Opret konto';
+      opret.setAttribute('onclick', "navigate('opret');return false;");
+    }
+  }
+}
+
+async function doSignup(ev) {
+  if (ev) ev.preventDefault();
+  const name = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass = document.getElementById('su-pass').value;
+  const level = document.getElementById('su-level').value;
+  const msg = document.getElementById('auth-msg');
+  if (!name || !email || pass.length < 6) {
+    if (msg) msg.innerHTML = '<span class="auth-err">Udfyld navn, email og en adgangskode på mindst 6 tegn.</span>';
+    return;
+  }
+  if (msg) msg.textContent = 'Opretter konto…';
+  try {
+    const { needsConfirmation } = await Auth.signUp({ name, email, password: pass, examLevel: level });
+    if (needsConfirmation) {
+      if (msg) msg.innerHTML = '<span class="auth-ok">Konto oprettet! Tjek din email for et bekræftelseslink, og log derefter ind.</span>';
+    } else {
+      navigate('konto');
+    }
+  } catch (e) {
+    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke oprette konto.'}</span>`;
+  }
+}
+
+async function doLogin(ev) {
+  if (ev) ev.preventDefault();
+  const email = document.getElementById('li-email').value.trim();
+  const pass = document.getElementById('li-pass').value;
+  const msg = document.getElementById('auth-msg');
+  if (msg) msg.textContent = 'Logger ind…';
+  try {
+    await Auth.signIn(email, pass);
+    navigate('konto');
+  } catch (e) {
+    if (msg) msg.innerHTML = `<span class="auth-err">${(e.message || '').includes('Invalid') ? 'Forkert email eller adgangskode.' : (e.message || 'Kunne ikke logge ind.')}</span>`;
+  }
+}
+
+async function doLogout() {
+  await Auth.signOut();
+  _progressMerged = false;
+  navigate('gymnasium');
+}
+
 function updateActiveNav(page) {
   document.querySelectorAll('.header-nav > ul > li').forEach(li => li.classList.remove('active'));
   const gymPages = ['gymnasium','hf','stx','hhx','hf-c','hf-b'];
@@ -3196,6 +3279,7 @@ function render() {
     case 'kontakt':   app.innerHTML = renderKontakt(); break;
     case 'opret':     app.innerHTML = renderOpret(); break;
     case 'konto':     app.innerHTML = renderKonto(); break;
+    case 'admin':     app.innerHTML = renderAdmin(); break;
     default:          app.innerHTML = renderSimple('Side ikke fundet', ''); break;
   }
   // Fade-in animation
@@ -3203,6 +3287,7 @@ function render() {
   app.offsetHeight; // reflow
   app.style.animation = 'fadeIn .25s ease';
   bindEvents();
+  if (currentPage === 'admin' && window.Auth && Auth.isAdmin()) loadAdminData();
 }
 
 // ── GYMNASIUM SIDE (nemmat.dk/gymnasium) ──
@@ -3980,14 +4065,38 @@ function renderOpret() {
     { name: 'HHX Basis', price: 49.95, level: 'HHX', features: ['Adgang til HHX C- og B-niveau', 'Quizzer og forklaringer', 'Progress tracking'] },
     { name: 'HHX Pro', price: 79.95, level: 'HHX', pro: true, features: ['Alt i Basis', 'Eksamenssæt + rettevejledning', 'AI-baseret personlig hjælp'] },
   ];
+  const signupForm = (window.Auth && Auth.available && !Auth.isLoggedIn()) ? `
+      <form class="auth-form" onsubmit="doSignup(event)">
+        <label>Navn<input type="text" id="su-name" autocomplete="name" required></label>
+        <label>Email<input type="email" id="su-email" autocomplete="email" required></label>
+        <label>Adgangskode<input type="password" id="su-pass" autocomplete="new-password" minlength="6" required placeholder="Mindst 6 tegn"></label>
+        <label>Niveau
+          <select id="su-level">
+            <option value="HF">HF</option>
+            <option value="STX">STX</option>
+            <option value="HHX">HHX</option>
+          </select>
+        </label>
+        <div id="auth-msg" class="auth-msg"></div>
+        <button type="submit" class="btn-auth">Opret gratis konto</button>
+      </form>
+      <p style="text-align:center;margin-top:14px;color:var(--muted)">
+        Har du allerede en konto?
+        <a href="#" onclick="navigate('konto');return false;" class="info-big-link">Log ind →</a>
+      </p>` : (window.Auth && Auth.isLoggedIn() ? `
+      <p style="text-align:center;color:var(--muted)">Du er logget ind som <strong>${Auth.displayName()}</strong>. <a href="#" onclick="navigate('konto');return false;" class="info-big-link">Gå til min konto →</a></p>` : '');
+
   return `
     ${renderBreadcrumb([{label:'Opret konto', page:'opret'}])}
     <div class="info-page">
       <div class="info-hero">
-        <div class="info-hero-badge">🎓 Medlemsskaber</div>
-        <h1>Vælg det medlemsskab der passer dig</h1>
-        <p class="info-lead">Start i dag — alle medlemsskaber kan opsiges når som helst. Prøv gratis de første 7 dage.</p>
+        <div class="info-hero-badge">🎓 Opret konto</div>
+        <h1>Opret din gratis konto</h1>
+        <p class="info-lead">Gem din fremgang i skyen og få adgang på alle dine enheder. Opgrader til premium når som helst.</p>
       </div>
+      ${signupForm}
+      <h2 style="text-align:center;margin:40px 0 4px;font-size:22px">Medlemsskaber</h2>
+      <p class="info-lead" style="text-align:center;margin-bottom:20px">Alle medlemsskaber kan opsiges når som helst.</p>
       <div class="pricing-grid">
         ${tiers.map(t => `
           <div class="pricing-card${t.pro ? ' pricing-pro' : ''}">
@@ -4044,13 +4153,50 @@ function renderKonto() {
           <p style="margin:0;color:var(--muted);font-size:14px">${p.done} / ${p.total} (${cPct}%)</p>
         </div>`;
     }).join('');
+  const loggedIn = window.Auth && Auth.isLoggedIn();
+
+  // ── UDLOGGET: login-formular ──
+  if (window.Auth && Auth.available && !loggedIn) {
+    return `
+    ${renderBreadcrumb([{label:'Log ind', page:'konto'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">🔐 Log ind</div>
+        <h1>Log ind på din konto</h1>
+        <p class="info-lead">Din fremgang gemmes i skyen og følger dig på alle dine enheder.</p>
+      </div>
+      <form class="auth-form" onsubmit="doLogin(event)">
+        <label>Email<input type="email" id="li-email" autocomplete="email" required></label>
+        <label>Adgangskode<input type="password" id="li-pass" autocomplete="current-password" required></label>
+        <div id="auth-msg" class="auth-msg"></div>
+        <button type="submit" class="btn-auth">Log ind</button>
+      </form>
+      <p style="text-align:center;margin-top:18px;color:var(--muted)">
+        Har du ikke en konto?
+        <a href="#" onclick="navigate('opret');return false;" class="info-big-link">Opret konto →</a>
+      </p>
+    </div>`;
+  }
+
+  // ── INDLOGGET (eller offline localStorage-only) ──
+  const name = loggedIn ? Auth.displayName().split('@')[0] : '';
+  const memb = loggedIn ? Auth.membership() : null;
+  const membLabel = { none: 'Gratis', basis: 'Basis', pro: 'Pro' }[memb] || '';
+  const isAdmin = loggedIn && Auth.isAdmin();
   return `
     ${renderBreadcrumb([{label:'Min konto', page:'konto'}])}
     <div class="info-page">
       <div class="info-hero">
         <div class="info-hero-badge">👤 Din konto</div>
-        <h1>Velkommen tilbage</h1>
-        <p class="info-lead">Her kan du se din fremgang på tværs af alle kurser — lokalt gemt i din browser.</p>
+        <h1>Velkommen${name ? ' ' + name : ' tilbage'}</h1>
+        <p class="info-lead">${loggedIn
+          ? 'Din fremgang gemmes i skyen og synkroniseres på tværs af dine enheder.'
+          : 'Her kan du se din fremgang på tværs af alle kurser — lokalt gemt i din browser.'}</p>
+        ${loggedIn ? `<div class="konto-account-row">
+          ${membLabel ? `<span class="konto-membership konto-membership-${memb}">${membLabel}-medlem</span>` : ''}
+          ${isAdmin ? `<a href="#" onclick="navigate('admin');return false;" class="konto-admin-link">⚙️ Admin-panel</a>` : ''}
+          <button class="btn-logout" onclick="doLogout()">Log ud</button>
+        </div>` : ''}
       </div>
       <div class="konto-progress">
         <div class="konto-progress-num">${totalDone} / ${flat.length}</div>
@@ -4070,13 +4216,87 @@ function renderKonto() {
           <h3>Fortsæt læring</h3>
           <p><a href="#" onclick="navigate('gymnasium');return false;" class="info-big-link">Gå til kurser →</a></p>
         </div>
-        <div class="info-card">
+        ${!loggedIn ? `<div class="info-card">
           <div class="info-icon">🔐</div>
-          <h3>Fuld nemmat.dk-konto</h3>
-          <p>Denne PWA gemmer fremgang lokalt. For adgang til premium-indhold: <a href="https://nemmat.dk/lp-profil/" target="_blank" rel="noopener">log ind på nemmat.dk</a>.</p>
-        </div>
+          <h3>Opret en konto</h3>
+          <p>Gem din fremgang i skyen og få adgang på alle enheder. <a href="#" onclick="navigate('opret');return false;" class="info-big-link">Opret konto →</a></p>
+        </div>` : ''}
       </div>
     </div>`;
+}
+
+// ── ADMIN-PANEL ──
+function renderAdmin() {
+  if (!(window.Auth && Auth.isAdmin())) {
+    return `
+      ${renderBreadcrumb([{label:'Admin', page:'admin'}])}
+      <div class="info-page">
+        <div class="info-hero"><div class="info-hero-badge">🔒 Admin</div>
+          <h1>Ingen adgang</h1>
+          <p class="info-lead">Denne side er kun for administratorer.</p>
+        </div>
+        <p style="text-align:center"><a href="#" onclick="navigate('konto');return false;" class="info-big-link">Tilbage til min konto →</a></p>
+      </div>`;
+  }
+  return `
+    ${renderBreadcrumb([{label:'Admin', page:'admin'}])}
+    <div class="info-page">
+      <div class="info-hero"><div class="info-hero-badge">⚙️ Admin-panel</div>
+        <h1>Brugere & medlemskaber</h1>
+        <p class="info-lead">Se alle brugere, deres fremgang og styr medlemskaber.</p>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="admin-table">
+          <thead><tr>
+            <th>Navn</th><th>Email</th><th>Niveau</th><th>Rolle</th><th>Fremgang</th><th>Medlemskab</th>
+          </tr></thead>
+          <tbody id="admin-users-body">
+            <tr><td colspan="6" style="text-align:center;color:var(--muted)">Henter brugere…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:18px;color:var(--muted);font-size:13px">Quiz-editor (redigér spørgsmål/videoer) kommer i næste trin.</p>
+    </div>`;
+}
+
+async function loadAdminData() {
+  const body = document.getElementById('admin-users-body');
+  if (!body) return;
+  try {
+    const [users, counts] = await Promise.all([Auth.adminListUsers(), Auth.adminProgressCounts()]);
+    if (!users.length) {
+      body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted)">Ingen brugere endnu.</td></tr>';
+      return;
+    }
+    const esc = s => (s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'));
+    body.innerHTML = users.map(u => {
+      const done = counts[u.id] || 0;
+      const sel = ['none','basis','pro'].map(m =>
+        `<option value="${m}"${u.membership===m?' selected':''}>${ {none:'Gratis',basis:'Basis',pro:'Pro'}[m] }</option>`).join('');
+      return `<tr>
+        <td>${esc(u.full_name)}</td>
+        <td>${esc(u.email)}</td>
+        <td>${esc(u.exam_level)||'–'}</td>
+        <td class="${u.role==='admin'?'admin-role-admin':''}">${u.role}</td>
+        <td>${done}</td>
+        <td><select onchange="doSetMembership('${u.id}', this.value, this)">${sel}</select></td>
+      </tr>`;
+    }).join('');
+  } catch (e) {
+    body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#d93636">Kunne ikke hente brugere: ${e.message||''}</td></tr>`;
+  }
+}
+
+async function doSetMembership(userId, membership, el) {
+  const prev = el ? el.value : null;
+  try {
+    if (el) el.disabled = true;
+    await Auth.adminSetMembership(userId, membership);
+    if (el) { el.disabled = false; el.style.borderColor = '#1a9b4b'; setTimeout(()=>{ el.style.borderColor=''; }, 900); }
+  } catch (e) {
+    if (el) { el.disabled = false; el.style.borderColor = '#d93636'; }
+    alert('Kunne ikke ændre medlemskab: ' + (e.message || ''));
+  }
 }
 
 // ── BREADCRUMB ──
@@ -4148,6 +4368,7 @@ function markComplete() {
   const key = getLessonKey(currentSection, currentItem);
   completedLessons.add(key);
   saveCompleted();
+  if (window.Auth && Auth.isLoggedIn()) Auth.markProgress(key);
 
   const btn = document.getElementById('btn-complete');
   if (btn) {
@@ -4288,4 +4509,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   navigate('gymnasium');
+
+  // Init auth (Supabase) — opdaterer header + fremgang når session er klar
+  if (window.Auth && Auth.init) Auth.init();
 });
