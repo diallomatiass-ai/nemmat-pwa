@@ -2880,6 +2880,22 @@ function updateAuthUI() {
       opret.setAttribute('onclick', "navigate('opret');return false;");
     }
   }
+  // Mobil-menu: samme opdatering (primær platform)
+  const mKonto = document.querySelector('.mobile-menu-btns .btn-min-konto');
+  const mOpret = document.querySelector('.mobile-menu-btns .btn-opret');
+  if (mKonto) {
+    mKonto.textContent = loggedIn ? Auth.displayName().split('@')[0] : 'Min konto';
+    mKonto.setAttribute('onclick', "navigate('konto');closeMobileMenu();return false;");
+  }
+  if (mOpret) {
+    if (loggedIn) {
+      mOpret.textContent = 'Log ud';
+      mOpret.setAttribute('onclick', 'doLogout();closeMobileMenu();return false;');
+    } else {
+      mOpret.textContent = 'Opret konto';
+      mOpret.setAttribute('onclick', "navigate('opret');closeMobileMenu();return false;");
+    }
+  }
 }
 
 async function doSignup(ev) {
@@ -2902,7 +2918,20 @@ async function doSignup(ev) {
       navigate('konto');
     }
   } catch (e) {
-    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke oprette konto.'}</span>`;
+    const raw = (e.message || '').toLowerCase();
+    let friendly;
+    if (raw.includes('rate limit') || raw.includes('email rate')) {
+      friendly = 'Vi kan ikke sende bekræftelses-emails lige nu. Prøv igen om lidt, eller kontakt os på info@nemmat.dk.';
+    } else if (raw.includes('already registered') || raw.includes('already been registered') || raw.includes('user already')) {
+      friendly = 'Der findes allerede en konto med denne email. <a href="#" onclick="navigate(\'konto\');return false;">Log ind i stedet →</a>';
+    } else if (raw.includes('invalid') && raw.includes('email')) {
+      friendly = 'Email-adressen ser ikke gyldig ud — tjek den igen.';
+    } else if (raw.includes('password')) {
+      friendly = 'Adgangskoden er for svag — brug mindst 6 tegn.';
+    } else {
+      friendly = e.message || 'Kunne ikke oprette konto. Prøv igen.';
+    }
+    if (msg) msg.innerHTML = `<span class="auth-err">${friendly}</span>`;
   }
 }
 
