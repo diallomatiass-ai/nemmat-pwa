@@ -2809,7 +2809,39 @@ function navigate(page, data) {
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
   updateActiveNav(page);
+  _syncHistory();
 }
+
+// ── BROWSER-HISTORIK (tilbage-knap + deep-link) ──
+let _historyReady = false;
+function _syncHistory() {
+  const state = { page: currentPage, course: currentCourse, section: currentSection, item: currentItem };
+  if (!_historyReady) {
+    history.replaceState(state, '', '#' + currentPage);
+    _historyReady = true;
+  } else {
+    history.pushState(state, '', '#' + currentPage);
+  }
+}
+window.addEventListener('popstate', (e) => {
+  const s = e.state;
+  // Luk evt. åbne overlays før vi navigerer tilbage
+  const ov = document.getElementById('search-overlay');
+  if (ov && !ov.hidden) closeSearch();
+  closeMobileMenu();
+  if (s && s.page) {
+    currentPage = s.page;
+    currentCourse = s.course || null;
+    if (typeof s.section === 'number') currentSection = s.section;
+    if (typeof s.item === 'number') currentItem = s.item;
+    if (currentPage === 'lesson') openLessonSections.add(currentSection);
+  } else {
+    currentPage = 'gymnasium';
+    currentCourse = null;
+  }
+  render();
+  updateActiveNav(currentPage);
+});
 
 function updateActiveNav(page) {
   document.querySelectorAll('.header-nav > ul > li').forEach(li => li.classList.remove('active'));
@@ -3428,7 +3460,7 @@ function renderCourse() {
                 <span class="course-enroll-pct">${pct}% gennemført</span>
               </div>` : ''}
               <button class="btn-start-kursus${pct === 100 ? ' done' : ''}" onclick="${btnClick}">${btnLabel}</button>
-              <button class="btn-kob-med">Køb Medlemskab</button>`;
+              <button class="btn-kob-med" onclick="navigate('opret')">Køb Medlemskab</button>`;
           })()}
           <ul class="course-meta-list">
             <li><span class="meta-label">Sektioner</span><span>${curriculum.length}</span></li>
