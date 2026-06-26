@@ -30,19 +30,30 @@
       if (!client || !this.user) { this.profile = null; return; }
       try {
         const { data } = await client.from('profiles').select('*').eq('id', this.user.id).single();
-        this.profile = data || null;
-      } catch (e) { this.profile = null; }
+        // Overskriv KUN ved et rigtigt resultat — en netop oprettet profil kan
+        // lagge bag PostgREST, og et null-svar må ikke nulstille en kendt profil.
+        if (data) this.profile = data;
+        else if (!this.profile) this.profile = null;
+      } catch (e) { if (!this.profile) this.profile = null; }
     },
 
-    // Returnerer { needsConfirmation } — true hvis email-bekræftelse er slået til
+    // Opretter brugeren via DB-funktion (springer GoTrue email-bekræftelse +
+    // free-tier rate-limit over) og logger ind med det samme.
     async signUp({ name, email, password, examLevel }) {
       if (!client) throw new Error('Online-funktioner er ikke tilgængelige lige nu.');
-      const { data, error } = await client.auth.signUp({
-        email, password,
-        options: { data: { full_name: name, exam_level: examLevel } },
+      const { data, error } = await client.rpc('signup', {
+        p_email: (email || '').trim(), p_password: password, p_name: name, p_level: examLevel,
       });
       if (error) throw error;
-      return { needsConfirmation: !data.session };
+      if (data && data.error) throw new Error(data.error);
+      const { error: e2 } = await client.auth.signInWithPassword({ email: (email || '').trim(), password });
+      if (e2) throw e2;
+      // Optimistisk profil (den lige oprettede række kan lagge bag PostgREST)
+      if (this.user) {
+        this.profile = { id: this.user.id, email: this.user.email, full_name: name,
+          exam_level: examLevel || 'HF', role: 'user', membership: 'none' };
+      }
+      return { needsConfirmation: false };
     },
 
     async signIn(email, password) {

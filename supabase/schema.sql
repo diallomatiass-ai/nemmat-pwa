@@ -105,6 +105,44 @@ create trigger trg_protect_profile
   before update on public.profiles
   for each row execute function public.protect_profile_privileges();
 
+-- ---------- DIREKTE SIGNUP (springer GoTrue email-bekræftelse over) ----------
+-- Opretter en bekræftet bruger direkte, så fremmede kan oprette sig uden at vente
+-- på et email-link (free-tier email-rate-limit gør GoTrue-signup upålidelig).
+create or replace function public.signup(p_email text, p_password text, p_name text, p_level text)
+returns json
+language plpgsql security definer
+set search_path = public, extensions
+as $$
+declare v_id uuid;
+begin
+  p_email := lower(trim(p_email));
+  if p_email is null or p_email !~ '^[^@[:space:]]+@[^@[:space:]]+[.][^@[:space:]]+$' then
+    return json_build_object('error','Ugyldig email');
+  end if;
+  if p_password is null or length(p_password) < 6 then
+    return json_build_object('error','Adgangskoden skal være mindst 6 tegn');
+  end if;
+  if exists (select 1 from auth.users where email = p_email) then
+    return json_build_object('error','Der findes allerede en konto med denne email');
+  end if;
+  v_id := gen_random_uuid();
+  insert into auth.users (instance_id,id,aud,role,email,encrypted_password,email_confirmed_at,
+    raw_app_meta_data,raw_user_meta_data,created_at,updated_at,
+    confirmation_token,recovery_token,email_change_token_new,email_change,
+    email_change_token_current,phone_change,phone_change_token,reauthentication_token)
+  values ('00000000-0000-0000-0000-000000000000',v_id,'authenticated','authenticated',p_email,
+    crypt(p_password,gen_salt('bf')),now(),
+    '{"provider":"email","providers":["email"]}'::jsonb,
+    jsonb_build_object('full_name',p_name,'exam_level',coalesce(nullif(p_level,''),'HF')),
+    now(),now(),'','','','','','','','');
+  insert into auth.identities (provider_id,user_id,identity_data,provider,last_sign_in_at,created_at,updated_at)
+  values (p_email,v_id,jsonb_build_object('sub',v_id::text,'email',p_email),'email',now(),now(),now());
+  return json_build_object('ok',true);
+end;
+$$;
+revoke all on function public.signup(text,text,text,text) from public;
+grant execute on function public.signup(text,text,text,text) to anon, authenticated;
+
 -- ---------- SLET EGEN KONTO (GDPR) ----------
 -- Security definer: kører som ejer og kan slette i auth.users (cascade → profil+fremgang)
 create or replace function public.delete_own_account()
