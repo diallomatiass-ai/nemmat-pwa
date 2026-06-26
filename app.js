@@ -2847,6 +2847,12 @@ window.addEventListener('popstate', (e) => {
 let _progressMerged = false;
 async function onAuthChanged() {
   updateAuthUI();
+  // Brugeren kom ind via et "nulstil adgangskode"-link → vis sæt-ny-kode-side
+  if (window._passwordRecovery) {
+    window._passwordRecovery = false;
+    navigate('reset-password');
+    return;
+  }
   if (window.Auth && Auth.isLoggedIn() && !_progressMerged) {
     _progressMerged = true;
     try {
@@ -2953,6 +2959,57 @@ async function doLogout() {
   await Auth.signOut();
   _progressMerged = false;
   navigate('gymnasium');
+}
+
+async function doForgot() {
+  const emailEl = document.getElementById('li-email');
+  const email = emailEl ? emailEl.value.trim() : '';
+  const msg = document.getElementById('auth-msg');
+  if (!email) {
+    if (msg) msg.innerHTML = '<span class="auth-err">Skriv din email ovenfor først, så sender vi et nulstillingslink.</span>';
+    if (emailEl) emailEl.focus();
+    return;
+  }
+  if (msg) msg.textContent = 'Sender nulstillingslink…';
+  try {
+    await Auth.resetPassword(email);
+    if (msg) msg.innerHTML = '<span class="auth-ok">Tjek din email — vi har sendt et link til at nulstille din adgangskode.</span>';
+  } catch (e) {
+    const raw = (e.message || '').toLowerCase();
+    if (msg) msg.innerHTML = `<span class="auth-err">${raw.includes('rate') ? 'For mange forsøg lige nu. Prøv igen om lidt.' : (e.message || 'Kunne ikke sende link.')}</span>`;
+  }
+}
+
+async function doResetPassword(ev) {
+  if (ev) ev.preventDefault();
+  const p1 = document.getElementById('rp-pass').value;
+  const p2 = document.getElementById('rp-pass2').value;
+  const msg = document.getElementById('auth-msg');
+  if (p1.length < 6) { if (msg) msg.innerHTML = '<span class="auth-err">Adgangskoden skal være mindst 6 tegn.</span>'; return; }
+  if (p1 !== p2) { if (msg) msg.innerHTML = '<span class="auth-err">De to adgangskoder er ikke ens.</span>'; return; }
+  if (msg) msg.textContent = 'Gemmer ny adgangskode…';
+  try {
+    await Auth.updatePassword(p1);
+    navigate('konto');
+  } catch (e) {
+    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke gemme adgangskoden.'}</span>`;
+  }
+}
+
+async function doSaveProfile(ev) {
+  if (ev) ev.preventDefault();
+  const name = document.getElementById('pf-name').value.trim();
+  const level = document.getElementById('pf-level').value;
+  const msg = document.getElementById('pf-msg');
+  if (!name) { if (msg) msg.innerHTML = '<span class="auth-err">Navn må ikke være tomt.</span>'; return; }
+  if (msg) msg.textContent = 'Gemmer…';
+  try {
+    await Auth.updateProfile({ full_name: name, exam_level: level });
+    if (msg) msg.innerHTML = '<span class="auth-ok">✅ Gemt!</span>';
+    updateAuthUI();
+  } catch (e) {
+    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke gemme.'}</span>`;
+  }
 }
 
 function updateActiveNav(page) {
@@ -3311,6 +3368,7 @@ function render() {
     case 'kontakt':   app.innerHTML = renderKontakt(); break;
     case 'opret':     app.innerHTML = renderOpret(); break;
     case 'konto':     app.innerHTML = renderKonto(); break;
+    case 'reset-password': app.innerHTML = renderResetPassword(); break;
     case 'admin':     app.innerHTML = renderAdmin(); break;
     default:          app.innerHTML = renderSimple('Side ikke fundet', ''); break;
   }
@@ -4200,6 +4258,9 @@ function renderKonto() {
       <form class="auth-form" onsubmit="doLogin(event)">
         <label>Email<input type="email" id="li-email" autocomplete="email" required></label>
         <label>Adgangskode<input type="password" id="li-pass" autocomplete="current-password" required></label>
+        <div style="text-align:right;margin-top:-6px">
+          <a href="#" onclick="doForgot();return false;" style="font-size:13px;color:var(--muted)">Glemt adgangskode?</a>
+        </div>
         <div id="auth-msg" class="auth-msg"></div>
         <button type="submit" class="btn-auth">Log ind</button>
       </form>
@@ -4254,6 +4315,43 @@ function renderKonto() {
           <p>Gem din fremgang i skyen og få adgang på alle enheder. <a href="#" onclick="navigate('opret');return false;" class="info-big-link">Opret konto →</a></p>
         </div>` : ''}
       </div>
+      ${loggedIn ? (function(){
+        const p = (window.Auth && Auth.profile) || {};
+        const lvl = p.exam_level || 'HF';
+        return `
+        <h2 style="margin-top:32px;font-size:20px">Rediger profil</h2>
+        <form class="auth-form" style="max-width:460px;margin:0" onsubmit="doSaveProfile(event)">
+          <label>Navn<input type="text" id="pf-name" value="${esc0(p.full_name || '')}" required></label>
+          <label>Niveau
+            <select id="pf-level">
+              <option value="HF"${lvl==='HF'?' selected':''}>HF</option>
+              <option value="STX"${lvl==='STX'?' selected':''}>STX</option>
+              <option value="HHX"${lvl==='HHX'?' selected':''}>HHX</option>
+            </select>
+          </label>
+          <div id="pf-msg" class="auth-msg"></div>
+          <button type="submit" class="btn-auth">Gem ændringer</button>
+        </form>` ;
+      })() : ''}
+    </div>`;
+}
+
+// ── NULSTIL ADGANGSKODE (efter klik på email-link) ──
+function renderResetPassword() {
+  return `
+    ${renderBreadcrumb([{label:'Ny adgangskode', page:'reset-password'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">🔑 Ny adgangskode</div>
+        <h1>Vælg en ny adgangskode</h1>
+        <p class="info-lead">Indtast en ny adgangskode til din konto.</p>
+      </div>
+      <form class="auth-form" onsubmit="doResetPassword(event)">
+        <label>Ny adgangskode<input type="password" id="rp-pass" autocomplete="new-password" minlength="6" required placeholder="Mindst 6 tegn"></label>
+        <label>Gentag adgangskode<input type="password" id="rp-pass2" autocomplete="new-password" minlength="6" required></label>
+        <div id="auth-msg" class="auth-msg"></div>
+        <button type="submit" class="btn-auth">Gem ny adgangskode</button>
+      </form>
     </div>`;
 }
 

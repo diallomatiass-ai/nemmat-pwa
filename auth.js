@@ -53,6 +53,30 @@
 
     async signOut() { if (client) await client.auth.signOut(); },
 
+    async resetPassword(email) {
+      if (!client) throw new Error('Online-funktioner er ikke tilgængelige lige nu.');
+      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+      if (error) throw error;
+    },
+
+    async updatePassword(newPassword) {
+      if (!client) throw new Error('Online-funktioner er ikke tilgængelige lige nu.');
+      const { error } = await client.auth.updateUser({ password: newPassword });
+      if (error) throw error;
+    },
+
+    async updateProfile({ full_name, exam_level }) {
+      if (!client || !this.user) throw new Error('Du skal være logget ind.');
+      const patch = {};
+      if (full_name != null) patch.full_name = full_name;
+      if (exam_level != null) patch.exam_level = exam_level;
+      const { error } = await client.from('profiles').update(patch).eq('id', this.user.id);
+      if (error) throw error;
+      // Skrivningen lykkedes (ellers kastet) → opdatér lokal profil direkte.
+      // Vi re-reader IKKE, da PostgREST kan returnere en stale værdi lige efter skriv.
+      if (this.profile) Object.assign(this.profile, patch);
+    },
+
     async loadProgressKeys() {
       if (!client || !this.user) return [];
       try {
@@ -136,8 +160,9 @@
   }
 
   if (client) {
-    client.auth.onAuthStateChange((_event, session) => {
+    client.auth.onAuthStateChange((event, session) => {
       Auth.user = session ? session.user : null;
+      if (event === 'PASSWORD_RECOVERY') window._passwordRecovery = true;
       Auth._loadProfile().then(() => {
         if (typeof window.onAuthChanged === 'function') window.onAuthChanged();
       });
