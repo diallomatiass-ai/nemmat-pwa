@@ -25,6 +25,19 @@
 
 <div id="offline-bar" class="offline-bar" hidden>📴 Offline – viser gemt indhold</div>
 
+<!-- Installér-app banner (vises kun når installerbar / på iOS i browser) -->
+<div id="install-banner" class="install-banner" hidden>
+  <span class="install-banner-icon">📲</span>
+  <span class="install-banner-text" id="install-banner-text">Få NemMat som app på din hjemmeskærm</span>
+  <button class="install-banner-btn" id="install-btn" onclick="doInstall()">Installér</button>
+  <button class="install-banner-close" onclick="dismissInstall()" aria-label="Luk">✕</button>
+</div>
+<div id="ios-install-hint" class="ios-install-hint" hidden>
+  <button class="ios-hint-close" onclick="closeIosHint()" aria-label="Luk">✕</button>
+  <strong>Installér NemMat på iPhone</strong>
+  <p>1. Tryk på <span class="ios-share">⬆️ Del</span>-ikonet nederst i Safari<br>2. Vælg <strong>“Føj til hjemmeskærm”</strong></p>
+</div>
+
 <!-- ====== HEADER ====== -->
 <header class="site-header" id="site-header">
   <div class="header-inner">

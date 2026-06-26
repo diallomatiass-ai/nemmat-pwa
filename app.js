@@ -2996,6 +2996,64 @@ async function doResetPassword(ev) {
   }
 }
 
+// ── PWA INSTALL-PROMPT ──
+let _deferredInstall = null;
+
+function _isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function _isIos() { return /iphone|ipad|ipod/i.test(navigator.userAgent); }
+function _isIosSafari() { return _isIos() && /^((?!crios|fxios|edgios|chrome).)*safari/i.test(navigator.userAgent); }
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstall = e;
+  if (!_isStandalone() && !localStorage.getItem('nemmat_install_dismissed')) {
+    const b = document.getElementById('install-banner');
+    if (b) b.hidden = false;
+  }
+});
+window.addEventListener('appinstalled', () => {
+  _deferredInstall = null;
+  const b = document.getElementById('install-banner');
+  if (b) b.hidden = true;
+  try { localStorage.setItem('nemmat_installed', '1'); } catch (e) {}
+});
+
+function initInstallPrompt() {
+  if (_isStandalone() || localStorage.getItem('nemmat_install_dismissed')) return;
+  // iOS Safari fyrer ikke beforeinstallprompt → vis banner der åbner instruktioner
+  if (_isIosSafari()) {
+    const b = document.getElementById('install-banner');
+    if (b) { b.dataset.ios = '1'; b.hidden = false; }
+  }
+}
+
+async function doInstall() {
+  const b = document.getElementById('install-banner');
+  if (b && b.dataset.ios === '1') {
+    const hint = document.getElementById('ios-install-hint');
+    if (hint) hint.hidden = false;
+    return;
+  }
+  if (!_deferredInstall) { if (b) b.hidden = true; return; }
+  _deferredInstall.prompt();
+  try { await _deferredInstall.userChoice; } catch (e) {}
+  _deferredInstall = null;
+  if (b) b.hidden = true;
+}
+
+function dismissInstall() {
+  const b = document.getElementById('install-banner');
+  if (b) b.hidden = true;
+  try { localStorage.setItem('nemmat_install_dismissed', '1'); } catch (e) {}
+}
+
+function closeIosHint() {
+  const h = document.getElementById('ios-install-hint');
+  if (h) h.hidden = true;
+}
+
 async function doSaveProfile(ev) {
   if (ev) ev.preventDefault();
   const name = document.getElementById('pf-name').value.trim();
@@ -4814,4 +4872,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Init auth (Supabase) — opdaterer header + fremgang når session er klar
   if (window.Auth && Auth.init) Auth.init();
+
+  // PWA install-prompt (iOS-banner; Android håndteres af beforeinstallprompt)
+  initInstallPrompt();
 });
