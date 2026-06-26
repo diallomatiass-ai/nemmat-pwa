@@ -3054,6 +3054,18 @@ function closeIosHint() {
   if (h) h.hidden = true;
 }
 
+async function doDeleteAccount() {
+  if (!confirm('Er du sikker? Din konto, fremgang og alle data slettes permanent. Dette kan ikke fortrydes.')) return;
+  try {
+    await Auth.deleteAccount();
+    _progressMerged = false;
+    alert('Din konto er slettet.');
+    navigate('gymnasium');
+  } catch (e) {
+    alert('Kunne ikke slette kontoen: ' + (e.message || ''));
+  }
+}
+
 async function doSaveProfile(ev) {
   if (ev) ev.preventDefault();
   const name = document.getElementById('pf-name').value.trim();
@@ -3685,6 +3697,12 @@ function renderCourse() {
             const totalDone = flat.filter(f => isCompleted(f.si, f.ii)).length;
             const pct = flat.length > 0 ? Math.round((totalDone / flat.length) * 100) : 0;
             const firstIncomplete = flat.findIndex(f => !isCompleted(f.si, f.ii));
+            const locked = !hasCourseAccess(slug);
+            if (locked) {
+              return `
+              <div class="course-locked-note">🔒 B-niveau kræver medlemskab</div>
+              <button class="btn-start-kursus" onclick="navigate('opret')">Lås op med medlemskab</button>`;
+            }
             const btnLabel = totalDone === 0 ? 'Start Kursus' : totalDone === flat.length ? '✅ Kursus Gennemført!' : 'Fortsæt';
             const btnClick = firstIncomplete >= 0 ? `openLesson(${flat[firstIncomplete].si},${flat[firstIncomplete].ii})` : 'openLesson(0,0)';
             return `
@@ -3707,8 +3725,38 @@ function renderCourse() {
   `;
 }
 
+// ── ADGANG / MEDLEMSKAB-GATING ──
+// Sæt GATING = false for at gøre alt indhold gratis igen.
+const GATING = true;
+function courseIsGated(slug) {
+  return GATING && typeof HF_B_COURSES !== 'undefined' && HF_B_COURSES.some(c => c.slug === slug);
+}
+function hasCourseAccess(slug) {
+  if (!courseIsGated(slug)) return true;
+  if (window.Auth && Auth.isAdmin()) return true;
+  if (window.Auth && Auth.isLoggedIn() && Auth.membership() !== 'none') return true;
+  return false;
+}
+function renderUpsell(course) {
+  const loggedIn = window.Auth && Auth.isLoggedIn();
+  return `
+    ${renderBreadcrumb([{label:'Gymnasium',page:'gymnasium'},{label:course.title||'Kursus',page:'course'}])}
+    <div class="info-page">
+      <div class="info-hero">
+        <div class="info-hero-badge">🔒 Medlemsindhold</div>
+        <h1>${course.title || 'Dette kursus'} kræver medlemskab</h1>
+        <p class="info-lead">B-niveau er en del af et Basis- eller Pro-medlemskab. C-niveau er gratis for alle.</p>
+      </div>
+      <div class="upsell-actions">
+        <button class="btn-auth" onclick="navigate('opret')">Se medlemskaber</button>
+        ${loggedIn ? '' : `<a href="#" onclick="navigate('konto');return false;" class="info-big-link" style="align-self:center">Har du allerede et medlemskab? Log ind →</a>`}
+      </div>
+    </div>`;
+}
+
 // ── LEKTION VIEWER ──
 function renderLessonViewer() {
+  if (currentCourse && !hasCourseAccess(currentCourse.slug)) return renderUpsell(currentCourse);
   const curriculum = getCurriculum();
   const flat = getFlatItems();
   const flatIdx = getCurrentFlatIdx();
@@ -4392,7 +4440,11 @@ function renderKonto() {
           </label>
           <div id="pf-msg" class="auth-msg"></div>
           <button type="submit" class="btn-auth">Gem ændringer</button>
-        </form>` ;
+        </form>
+        <div style="max-width:460px;margin:18px 0 0">
+          <button class="btn-delete-account" onclick="doDeleteAccount()">Slet min konto</button>
+          <p style="font-size:12px;color:var(--muted-lt);margin:6px 0 0">Fjerner permanent din konto, fremgang og data.</p>
+        </div>` ;
       })() : ''}
     </div>`;
 }

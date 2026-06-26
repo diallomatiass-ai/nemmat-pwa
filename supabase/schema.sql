@@ -105,6 +105,21 @@ create trigger trg_protect_profile
   before update on public.profiles
   for each row execute function public.protect_profile_privileges();
 
+-- ---------- SLET EGEN KONTO (GDPR) ----------
+-- Security definer: kører som ejer og kan slette i auth.users (cascade → profil+fremgang)
+create or replace function public.delete_own_account()
+returns void
+language plpgsql security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is null then raise exception 'Ikke logget ind'; end if;
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+revoke all on function public.delete_own_account() from public;
+grant execute on function public.delete_own_account() to authenticated;
+
 -- ---------- ROW LEVEL SECURITY ----------
 alter table public.profiles       enable row level security;
 alter table public.progress       enable row level security;

@@ -53,6 +53,13 @@
 
     async signOut() { if (client) await client.auth.signOut(); },
 
+    async deleteAccount() {
+      if (!client || !this.user) throw new Error('Du skal være logget ind.');
+      const { error } = await client.rpc('delete_own_account');
+      if (error) throw error;
+      await client.auth.signOut();
+    },
+
     async resetPassword(email) {
       if (!client) throw new Error('Online-funktioner er ikke tilgængelige lige nu.');
       const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
