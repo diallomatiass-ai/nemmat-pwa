@@ -36,6 +36,17 @@ create table if not exists public.quiz_overrides (
   unique (course_slug, quiz_key)
 );
 
+-- Admin-tilføjet forklaringsvideo til lektioner (overrider/udfylder lektion-ytId)
+create table if not exists public.lesson_overrides (
+  id          uuid primary key default gen_random_uuid(),
+  course_slug text not null,
+  lesson_key  text not null,                        -- format: '{si}-{ii}'
+  yt_id       text not null,                        -- YouTube-video-ID
+  updated_by  uuid references auth.users(id),
+  updated_at  timestamptz not null default now(),
+  unique (course_slug, lesson_key)
+);
+
 -- ---------- HJÆLPEFUNKTION (security definer = ingen RLS-rekursion) ----------
 create or replace function public.is_admin()
 returns boolean
@@ -130,12 +141,23 @@ drop policy if exists quiz_overrides_write on public.quiz_overrides;
 create policy quiz_overrides_write on public.quiz_overrides
   for all using (public.is_admin()) with check (public.is_admin());
 
+-- lesson_overrides (alle læser, kun admin skriver)
+alter table public.lesson_overrides enable row level security;
+drop policy if exists lesson_overrides_select on public.lesson_overrides;
+create policy lesson_overrides_select on public.lesson_overrides
+  for select using (true);
+drop policy if exists lesson_overrides_write on public.lesson_overrides;
+create policy lesson_overrides_write on public.lesson_overrides
+  for all using (public.is_admin()) with check (public.is_admin());
+
 -- ---------- RETTIGHEDER (PostgREST) ----------
 grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on public.profiles       to authenticated;
 grant select, insert, update, delete on public.progress       to authenticated;
 grant select, insert, update, delete on public.quiz_overrides to authenticated;
 grant select on public.quiz_overrides to anon;
+grant select, insert, update, delete on public.lesson_overrides to authenticated;
+grant select on public.lesson_overrides to anon;
 
 -- ============================================================
 --  EFTER FØRSTE SIGNUP: gør din egen konto til admin.

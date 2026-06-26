@@ -1824,3 +1824,22 @@ h4 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; line
   position: absolute; top: 10px; right: 12px;
   background: none; border: none; font-size: 16px; color: var(--muted-lt); cursor: pointer;
 }
+
+/* ── LEKTION-VIDEO-EDITOR (admin) ── */
+.lv-box { display: flex; flex-direction: column; gap: 8px; }
+.lv-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+.lv-row.lv-missing { border-color: #f3c2c2; background: #fff8f8; }
+.lv-row-title { flex: 1; font-size: 14px; font-weight: 600; color: var(--primary-dk); min-width: 0; }
+.lv-tag { font-size: 11px; font-weight: 700; color: var(--primary); background: #eef2fb; padding: 1px 7px; border-radius: 999px; margin-left: 6px; }
+.lv-input {
+  flex: 1.4; font: inherit; font-weight: 400;
+  padding: 8px 11px; border: 1px solid var(--border); border-radius: var(--radius); background: #fafbfe;
+}
+.lv-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(53,109,241,.12); }
+@media (max-width: 640px) { .lv-row { flex-direction: column; align-items: stretch; gap: 6px; } .lv-input { flex: none; } }

@@ -3771,10 +3771,13 @@ function renderLessonViewer() {
   if (isQuiz && quizQuestions) {
     contentHtml = renderQuizContent(quizQuestions, sec, item, alreadyDone);
   } else {
+    // Admin-tilføjet lektionsvideo vinder over den statiske ytId
+    const _lvSlug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
+    const effYtId = (window.LESSON_OVERRIDES && window.LESSON_OVERRIDES[_lvSlug + '::' + `${currentSection}-${currentItem}`]) || item.ytId;
     contentHtml = `
     <div class="lesson-video-wrap">
-      ${item.ytId ? `
-        <iframe src="https://www.youtube.com/embed/${item.ytId}?rel=0&modestbranding=1"
+      ${effYtId ? `
+        <iframe src="https://www.youtube.com/embed/${effYtId}?rel=0&modestbranding=1"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>` : `
         <div class="lesson-video-placeholder">
@@ -4459,11 +4462,94 @@ function renderAdmin() {
         </label>
       </div>
       <div id="qe-editor"></div>
+
+      <h2 style="margin-top:40px;font-size:20px">Lektion-videoer</h2>
+      <p class="info-lead" style="margin-bottom:14px">Tilføj eller ret forklaringsvideoen på en lektion. Lektioner uden video er markeret. Indsæt et YouTube-link eller -ID.</p>
+      <div class="qe-pickers">
+        <label>Kursus
+          <select id="lv-course" onchange="lvSelectCourse(this.value)">
+            <option value="">— vælg kursus —</option>
+            ${_allCourses().map(c => `<option value="${c.slug}">${esc0(c.title)} (${c.exam}${c.niveau ? ' '+c.niveau : ''})</option>`).join('')}
+          </select>
+        </label>
+      </div>
+      <div id="lv-editor"></div>
     </div>`;
 }
 
 // Hjælpe-escape (bruges i admin-render)
 function esc0(s) { return (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Træk YouTube-video-ID ud af et link eller en rå streng
+function ytIdFrom(s) {
+  s = (s || '').trim();
+  if (!s) return '';
+  const m = s.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  if (m) return m[1];
+  if (/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  return s; // lad brugeren rette hvis det ikke matcher
+}
+
+// ── LEKTION-VIDEO-EDITOR (admin) ──
+function lvLessonsFor(slug) {
+  const cur = (slug === 'vektorer-matematik-b-stx-2aar')
+    ? (typeof VEKTORER_CURRICULUM !== 'undefined' ? VEKTORER_CURRICULUM : [])
+    : (ALL_CURRICULA[slug] || []);
+  const out = [];
+  cur.forEach((sec, si) => (sec.items || []).forEach((it, ii) => {
+    if (it.type !== 'quiz') {
+      const key = si + '-' + ii;
+      const ov = window.LESSON_OVERRIDES && window.LESSON_OVERRIDES[slug + '::' + key];
+      out.push({ key, title: it.title, section: sec.title, current: ov || it.ytId || '', isOverride: !!ov });
+    }
+  }));
+  return out;
+}
+
+function lvSelectCourse(slug) {
+  const ed = document.getElementById('lv-editor');
+  if (!ed) return;
+  if (!slug) { ed.innerHTML = ''; return; }
+  const lessons = lvLessonsFor(slug);
+  const missing = lessons.filter(l => !l.current).length;
+  ed.innerHTML = `
+    <div class="lv-box" data-slug="${slug}">
+      <p style="color:var(--muted);font-size:13px;margin:0 0 10px">${lessons.length} lektioner · ${missing ? `<strong style="color:#d93636">${missing} mangler video</strong>` : 'alle har video ✓'}</p>
+      ${lessons.map(l => `
+        <div class="lv-row${l.current ? '' : ' lv-missing'}" data-key="${l.key}">
+          <div class="lv-row-title">${esc0(l.title)}${l.isOverride ? ' <span class="lv-tag">redigeret</span>' : ''}</div>
+          <input type="text" class="lv-input" value="${esc0(l.current)}" placeholder="YouTube-link eller -ID — tom = ingen video">
+        </div>`).join('')}
+      <div class="qe-actions">
+        <button class="btn-auth" onclick="lvSave()">💾 Gem videoer</button>
+        <span id="lv-status" class="auth-msg"></span>
+      </div>
+    </div>`;
+}
+
+async function lvSave() {
+  const box = document.querySelector('#lv-editor .lv-box');
+  const status = document.getElementById('lv-status');
+  if (!box) return;
+  const slug = box.dataset.slug;
+  if (status) status.textContent = 'Gemmer…';
+  const rows = [...box.querySelectorAll('.lv-row')];
+  let changed = 0;
+  try {
+    for (const row of rows) {
+      const key = row.dataset.key;
+      const raw = row.querySelector('.lv-input').value.trim();
+      const id = ytIdFrom(raw);
+      const existing = (window.LESSON_OVERRIDES && window.LESSON_OVERRIDES[slug + '::' + key]) || '';
+      if (id && id !== existing) { await Auth.saveLessonOverride(slug, key, id); changed++; }
+      else if (!id && existing) { await Auth.deleteLessonOverride(slug, key); changed++; }
+    }
+    if (status) status.innerHTML = `<span class="auth-ok">✅ Gemt (${changed} ændret). Live for alle elever.</span>`;
+    lvSelectCourse(slug); // gen-render med opdaterede markeringer
+  } catch (e) {
+    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${e.message || ''}</span>`;
+  }
+}
 
 // ── QUIZ-EDITOR STATE ──
 let _qe = { slug: '', key: '', questions: [] };

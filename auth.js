@@ -145,6 +145,32 @@
       if (error) throw error;
       if (window.QUIZ_OVERRIDES) delete window.QUIZ_OVERRIDES[slug + '::' + key];
     },
+
+    // ── LEKTION-VIDEO-OVERRIDES (admin tilføjer forklaringsvideo til lektioner) ──
+    async loadLessonOverrides() {
+      if (!client) return;
+      try {
+        const { data } = await client.from('lesson_overrides').select('course_slug,lesson_key,yt_id');
+        const map = {};
+        (data || []).forEach(r => { map[r.course_slug + '::' + r.lesson_key] = r.yt_id; });
+        window.LESSON_OVERRIDES = map;
+      } catch (e) { window.LESSON_OVERRIDES = window.LESSON_OVERRIDES || {}; }
+    },
+    async saveLessonOverride(slug, key, ytId) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('lesson_overrides').upsert(
+        { course_slug: slug, lesson_key: key, yt_id: ytId, updated_by: this.user.id, updated_at: new Date().toISOString() },
+        { onConflict: 'course_slug,lesson_key' });
+      if (error) throw error;
+      window.LESSON_OVERRIDES = window.LESSON_OVERRIDES || {};
+      window.LESSON_OVERRIDES[slug + '::' + key] = ytId;
+    },
+    async deleteLessonOverride(slug, key) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('lesson_overrides').delete().eq('course_slug', slug).eq('lesson_key', key);
+      if (error) throw error;
+      if (window.LESSON_OVERRIDES) delete window.LESSON_OVERRIDES[slug + '::' + key];
+    },
   };
 
   async function refresh() {
@@ -155,6 +181,7 @@
         await Auth._loadProfile();
       } catch (e) { Auth.user = null; Auth.profile = null; }
       await Auth.loadQuizOverrides();
+      await Auth.loadLessonOverrides();
     }
     if (typeof window.onAuthChanged === 'function') await window.onAuthChanged();
   }
