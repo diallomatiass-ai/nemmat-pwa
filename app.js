@@ -2815,13 +2815,49 @@ function navigate(page, data) {
 // ── BROWSER-HISTORIK (tilbage-knap + deep-link) ──
 let _historyReady = false;
 function _syncHistory() {
+  // Skriv kursus-slug + lektion ind i hash'en, så reload/deep-link kan genskabe siden.
+  let hash = '#' + currentPage;
+  if (currentCourse?.slug && currentPage === 'course') {
+    hash = `#course/${encodeURIComponent(currentCourse.slug)}`;
+  } else if (currentCourse?.slug && currentPage === 'lesson') {
+    hash = `#lesson/${encodeURIComponent(currentCourse.slug)}/${currentSection}/${currentItem}`;
+  }
   const state = { page: currentPage, course: currentCourse, section: currentSection, item: currentItem };
   if (!_historyReady) {
-    history.replaceState(state, '', '#' + currentPage);
+    history.replaceState(state, '', hash);
     _historyReady = true;
   } else {
-    history.pushState(state, '', '#' + currentPage);
+    history.pushState(state, '', hash);
   }
+}
+
+// Slå et kursus op ud fra slug (til titel ved deep-link, hvor vi kun har slug'en).
+function _courseBySlug(slug) {
+  try { return (_allCourses() || []).find(c => c.slug === slug) || { slug, title: slug }; }
+  catch (e) { return { slug, title: slug }; }
+}
+
+// Genskab side/kursus/lektion ud fra URL-hash ved opstart (reload + deep-link).
+function _restoreFromHash() {
+  const raw = (location.hash || '').replace(/^#/, '');
+  if (!raw) { navigate('gymnasium'); return; }
+  const parts = raw.split('/').map(decodeURIComponent);
+  const page = parts[0];
+  if (page === 'course' && parts[1]) {
+    currentCourse = _courseBySlug(parts[1]);
+    navigate('course');
+    return;
+  }
+  if (page === 'lesson' && parts[1]) {
+    currentCourse = _courseBySlug(parts[1]);
+    currentSection = parseInt(parts[2], 10) || 0;
+    currentItem = parseInt(parts[3], 10) || 0;
+    openLessonSections.add(currentSection);
+    navigate('lesson');
+    return;
+  }
+  const known = ['gymnasium','hf','stx','hhx','hf-c','hf-b','institutioner','private','om','kontakt','konto','opret'];
+  navigate(known.includes(page) ? page : 'gymnasium');
 }
 window.addEventListener('popstate', (e) => {
   const s = e.state;
@@ -2865,8 +2901,21 @@ async function onAuthChanged() {
     } catch (e) { /* offline */ }
   }
   if (window.Auth && !Auth.isLoggedIn()) _progressMerged = false;
+  // Re-render kun når den auth-relevante tilstand faktisk ændrede sig. Ellers
+  // ville en token-autorefresh (hver time) bygge hele DOM'en om og slette
+  // halvt-udfyldte formularer (login/profil/reset).
+  let sig = 'na';
+  try {
+    sig = JSON.stringify({
+      in: Auth.isLoggedIn(), id: (Auth.user && Auth.user.id) || null,
+      m: Auth.membership(), r: Auth.isAdmin(),
+    });
+  } catch (e) {}
+  if (sig === _lastAuthSig) return;
+  _lastAuthSig = sig;
   render();
 }
+let _lastAuthSig = null;
 
 function updateAuthUI() {
   const acc = document.getElementById('header-account-link');
@@ -2958,6 +3007,7 @@ async function doLogin(ev) {
 async function doLogout() {
   await Auth.signOut();
   _progressMerged = false;
+  clearLocalProgress();   // undgå at fremgang lækker til næste bruger på samme enhed
   navigate('gymnasium');
 }
 
@@ -3059,10 +3109,29 @@ async function doDeleteAccount() {
   try {
     await Auth.deleteAccount();
     _progressMerged = false;
+    clearLocalProgress();   // ryd lokal fremgang så den ikke merges til næste konto
     alert('Din konto er slettet.');
     navigate('gymnasium');
   } catch (e) {
     alert('Kunne ikke slette kontoen: ' + (e.message || ''));
+  }
+}
+
+async function doChangePassword(ev) {
+  if (ev) ev.preventDefault();
+  const p1 = document.getElementById('cp-pass').value;
+  const p2 = document.getElementById('cp-pass2').value;
+  const msg = document.getElementById('cp-msg');
+  if (p1.length < 6) { if (msg) msg.innerHTML = '<span class="auth-err">Adgangskoden skal være mindst 6 tegn.</span>'; return; }
+  if (p1 !== p2) { if (msg) msg.innerHTML = '<span class="auth-err">De to adgangskoder er ikke ens.</span>'; return; }
+  if (msg) msg.textContent = 'Opdaterer…';
+  try {
+    await Auth.updatePassword(p1);
+    if (msg) msg.innerHTML = '<span class="auth-ok">✅ Adgangskoden er opdateret.</span>';
+    document.getElementById('cp-pass').value = '';
+    document.getElementById('cp-pass2').value = '';
+  } catch (e) {
+    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke opdatere adgangskoden.'}</span>`;
   }
 }
 
@@ -3102,10 +3171,11 @@ function updateActiveNav(page) {
 // ── MOBILE MENU ──
 function toggleMobileMenu() {
   const m = document.getElementById('mobile-menu');
-  m.hidden = !m.hidden;
+  if (m) m.hidden = !m.hidden;
 }
 function closeMobileMenu() {
-  document.getElementById('mobile-menu').hidden = true;
+  const m = document.getElementById('mobile-menu');
+  if (m) m.hidden = true;
 }
 
 // ── SEARCH ──
@@ -3149,13 +3219,13 @@ function _buildSearchIndex() {
     if (!c) continue;
     const courseMeta = courses.find(x => x.slug === slug);
     const courseTitle = courseMeta ? courseMeta.title : slug;
-    c.forEach((sec) => (sec.items || []).forEach((it) => {
+    c.forEach((sec, si) => (sec.items || []).forEach((it, ii) => {
       idx.push({
         type: it.type === 'quiz' ? 'Quiz' : 'Lektion',
         icon: it.type === 'quiz' ? '❓' : '▶️',
         title: it.title,
         meta: courseTitle + (sec.title ? ' · ' + sec.title : ''),
-        slug, courseMeta,
+        slug, courseMeta, si, ii,
       });
     }));
   }
@@ -3231,8 +3301,15 @@ function _searchGo(i) {
   if (!hit) return;
   const e = hit.e;
   closeSearch();
-  if (e.courseMeta) navigate('course', e.courseMeta);
-  else navigate('gymnasium');
+  // Lektion/Quiz-hit → åbn selve lektionen i kurset. Kursus-hit → kursus-siden.
+  if (e.courseMeta && typeof e.si === 'number' && typeof e.ii === 'number') {
+    currentCourse = e.courseMeta;
+    openLesson(e.si, e.ii);
+  } else if (e.courseMeta) {
+    navigate('course', e.courseMeta);
+  } else {
+    navigate('gymnasium');
+  }
 }
 
 // ── LESSON HELPERS ──
@@ -3310,11 +3387,13 @@ function _quizIndexFromKey(slug, key) {
 function _mapScrapedQuestions(scrapedQuiz) {
   if (!scrapedQuiz?.questions?.length) return null;
   // Understøt single_choice + true_or_false + multi_choice (alle har opts+ans)
+  // Kun single_choice + true_or_false: multi_choice har flere rigtige svar, men
+  // scraperen gemte kun ÉT svar-indeks → de kan ikke scores korrekt og udelades.
   const qs = scrapedQuiz.questions
-    .filter(q => ['single_choice','true_or_false','multi_choice'].includes(q.type)
+    .filter(q => ['single_choice','true_or_false'].includes(q.type)
                  && q.ans >= 0
                  && q.opts?.length >= 2)
-    .map(q => ({ q: q.q, opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
+    .map(q => ({ q: q.q, content: q.content || '', opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
   return qs.length ? qs : null;
 }
 
@@ -3353,9 +3432,9 @@ function getQuizData(key) {
       scrapedAll.forEach(q => {
         if (/eksamen|delprøve/i.test(q.title || '')) {
           (q.questions || []).forEach(qq => {
-            if (['single_choice','true_or_false','multi_choice'].includes(qq.type)
+            if (['single_choice','true_or_false'].includes(qq.type)
                 && qq.ans >= 0 && qq.opts?.length >= 2) {
-              examQs.push({ q: qq.q, opts: qq.opts, ans: qq.ans, ytId: qq.ytId || null });
+              examQs.push({ q: qq.q, content: qq.content || '', opts: qq.opts, ans: qq.ans, ytId: qq.ytId || null });
             }
           });
         }
@@ -3807,12 +3886,15 @@ function renderLessonViewer() {
   // ── CONTENT ──
   const isQuiz = item.type === 'quiz';
   const quizKey = `${currentSection}-${currentItem}`;
+  // Identitet inkl. kursus-slug, så kursus A's quiz 1-1 ikke deler state med
+  // kursus B's quiz 1-1 (quizKey alene = si-ii og bruges fortsat til getQuizData).
+  const quizStateId = `${currentCourse?.slug || ''}|${quizKey}`;
   const quizQuestions = getQuizData(quizKey);
   const alreadyDone = isCompleted(currentSection, currentItem);
 
   // Init quiz state when entering a new quiz
-  if (isQuiz && quizQuestions && (!quizState || quizState.key !== quizKey)) {
-    quizState = { key: quizKey, current: 0, answers: new Array(quizQuestions.length).fill(null), submitted: false, score: 0 };
+  if (isQuiz && quizQuestions && (!quizState || quizState.id !== quizStateId)) {
+    quizState = { id: quizStateId, key: quizKey, current: 0, answers: new Array(quizQuestions.length).fill(null), submitted: false, score: 0 };
   }
 
   let contentHtml;
@@ -3821,7 +3903,7 @@ function renderLessonViewer() {
   } else {
     // Admin-tilføjet lektionsvideo vinder over den statiske ytId
     const _lvSlug = currentCourse?.slug || 'vektorer-matematik-b-stx-2aar';
-    const effYtId = (window.LESSON_OVERRIDES && window.LESSON_OVERRIDES[_lvSlug + '::' + `${currentSection}-${currentItem}`]) || item.ytId;
+    const effYtId = _safeYt((window.LESSON_OVERRIDES && window.LESSON_OVERRIDES[_lvSlug + '::' + `${currentSection}-${currentItem}`]) || item.ytId);
     contentHtml = `
     <div class="lesson-video-wrap">
       ${effYtId ? `
@@ -3909,6 +3991,21 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
   }
 
   if (quizState.submitted) {
+    // Hvis quizzen blot er markeret gennemført tidligere (ingen svar i denne
+    // session) har vi ikke elevens svar — vis en ren gennemført-skærm i stedet
+    // for en misvisende facit-gennemgang hvor alt står som forkert.
+    const playedThisSession = quizState.answers.some(a => a !== null);
+    if (alreadyDone && !playedThisSession) {
+      return `
+        <div class="quiz-wrap">
+          <div class="quiz-result-screen">
+            <div class="quiz-result-icon">✅</div>
+            <h2 class="quiz-result-title">Quiz gennemført</h2>
+            <p class="quiz-result-sub" style="color:var(--muted-lt);margin:8px 0 20px">Du har allerede gennemført denne quiz. Vil du teste dig selv igen?</p>
+            <button class="btn-quiz-retry" onclick="retryQuiz()">🔄 Tag quizzen igen</button>
+          </div>
+        </div>`;
+    }
     const score = quizState.score;
     const total = questions.length;
     const pct = Math.round((score / total) * 100);
@@ -3935,7 +4032,7 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
                   <span class="quiz-review-icon">${correct ? '✅' : '❌'}</span>
                   <div>
                     <div class="quiz-review-q">Sp. ${i+1}</div>
-                    <div class="quiz-review-a">${correct ? 'Korrekt' : `Forkert — rigtigt svar: ${q.opts[q.ans]}`}</div>
+                    <div class="quiz-review-a">${correct ? 'Korrekt' : `Forkert - rigtigt svar: ${esc0(q.opts[q.ans])}`}</div>
                   </div>
                 </div>`;
             }).join('')}
@@ -3969,8 +4066,9 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
 
       <div class="quiz-question-card">
         <div class="quiz-q-number">Q${quizState.current + 1}</div>
-        <p class="quiz-question-text">${q.q}</p>
-        ${q.hint ? `<div class="quiz-hint">💡 ${q.hint}</div>` : ''}
+        <p class="quiz-question-text">${esc0(q.q)}</p>
+        ${q.content ? `<div class="quiz-q-content">${esc0(q.content)}</div>` : ''}
+        ${q.hint ? `<div class="quiz-hint">💡 ${esc0(q.hint)}</div>` : ''}
         <div class="quiz-options">
           ${q.opts.map((opt, i) => {
             let cls = 'quiz-option';
@@ -3981,19 +4079,19 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
             } else if (answered === i) {
               cls += ' selected';
             }
-            return `<button class="${cls}" onclick="selectQuizAnswer(${i})" ${answered !== null ? 'disabled' : ''}>${opt}</button>`;
+            return `<button class="${cls}" onclick="selectQuizAnswer(${i})" ${answered !== null ? 'disabled' : ''}>${esc0(opt)}</button>`;
           }).join('')}
         </div>
         ${answered !== null ? `
           <div class="quiz-feedback ${answered === q.ans ? 'feedback-correct' : 'feedback-wrong'}">
-            ${answered === q.ans ? '✅ Korrekt!' : `❌ Forkert. Svaret er: ${q.opts[q.ans]}`}
+            ${answered === q.ans ? '✅ Korrekt!' : `❌ Forkert. Svaret er: ${esc0(q.opts[q.ans])}`}
           </div>
-          ${q.ytId ? `
+          ${_safeYt(q.ytId) ? `
           <div class="quiz-explanation-video">
             <div class="quiz-explanation-label">📹 Forklaring</div>
             <div class="quiz-video-wrap">
               <iframe
-                src="https://www.youtube.com/embed/${q.ytId}?rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/${_safeYt(q.ytId)}?rel=0&modestbranding=1"
                 title="Forklaring"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -4045,7 +4143,7 @@ function nextQuizQuestion() {
 function retryQuiz() {
   if (!quizState) return;
   const questions = getQuizData(quizState.key);
-  quizState = { key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0 };
+  quizState = { id: quizState.id, key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0 };
   const content = document.querySelector('.lesson-content');
   if (content) {
     const sec = getCurriculum()[currentSection];
@@ -4441,6 +4539,13 @@ function renderKonto() {
           <div id="pf-msg" class="auth-msg"></div>
           <button type="submit" class="btn-auth">Gem ændringer</button>
         </form>
+        <h2 style="margin-top:32px;font-size:20px">Skift adgangskode</h2>
+        <form class="auth-form" style="max-width:460px;margin:0" onsubmit="doChangePassword(event)">
+          <label>Ny adgangskode<input type="password" id="cp-pass" autocomplete="new-password" required></label>
+          <label>Gentag ny adgangskode<input type="password" id="cp-pass2" autocomplete="new-password" required></label>
+          <div id="cp-msg" class="auth-msg"></div>
+          <button type="submit" class="btn-auth">Opdater adgangskode</button>
+        </form>
         <div style="max-width:460px;margin:18px 0 0">
           <button class="btn-delete-account" onclick="doDeleteAccount()">Slet min konto</button>
           <p style="font-size:12px;color:var(--muted-lt);margin:6px 0 0">Fjerner permanent din konto, fremgang og data.</p>
@@ -4531,6 +4636,10 @@ function renderAdmin() {
 
 // Hjælpe-escape (bruges i admin-render)
 function esc0(s) { return (s == null ? '' : String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Validér et YouTube-video-ID før det indsættes i en iframe-URL (mod stored-XSS
+// via admin-redigeret/scraped data). Returnerer '' hvis det ikke er et gyldigt ID.
+function _safeYt(s) { return /^[A-Za-z0-9_-]{11}$/.test(s || '') ? s : ''; }
 
 // Træk YouTube-video-ID ud af et link eller en rå streng
 function ytIdFrom(s) {
@@ -4855,6 +4964,13 @@ function saveCompleted() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedLessons]));
 }
 
+// Ryd lokal fremgang helt — bruges ved logout/kontosletning, så den ene brugers
+// fremgang IKKE merges ind i den næste brugers konto på samme enhed.
+function clearLocalProgress() {
+  completedLessons = new Set();
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
+
 function getLessonKey(si, ii) {
   const slug = currentCourse?.slug || 'default';
   return `${slug}:${si}-${ii}`;
@@ -4886,8 +5002,10 @@ function markComplete() {
   const sectionDone = sec.items.every((_, ii) => isCompleted(currentSection, ii));
   if (sectionDone) fireConfetti();
 
-  // Auto-næste efter 1.5 sek
-  setTimeout(() => goNextLesson(), 1500);
+  // Auto-næste efter 1.5 sek — men IKKE på quiz-resultatet, så eleven kan nå at
+  // læse facit-gennemgangen før der skiftes lektion.
+  const curItem = sec.items[currentItem];
+  if (curItem && curItem.type !== 'quiz') setTimeout(() => goNextLesson(), 1500);
 }
 
 function updateSidebarItem(si, ii) {
@@ -5006,7 +5124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && !document.getElementById('search-overlay').hidden) closeSearch();
   });
 
-  navigate('gymnasium');
+  _restoreFromHash();
 
   // Init auth (Supabase) — opdaterer header + fremgang når session er klar
   if (window.Auth && Auth.init) Auth.init();

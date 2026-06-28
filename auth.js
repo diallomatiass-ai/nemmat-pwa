@@ -58,8 +58,12 @@
 
     async signIn(email, password) {
       if (!client) throw new Error('Online-funktioner er ikke tilgængelige lige nu.');
-      const { error } = await client.auth.signInWithPassword({ email, password });
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      // Hent profilen FØR vi vender tilbage, så konto-siden ikke kortvarigt viser
+      // "Gratis"/intet admin-link mens profilen lagger ind asynkront.
+      this.user = data.user || this.user;
+      await this._loadProfile();
     },
 
     async signOut() { if (client) await client.auth.signOut(); },
