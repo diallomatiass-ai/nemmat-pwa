@@ -3384,16 +3384,32 @@ function _quizIndexFromKey(slug, key) {
   return -1;
 }
 
+// Kan spørgsmålet spilles? single/true_or_false kræver gyldigt ans; multi_choice
+// kræver et corrects-array (alle rigtige svar-indeks, hentet ved scrape).
+function _isPlayableQ(q) {
+  if (!q || !(q.opts?.length >= 2)) return false;
+  if (['single_choice','true_or_false'].includes(q.type)) return q.ans >= 0;
+  if (q.type === 'multi_choice') return Array.isArray(q.corrects) && q.corrects.length >= 1;
+  return false;
+}
+
+// Map et scraped spørgsmål til quiz-render-formatet. multi_choice med >1 rigtigt
+// svar bliver et ægte multi-select-spørgsmål; ét rigtigt svar = almindeligt valg.
+function _normalizeQ(q) {
+  const base = { q: q.q, content: q.content || '', opts: q.opts, ytId: q.ytId || null };
+  if (q.type === 'multi_choice' && Array.isArray(q.corrects)) {
+    if (q.corrects.length > 1) return { ...base, multi: true, corrects: q.corrects.slice() };
+    return { ...base, ans: q.corrects[0] };
+  }
+  return { ...base, ans: q.ans };
+}
+
 function _mapScrapedQuestions(scrapedQuiz) {
   if (!scrapedQuiz?.questions?.length) return null;
   // Understøt single_choice + true_or_false + multi_choice (alle har opts+ans)
-  // Kun single_choice + true_or_false: multi_choice har flere rigtige svar, men
-  // scraperen gemte kun ÉT svar-indeks → de kan ikke scores korrekt og udelades.
   const qs = scrapedQuiz.questions
-    .filter(q => ['single_choice','true_or_false'].includes(q.type)
-                 && q.ans >= 0
-                 && q.opts?.length >= 2)
-    .map(q => ({ q: q.q, content: q.content || '', opts: q.opts, ans: q.ans, ytId: q.ytId || null }));
+    .filter(q => _isPlayableQ(q))
+    .map(_normalizeQ);
   return qs.length ? qs : null;
 }
 
@@ -3432,10 +3448,7 @@ function getQuizData(key) {
       scrapedAll.forEach(q => {
         if (/eksamen|delprøve/i.test(q.title || '')) {
           (q.questions || []).forEach(qq => {
-            if (['single_choice','true_or_false'].includes(qq.type)
-                && qq.ans >= 0 && qq.opts?.length >= 2) {
-              examQs.push({ q: qq.q, content: qq.content || '', opts: qq.opts, ans: qq.ans, ytId: qq.ytId || null });
-            }
+            if (_isPlayableQ(qq)) examQs.push(_normalizeQ(qq));
           });
         }
       });
@@ -3894,7 +3907,7 @@ function renderLessonViewer() {
 
   // Init quiz state when entering a new quiz
   if (isQuiz && quizQuestions && (!quizState || quizState.id !== quizStateId)) {
-    quizState = { id: quizStateId, key: quizKey, current: 0, answers: new Array(quizQuestions.length).fill(null), submitted: false, score: 0 };
+    quizState = { id: quizStateId, key: quizKey, current: 0, answers: new Array(quizQuestions.length).fill(null), submitted: false, score: 0, pending: [] };
   }
 
   let contentHtml;
@@ -4026,13 +4039,16 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
           <div class="quiz-review">
             ${questions.map((q, i) => {
               const userAns = quizState.answers[i];
-              const correct = userAns === q.ans;
+              const correct = _answerCorrect(q, userAns);
+              const rigtigt = q.multi
+                ? (q.corrects || []).map(ci => esc0(q.opts[ci])).join(', ')
+                : esc0(q.opts[q.ans]);
               return `
                 <div class="quiz-review-item ${correct ? 'correct' : 'wrong'}">
                   <span class="quiz-review-icon">${correct ? '✅' : '❌'}</span>
                   <div>
                     <div class="quiz-review-q">Sp. ${i+1}</div>
-                    <div class="quiz-review-a">${correct ? 'Korrekt' : `Forkert - rigtigt svar: ${esc0(q.opts[q.ans])}`}</div>
+                    <div class="quiz-review-a">${correct ? 'Korrekt' : `Forkert - rigtigt svar: ${rigtigt}`}</div>
                   </div>
                 </div>`;
             }).join('')}
@@ -4053,6 +4069,10 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
   const total = questions.length;
   const answered = quizState.answers[quizState.current];
   const progressPct = Math.round((quizState.current / total) * 100);
+  const isMulti = !!q.multi;
+  const corrects = q.corrects || [];
+  const isCorrect = answered !== null && _answerCorrect(q, answered);
+  if (!Array.isArray(quizState.pending)) quizState.pending = [];
 
   return `
     <div class="quiz-wrap">
@@ -4069,22 +4089,29 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
         <p class="quiz-question-text">${esc0(q.q)}</p>
         ${q.content ? `<div class="quiz-q-content">${esc0(q.content)}</div>` : ''}
         ${q.hint ? `<div class="quiz-hint">💡 ${esc0(q.hint)}</div>` : ''}
+        ${isMulti && answered === null ? `<div class="quiz-multi-hint">✔️ Vælg <strong>alle</strong> rigtige svar - der kan være flere</div>` : ''}
         <div class="quiz-options">
           ${q.opts.map((opt, i) => {
             let cls = 'quiz-option';
             if (answered !== null) {
-              if (i === q.ans) cls += ' correct';
-              else if (i === answered) cls += ' wrong';
+              const isCorrectOpt = isMulti ? corrects.includes(i) : (i === q.ans);
+              const wasSelected = isMulti ? answered.includes(i) : (i === answered);
+              if (isCorrectOpt) cls += ' correct';
+              else if (wasSelected) cls += ' wrong';
               else cls += ' dimmed';
-            } else if (answered === i) {
+            } else if (isMulti ? quizState.pending.includes(i) : (answered === i)) {
               cls += ' selected';
             }
-            return `<button class="${cls}" onclick="selectQuizAnswer(${i})" ${answered !== null ? 'disabled' : ''}>${esc0(opt)}</button>`;
+            if (isMulti) cls += ' multi';
+            const handler = answered !== null ? '' : (isMulti ? `toggleQuizAnswer(${i})` : `selectQuizAnswer(${i})`);
+            return `<button class="${cls}" onclick="${handler}" ${answered !== null ? 'disabled' : ''}>${esc0(opt)}</button>`;
           }).join('')}
         </div>
+        ${isMulti && answered === null ? `
+          <button class="btn-quiz-check" onclick="submitMultiAnswer()" ${quizState.pending.length ? '' : 'disabled'}>Tjek svar</button>` : ''}
         ${answered !== null ? `
-          <div class="quiz-feedback ${answered === q.ans ? 'feedback-correct' : 'feedback-wrong'}">
-            ${answered === q.ans ? '✅ Korrekt!' : `❌ Forkert. Svaret er: ${esc0(q.opts[q.ans])}`}
+          <div class="quiz-feedback ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}">
+            ${isCorrect ? '✅ Korrekt!' : `❌ Forkert. ${isMulti ? 'Rigtige svar: ' + corrects.map(ci => esc0(q.opts[ci])).join(', ') : 'Svaret er: ' + esc0(q.opts[q.ans])}`}
           </div>
           ${_safeYt(q.ytId) ? `
           <div class="quiz-explanation-video">
@@ -4106,20 +4133,47 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
     </div>`;
 }
 
+// Gen-render kun quiz-content-området (efter svar/skift), inkl. MathJax.
+function _rerenderQuizContent(scrollTop) {
+  const questions = getQuizData(quizState.key);
+  const content = document.querySelector('.lesson-content');
+  if (!content) return;
+  const sec = getCurriculum()[currentSection];
+  const item = sec.items[currentItem];
+  content.innerHTML = renderQuizContent(questions, sec, item, isCompleted(currentSection, currentItem));
+  if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
+  if (scrollTop) content.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Enkelt-valg: vælg + afslør med det samme.
 function selectQuizAnswer(optIdx) {
   if (!quizState || quizState.answers[quizState.current] !== null) return;
-  const questions = getQuizData(quizState.key);
+  const q = getQuizData(quizState.key)[quizState.current];
   quizState.answers[quizState.current] = optIdx;
-  if (optIdx === questions[quizState.current].ans) quizState.score++;
+  if (_answerCorrect(q, optIdx)) quizState.score++;
+  _rerenderQuizContent();
+}
 
-  // Re-render content area only
-  const content = document.querySelector('.lesson-content');
-  if (content) {
-    const sec = getCurriculum()[currentSection];
-    const item = sec.items[currentItem];
-    content.innerHTML = renderQuizContent(questions, sec, item, isCompleted(currentSection, currentItem));
-    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
-  }
+// Multi-valg: slå et svar til/fra (afslører ikke før "Tjek svar").
+function toggleQuizAnswer(optIdx) {
+  if (!quizState || quizState.answers[quizState.current] !== null) return;
+  if (!Array.isArray(quizState.pending)) quizState.pending = [];
+  const i = quizState.pending.indexOf(optIdx);
+  if (i >= 0) quizState.pending.splice(i, 1);
+  else quizState.pending.push(optIdx);
+  _rerenderQuizContent();
+}
+
+// Multi-valg: lås elevens valg, scor (præcis de rigtige = korrekt), afslør.
+function submitMultiAnswer() {
+  if (!quizState || quizState.answers[quizState.current] !== null) return;
+  const pending = (quizState.pending || []).slice().sort((a, b) => a - b);
+  if (!pending.length) return;
+  const q = getQuizData(quizState.key)[quizState.current];
+  quizState.answers[quizState.current] = pending;
+  if (_answerCorrect(q, pending)) quizState.score++;
+  quizState.pending = [];
+  _rerenderQuizContent();
 }
 
 function nextQuizQuestion() {
@@ -4127,30 +4181,18 @@ function nextQuizQuestion() {
   const questions = getQuizData(quizState.key);
   if (quizState.current < questions.length - 1) {
     quizState.current++;
+    quizState.pending = [];   // nyt spørgsmål → nulstil midlertidige multi-valg
   } else {
     quizState.submitted = true;
   }
-  const content = document.querySelector('.lesson-content');
-  if (content) {
-    const sec = getCurriculum()[currentSection];
-    const item = sec.items[currentItem];
-    content.innerHTML = renderQuizContent(questions, sec, item, isCompleted(currentSection, currentItem));
-    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
-    content.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  _rerenderQuizContent(true);
 }
 
 function retryQuiz() {
   if (!quizState) return;
   const questions = getQuizData(quizState.key);
-  quizState = { id: quizState.id, key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0 };
-  const content = document.querySelector('.lesson-content');
-  if (content) {
-    const sec = getCurriculum()[currentSection];
-    const item = sec.items[currentItem];
-    content.innerHTML = renderQuizContent(questions, sec, item, false);
-    if (window.MathJax) MathJax.typesetPromise([content]).catch(()=>{});
-  }
+  quizState = { id: quizState.id, key: quizState.key, current: 0, answers: new Array(questions.length).fill(null), submitted: false, score: 0, pending: [] };
+  _rerenderQuizContent();
 }
 
 // ── STX SIDE ──
@@ -4640,6 +4682,20 @@ function esc0(s) { return (s == null ? '' : String(s)).replace(/&/g,'&amp;').rep
 // Validér et YouTube-video-ID før det indsættes i en iframe-URL (mod stored-XSS
 // via admin-redigeret/scraped data). Returnerer '' hvis det ikke er et gyldigt ID.
 function _safeYt(s) { return /^[A-Za-z0-9_-]{11}$/.test(s || '') ? s : ''; }
+
+// To talsæt er ens (rækkefølge ligegyldig) — bruges til multi-select-scoring.
+function _sameSet(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  const sb = new Set(b);
+  return a.every(x => sb.has(x));
+}
+
+// Er elevens svar på et spørgsmål korrekt? multi = præcis de rigtige valgt.
+function _answerCorrect(q, ans) {
+  if (ans == null) return false;
+  if (q.multi) return _sameSet(ans, q.corrects || []);
+  return ans === q.ans;
+}
 
 // Træk YouTube-video-ID ud af et link eller en rå streng
 function ytIdFrom(s) {
