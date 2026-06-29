@@ -134,8 +134,26 @@
       const { error } = await client.from('profiles').update({ membership }).eq('id', userId);
       if (error) throw error;
     },
+    async adminSetRole(userId, role) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      if (!['user','admin'].includes(role)) throw new Error('Ugyldig rolle.');
+      // Trigger'en protect_profile_privileges tillader rolle-skift når den der
+      // skriver selv er admin (is_admin()), så denne update går igennem.
+      const { error } = await client.from('profiles').update({ role }).eq('id', userId);
+      if (error) throw error;
+    },
     async adminProgressCounts() {
       if (!client || !this.isAdmin()) return {};
+      // Forsøg den aggregerede DB-funktion (skalerer godt). Falder tilbage til
+      // klient-optælling hvis RPC'en ikke er kørt endnu i Supabase.
+      try {
+        const { data, error } = await client.rpc('admin_progress_counts');
+        if (!error && Array.isArray(data)) {
+          const counts = {};
+          data.forEach(r => { counts[r.user_id] = Number(r.n) || 0; });
+          return counts;
+        }
+      } catch (e) { /* falder tilbage nedenfor */ }
       const { data } = await client.from('progress').select('user_id');
       const counts = {};
       (data || []).forEach(r => { counts[r.user_id] = (counts[r.user_id] || 0) + 1; });

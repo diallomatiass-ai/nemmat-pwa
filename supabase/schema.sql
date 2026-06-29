@@ -158,6 +158,20 @@ $$;
 revoke all on function public.delete_own_account() from public;
 grant execute on function public.delete_own_account() to authenticated;
 
+-- ---------- ADMIN: AGGREGERET FREMGANG (skalerer bedre end at hente alle rækker) ----------
+create or replace function public.admin_progress_counts()
+returns table(user_id uuid, n bigint)
+language sql security definer
+set search_path = public
+as $$
+  select p.user_id, count(*)::bigint as n
+  from public.progress p
+  where public.is_admin()
+  group by p.user_id;
+$$;
+revoke all on function public.admin_progress_counts() from public;
+grant execute on function public.admin_progress_counts() to authenticated;
+
 -- ---------- ROW LEVEL SECURITY ----------
 alter table public.profiles       enable row level security;
 alter table public.progress       enable row level security;

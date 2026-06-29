@@ -3144,8 +3144,15 @@ async function doSaveProfile(ev) {
   if (msg) msg.textContent = 'Gemmer…';
   try {
     await Auth.updateProfile({ full_name: name, exam_level: level });
-    if (msg) msg.innerHTML = '<span class="auth-ok">✅ Gemt!</span>';
     updateAuthUI();
+    // Gen-render konto-siden så navn/niveau-visning opdateres, og vis kvittering igen.
+    if (currentPage === 'konto') {
+      render();
+      const m2 = document.getElementById('pf-msg');
+      if (m2) m2.innerHTML = '<span class="auth-ok">✅ Gemt!</span>';
+    } else if (msg) {
+      msg.innerHTML = '<span class="auth-ok">✅ Gemt!</span>';
+    }
   } catch (e) {
     if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke gemme.'}</span>`;
   }
@@ -3351,9 +3358,6 @@ const SCRAPED_SLUG_MAP = {
   'andengradspolynomier-hf': 'andengradspolynomier-hf-b',
   'analytisk-plan-geometri-hf-b': 'analytisk-plan-geometri-hf-b',
   'funktioner-b-niveau': 'funktioner-b-niveau-hf',
-  'funktions-begrebet': 'funktions-begrebet',
-  'annuitetsregning': 'annuitetsregning',
-  'ligninger-og-formlerstx-c': 'ligninger-og-formlerstx-c',
   // STX/HHX-dubletter genbruger samme scraped-data som HF-C
   'tal-og-algebrastx-1aar': 'tal-og-algebra-hf-c',
   'lineaer-funktion-stx': 'lineaer-funktioner-hf-c',
@@ -3539,6 +3543,9 @@ function render() {
   app.offsetHeight; // reflow
   app.style.animation = 'fadeIn .25s ease';
   bindEvents();
+  // Render matematik ($$…$$) i HELE siden — også kursus-/lektions-/sektionstitler,
+  // ikke kun quiz-indhold (ellers vises formler i titler som rå $$…$$).
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([app]).catch(()=>{});
   if (currentPage === 'admin' && window.Auth && Auth.isAdmin()) loadAdminData();
 }
 
@@ -4811,27 +4818,54 @@ function qeSelectQuiz(key) {
   qeRender();
 }
 
-// Læs DOM-værdier ind i _qe.questions så de overlever en re-render
+// Læs DOM-værdier ind i _qe.questions så de overlever en re-render.
+// Multi-spørgsmål (checkbox-svar) gemmes som {multi, corrects[]}, enkelt-valg som {ans}.
 function qeSyncFromDOM() {
   const ed = document.getElementById('qe-editor');
   if (!ed) return;
   ed.querySelectorAll('.qe-q').forEach((qEl, qi) => {
-    if (!_qe.questions[qi]) return;
+    const q = _qe.questions[qi];
+    if (!q) return;
     const qt = qEl.querySelector('.qe-q-text');
-    if (qt) _qe.questions[qi].q = qt.value;
+    if (qt) q.q = qt.value;
     const yt = qEl.querySelector('.qe-q-yt');
-    if (yt) _qe.questions[qi].ytId = yt.value.trim() || null;
+    if (yt) q.ytId = yt.value.trim() || null;
     const opts = [];
-    let correct = _qe.questions[qi].ans || 0;
+    const correctIdx = [];
     qEl.querySelectorAll('.qe-opt').forEach((oEl, oi) => {
       const inp = oEl.querySelector('.qe-opt-text');
       opts.push(inp ? inp.value : '');
-      const r = oEl.querySelector('.qe-opt-correct');
-      if (r && r.checked) correct = oi;
+      const c = oEl.querySelector('.qe-opt-correct');
+      if (c && c.checked) correctIdx.push(oi);
     });
-    _qe.questions[qi].opts = opts;
-    _qe.questions[qi].ans = correct;
+    q.opts = opts;
+    // Afgør tilstand ud fra hvad der faktisk er renderet (checkbox = multi).
+    const renderedMulti = !!qEl.querySelector('.qe-opt-correct[type="checkbox"]');
+    if (renderedMulti) {
+      q.multi = true; q.corrects = correctIdx; delete q.ans;
+    } else {
+      q.multi = false; q.ans = correctIdx.length ? correctIdx[0] : 0; delete q.corrects;
+    }
   });
+}
+
+// Skift et spørgsmål mellem enkelt-valg og multi-select (bevarer markerede svar).
+function qeToggleMulti(qi) {
+  qeSyncFromDOM();
+  const q = _qe.questions[qi];
+  if (!q) return;
+  const toggle = document.querySelector(`.qe-q[data-qi="${qi}"] .qe-q-multi`);
+  const wantMulti = toggle ? toggle.checked : !q.multi;
+  if (wantMulti) {
+    q.multi = true;
+    q.corrects = (q.ans != null) ? [q.ans] : (q.corrects || []);
+    delete q.ans;
+  } else {
+    q.multi = false;
+    q.ans = (q.corrects && q.corrects.length) ? q.corrects[0] : 0;
+    delete q.corrects;
+  }
+  qeRender();
 }
 
 function qeRender() {
@@ -4845,16 +4879,25 @@ function qeRender() {
         <div class="qe-q" data-qi="${qi}">
           <div class="qe-q-head">
             <span class="qe-q-num">Spørgsmål ${qi + 1}</span>
+            <label class="qe-multi-toggle" title="Slå til hvis spørgsmålet har flere rigtige svar">
+              <input type="checkbox" class="qe-q-multi" ${q.multi ? 'checked' : ''} onchange="qeToggleMulti(${qi})"> Flere rigtige svar
+            </label>
             <button class="qe-btn-del" onclick="qeRemoveQuestion(${qi})" title="Slet spørgsmål">🗑</button>
           </div>
           <textarea class="qe-q-text" rows="2" placeholder="Skriv spørgsmålet…">${esc0(q.q || '')}</textarea>
           <div class="qe-opts">
-            ${(q.opts || []).map((o, oi) => `
+            ${(q.opts || []).map((o, oi) => {
+              const checked = q.multi ? (q.corrects || []).includes(oi) : (q.ans === oi);
+              const input = q.multi
+                ? `<input type="checkbox" class="qe-opt-correct" ${checked ? 'checked' : ''} title="Markér som rigtigt svar">`
+                : `<input type="radio" class="qe-opt-correct" name="qe-correct-${qi}" ${checked ? 'checked' : ''} title="Markér som rigtigt svar">`;
+              return `
               <div class="qe-opt">
-                <input type="radio" class="qe-opt-correct" name="qe-correct-${qi}" ${q.ans === oi ? 'checked' : ''} title="Markér som rigtigt svar">
+                ${input}
                 <input type="text" class="qe-opt-text" value="${esc0(o)}" placeholder="Svarmulighed ${oi + 1}">
                 <button class="qe-btn-del" onclick="qeRemoveOption(${qi},${oi})" title="Fjern svar">✕</button>
-              </div>`).join('')}
+              </div>`;
+            }).join('')}
           </div>
           <button class="qe-btn-add" onclick="qeAddOption(${qi})">+ Tilføj svar</button>
           <label class="qe-yt-label">YouTube-video-ID (forklaring, valgfri)
@@ -4878,7 +4921,15 @@ function qeRemoveOption(qi, oi) {
   const q = _qe.questions[qi];
   if (q.opts.length <= 2) { alert('En quiz skal have mindst 2 svarmuligheder.'); return; }
   q.opts.splice(oi, 1);
-  if (q.ans >= q.opts.length) q.ans = 0;
+  if (q.multi) {
+    // Fjern det slettede indeks og ryk højere indeks ét ned.
+    q.corrects = (q.corrects || []).filter(i => i !== oi).map(i => i > oi ? i - 1 : i);
+    if (!q.corrects.length) q.corrects = [0];
+  } else if (q.ans >= q.opts.length || q.ans === oi) {
+    q.ans = 0;
+  } else if (q.ans > oi) {
+    q.ans -= 1;
+  }
   qeRender();
 }
 
@@ -4891,15 +4942,24 @@ async function qeSave() {
     if (!(q.q || '').trim()) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} mangler tekst.</span>`; return; }
     const opts = (q.opts || []).filter(o => (o || '').trim());
     if (opts.length < 2) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} skal have mindst 2 udfyldte svar.</span>`; return; }
+    if (q.multi && !(q.corrects || []).length) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1}: markér mindst ét rigtigt svar.</span>`; return; }
   }
   if (!_qe.questions.length) { if (status) status.innerHTML = '<span class="auth-err">Tilføj mindst ét spørgsmål.</span>'; return; }
   if (status) status.textContent = 'Gemmer…';
   try {
-    // ryd tomme svar væk og normalisér
+    // ryd tomme svar væk og normalisér (multi -> {multi, corrects}, ellers {ans})
     const clean = _qe.questions.map(q => {
       const opts = (q.opts || []).map(o => (o || '').trim()).filter(Boolean);
+      const base = { q: (q.q || '').trim(), opts, ytId: (q.ytId || '').trim() || null };
+      if (q.multi) {
+        let corrects = (q.corrects || []).filter(i => i >= 0 && i < opts.length);
+        if (!corrects.length) corrects = [0];
+        // ét rigtigt svar = reelt enkelt-valg
+        if (corrects.length === 1) return { ...base, ans: corrects[0] };
+        return { ...base, multi: true, corrects };
+      }
       let ans = q.ans || 0; if (ans >= opts.length) ans = 0;
-      return { q: (q.q || '').trim(), opts, ans, ytId: (q.ytId || '').trim() || null };
+      return { ...base, ans };
     });
     await Auth.saveQuizOverride(_qe.slug, _qe.key, clean);
     _qe.questions = JSON.parse(JSON.stringify(clean));
@@ -4936,11 +4996,13 @@ async function loadAdminData() {
       const done = counts[u.id] || 0;
       const sel = ['none','basis','pro'].map(m =>
         `<option value="${m}"${u.membership===m?' selected':''}>${ {none:'Gratis',basis:'Basis',pro:'Pro'}[m] }</option>`).join('');
+      const roleSel = ['user','admin'].map(r =>
+        `<option value="${r}"${u.role===r?' selected':''}>${ {user:'Bruger',admin:'Admin'}[r] }</option>`).join('');
       return `<tr>
         <td>${esc(u.full_name)}</td>
         <td>${esc(u.email)}</td>
         <td>${esc(u.exam_level)||'–'}</td>
-        <td class="${u.role==='admin'?'admin-role-admin':''}">${u.role}</td>
+        <td class="${u.role==='admin'?'admin-role-admin':''}"><select onchange="doSetRole('${u.id}', this.value, this)">${roleSel}</select></td>
         <td>${done}</td>
         <td><select onchange="doSetMembership('${u.id}', this.value, this)">${sel}</select></td>
       </tr>`;
@@ -4951,7 +5013,6 @@ async function loadAdminData() {
 }
 
 async function doSetMembership(userId, membership, el) {
-  const prev = el ? el.value : null;
   try {
     if (el) el.disabled = true;
     await Auth.adminSetMembership(userId, membership);
@@ -4959,6 +5020,26 @@ async function doSetMembership(userId, membership, el) {
   } catch (e) {
     if (el) { el.disabled = false; el.style.borderColor = '#d93636'; }
     alert('Kunne ikke ændre medlemskab: ' + (e.message || ''));
+  }
+}
+
+async function doSetRole(userId, role, el) {
+  // Advar hvis admin er ved at fjerne sin EGEN adminrolle.
+  if (role === 'user' && window.Auth && Auth.user && Auth.user.id === userId) {
+    if (!confirm('Du fjerner din egen adminrolle og mister adgang til admin-panelet. Fortsæt?')) {
+      if (el) el.value = 'admin';
+      return;
+    }
+  }
+  try {
+    if (el) el.disabled = true;
+    await Auth.adminSetRole(userId, role);
+    if (el) { el.disabled = false; el.style.borderColor = '#1a9b4b'; setTimeout(()=>{ el.style.borderColor=''; }, 900); }
+    // Hvis man lige har fjernet sin egen adminrolle, send væk fra admin.
+    if (role === 'user' && Auth.user && Auth.user.id === userId) { await Auth.init(); navigate('konto'); }
+  } catch (e) {
+    if (el) { el.disabled = false; el.style.borderColor = '#d93636'; }
+    alert('Kunne ikke ændre rolle: ' + (e.message || ''));
   }
 }
 
