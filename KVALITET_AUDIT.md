@@ -31,24 +31,26 @@ svarmulighederne, så facit er flyttet til den korrekte mulighed).
 
 ---
 
-## 2. FORKERTE facit der IKKE kunne auto-rettes (10 spørgsmål)
+## 2. FORKERTE facit RETTET via svar-tekst (10 spørgsmål)
 
-Her er det markerede svar matematisk forkert, MEN det rigtige svar findes
-ikke blandt svarmulighederne. **Skal rettes manuelt i admin → Quiz-editor**
-(ret svarmulighedens tekst, så det rigtige svar bliver muligt).
+Her var det markerede svar matematisk forkert, OG det rigtige svar fandtes ikke
+blandt svarmulighederne. Løst ved at rette selve svar-tekstens værdi (alle
+værdier gennemregnet og verificeret numerisk før ændring).
 
-| qid | Kursus | Problem |
+| qid | Kursus | Rettelse |
 |---|---|---|
-| 31161 | sandsynlighedsregning-og-statistik-hf-b | "Højst 12" P(X≤12): markeret 85,35% er P(X≥12). Rigtigt ≈ **25,07%** |
-| 31252 | sandsynlighedsregning-og-statistik-hf-b | P(X≤9) b(20;0,5): markeret 0,2517 er P(X≤8) (off-by-one). Rigtigt **0,4119** |
-| 31211 | sandsynlighedsregning-og-statistik-hf-b | n,p for cappuccino (12 typer): markeret p=0,40. Rigtigt **p=1/12≈0,083** |
-| 43655 | analytisk-plan-geometri-hf-b | cirkel m. diameter A(2,-2)B(2,4): markeret centrum (-2,1). Rigtigt **(2,1)** |
-| 31017 | analytisk-plan-geometri-hf-b | tangent gennem P(3,9): markeret går ikke gennem P. Rigtigt **y=-0,75x+11,25** |
-| 44494 | differentialregning-hf-b | f(2) for 3t²+2t+5: markeret 45. Rigtigt **21** |
-| 44898 | andengradspolynomier-hf-b | 2(x-1)(x+2): markeret 2x²+2x+4. Rigtigt **2x²+2x-4** (fortegn på c) |
-| 26456 | deskriptiv-statistik | gennemsnit (=60,71): markeret 65. Ingen mulighed rammer |
-| 37111 | potens-funktioner-hf-b | lysforurening a,b: model fittet til kun ét datapunkt. Rigtigt a≈-0,95, b≈1549 |
-| 37116 | potens-funktioner-hf-b | 15% mere lys → % færre stjerner: følgefejl af 37111. Rigtigt ≈12,5% |
+| 31161 | sandsynlighedsregning-og-statistik-hf-b | "Højst 12" P(X≤12): 85,35% (var P(X≥12)) → **25,07%** |
+| 31252 | sandsynlighedsregning-og-statistik-hf-b | P(X≤9) b(20;0,5): 0,2517 (var P(X≤8)) → **0,4119** |
+| 31211 | sandsynlighedsregning-og-statistik-hf-b | n,p for cappuccino (12 typer): p=0,40 → **p≈0,083** (1/12) |
+| 43655 | analytisk-plan-geometri-hf-b | cirkel m. diameter A(2,-2)B(2,4): centrum (-2,1) → **(x-2)²+(y-1)²=9** |
+| 31017 | analytisk-plan-geometri-hf-b | tangent gennem P(3,9): y=-0,75x+15,75 → **y=-0,75x+11,25** |
+| 44494 | differentialregning-hf-b | f(2) for 3t²+2t+5: 45 → **21** |
+| 44898 | andengradspolynomier-hf-b | 2(x-1)(x+2): 2x²+2x+4 → **2x²+2x-4** (fortegn på c) |
+| 26456 | deskriptiv-statistik | gennemsnit: 65 → **60,71** |
+| 37111 | potens-funktioner-hf-b | lysforurening a,b: a=-0,3583,b=2340 → **a≈-0,95, b≈1549** |
+| 37116 | potens-funktioner-hf-b | 15% mere lys → % færre: 4,88% → **12,48%** |
+
+**I alt 25 forkerte facit rettet** (15 i afsnit 1 + 10 her).
 
 ---
 
