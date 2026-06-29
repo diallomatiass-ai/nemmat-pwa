@@ -3391,7 +3391,9 @@ function _quizIndexFromKey(slug, key) {
 // Kan spørgsmålet spilles? single/true_or_false kræver gyldigt ans; multi_choice
 // kræver et corrects-array (alle rigtige svar-indeks, hentet ved scrape).
 function _isPlayableQ(q) {
-  if (!q || !(q.opts?.length >= 2)) return false;
+  if (!q) return false;
+  if (q.type === 'fill_in_blanks') return !!(q.fib && Array.isArray(q.fib.blanks) && q.fib.blanks.length && q.fib.blanks.every(b => b.correct));
+  if (!(q.opts?.length >= 2)) return false;
   if (['single_choice','true_or_false'].includes(q.type)) return q.ans >= 0;
   if (q.type === 'multi_choice') return Array.isArray(q.corrects) && q.corrects.length >= 1;
   return false;
@@ -3399,7 +3401,12 @@ function _isPlayableQ(q) {
 
 // Map et scraped spørgsmål til quiz-render-formatet. multi_choice med >1 rigtigt
 // svar bliver et ægte multi-select-spørgsmål; ét rigtigt svar = almindeligt valg.
+// fill_in_blanks bliver et udfyld-selv-spørgsmål (fib:true + skabelon + facit).
 function _normalizeQ(q) {
+  if (q.type === 'fill_in_blanks' && q.fib) {
+    return { q: q.q, content: q.content || '', ytId: q.ytId || null,
+             fib: true, template: q.fib.template, blanks: q.fib.blanks.map(b => ({ id: b.id, correct: b.correct })) };
+  }
   const base = { q: q.q, content: q.content || '', opts: q.opts, ytId: q.ytId || null };
   if (q.type === 'multi_choice' && Array.isArray(q.corrects)) {
     if (q.corrects.length > 1) return { ...base, multi: true, corrects: q.corrects.slice() };
@@ -4047,9 +4054,11 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
             ${questions.map((q, i) => {
               const userAns = quizState.answers[i];
               const correct = _answerCorrect(q, userAns);
-              const rigtigt = q.multi
-                ? (q.corrects || []).map(ci => esc0(q.opts[ci])).join(', ')
-                : esc0(q.opts[q.ans]);
+              const rigtigt = q.fib
+                ? (q.blanks || []).map(b => esc0(b.correct)).join(', ')
+                : q.multi
+                  ? (q.corrects || []).map(ci => esc0(q.opts[ci])).join(', ')
+                  : esc0(q.opts[q.ans]);
               return `
                 <div class="quiz-review-item ${correct ? 'correct' : 'wrong'}">
                   <span class="quiz-review-icon">${correct ? '✅' : '❌'}</span>
@@ -4081,16 +4090,42 @@ function renderQuizContent(questions, sec, item, alreadyDone) {
   const isCorrect = answered !== null && _answerCorrect(q, answered);
   if (!Array.isArray(quizState.pending)) quizState.pending = [];
 
-  return `
-    <div class="quiz-wrap">
+  const headerHtml = `
       <div class="quiz-header">
-        <div class="quiz-breadcrumb">📚 ${sec.title}</div>
+        <div class="quiz-breadcrumb">📚 ${esc0(sec.title)}</div>
         <div class="quiz-progress-row">
           <span class="quiz-counter">Spørgsmål ${quizState.current + 1} / ${total}</span>
           <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progressPct}%"></div></div>
         </div>
-      </div>
+      </div>`;
 
+  // ── UDFYLD-SELV (fill-in-blanks) ──
+  if (q.fib) {
+    return `
+    <div class="quiz-wrap">
+      ${headerHtml}
+      <div class="quiz-question-card">
+        <div class="quiz-q-number">Q${quizState.current + 1}</div>
+        ${q.q ? `<p class="quiz-question-text">${esc0(q.q)}</p>` : ''}
+        ${q.content ? `<div class="quiz-q-content">${esc0(q.content)}</div>` : ''}
+        ${answered === null ? `<div class="quiz-multi-hint">✏️ Udfyld de tomme felter</div>` : ''}
+        <div class="fib-body">${_renderFibTemplate(q, answered)}</div>
+        ${answered === null ? `
+          <button class="btn-quiz-check" onclick="submitFibAnswer()">Tjek svar</button>` : `
+          <div class="quiz-feedback ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}">
+            ${isCorrect ? '✅ Helt rigtigt!' : '❌ Ikke helt - de rigtige svar er vist ovenfor.'}
+          </div>
+          ${_quizVideoHtml(q.ytId)}
+          <button class="btn-quiz-next" onclick="nextQuizQuestion()">
+            ${quizState.current < total - 1 ? 'Næste spørgsmål →' : 'Se resultat →'}
+          </button>`}
+      </div>
+    </div>`;
+  }
+
+  return `
+    <div class="quiz-wrap">
+      ${headerHtml}
       <div class="quiz-question-card">
         <div class="quiz-q-number">Q${quizState.current + 1}</div>
         <p class="quiz-question-text">${esc0(q.q)}</p>
@@ -4180,6 +4215,21 @@ function submitMultiAnswer() {
   quizState.answers[quizState.current] = pending;
   if (_answerCorrect(q, pending)) quizState.score++;
   quizState.pending = [];
+  _rerenderQuizContent();
+}
+
+// Udfyld-selv: læs felterne, lås, scor (alle blanke rigtige = korrekt), afslør.
+function submitFibAnswer() {
+  if (!quizState || quizState.answers[quizState.current] !== null) return;
+  const q = getQuizData(quizState.key)[quizState.current];
+  if (!q || !q.fib) return;
+  const content = document.querySelector('.lesson-content');
+  const vals = q.blanks.map(b => {
+    const el = content && content.querySelector(`.fib-input[data-fib="${b.id}"]`);
+    return el ? el.value : '';
+  });
+  quizState.answers[quizState.current] = vals;
+  if (_answerCorrect(q, vals)) quizState.score++;
   _rerenderQuizContent();
 }
 
@@ -4697,11 +4747,59 @@ function _sameSet(a, b) {
   return a.every(x => sb.has(x));
 }
 
-// Er elevens svar på et spørgsmål korrekt? multi = præcis de rigtige valgt.
+// Normalisér et udfyld-selv-svar til sammenligning (ufølsom for mellemrum, store
+// bogstaver og $-tegn, så "3x" = "3 X" = "$$3x$$").
+function _fibNorm(s) { return String(s == null ? '' : s).toLowerCase().replace(/\$/g, '').replace(/\s+/g, '').trim(); }
+
+// Er elevens svar på et spørgsmål korrekt? multi = præcis de rigtige valgt;
+// fib = alle blanke felter rigtige.
 function _answerCorrect(q, ans) {
   if (ans == null) return false;
+  if (q.fib) {
+    if (!Array.isArray(ans) || ans.length !== q.blanks.length) return false;
+    return q.blanks.every((b, i) => _fibNorm(ans[i]) === _fibNorm(b.correct));
+  }
   if (q.multi) return _sameSet(ans, q.corrects || []);
   return ans === q.ans;
+}
+
+// Forklarings-video-blok (genbruges af alle spørgsmålstyper).
+function _quizVideoHtml(ytId) {
+  const id = _safeYt(ytId);
+  if (!id) return '';
+  return `
+    <div class="quiz-explanation-video">
+      <div class="quiz-explanation-label">📹 Forklaring</div>
+      <div class="quiz-video-wrap">
+        <iframe src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1" title="Forklaring"
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>`;
+}
+
+// Fjern farlige elementer fra scraped FIB-skabelon-HTML før den indsættes.
+function _fibSanitize(html) {
+  return String(html || '').replace(/<\s*script/gi, '<x-script').replace(/\son\w+\s*=/gi, ' data-x=').replace(/javascript:/gi, '');
+}
+
+// Render en udfyld-selv-skabelon: erstat hver {{FIB_id}} med et inputfelt (eller
+// elevens svar + facit ved afsløring).
+function _renderFibTemplate(q, answered) {
+  let html = _fibSanitize(q.template);
+  q.blanks.forEach((b, i) => {
+    const ph = '{{FIB_' + b.id + '}}';
+    let repl;
+    if (answered === null) {
+      repl = `<input class="fib-input" data-fib="${esc0(b.id)}" type="text" autocomplete="off" spellcheck="false">`;
+    } else {
+      const val = answered[i] != null ? answered[i] : '';
+      const ok = _fibNorm(val) === _fibNorm(b.correct);
+      repl = `<span class="fib-reveal ${ok ? 'fib-ok' : 'fib-bad'}">${esc0(val || '(tom)')}${ok ? '' : ` <span class="fib-correct">→ ${esc0(b.correct)}</span>`}</span>`;
+    }
+    html = html.split(ph).join(repl);
+  });
+  return html;
 }
 
 // Træk YouTube-video-ID ud af et link eller en rå streng
@@ -4826,6 +4924,7 @@ function qeSyncFromDOM() {
   ed.querySelectorAll('.qe-q').forEach((qEl, qi) => {
     const q = _qe.questions[qi];
     if (!q) return;
+    if (q.fib) return;   // udfyld-selv-spørgsmål redigeres ikke her (bevares uændret)
     const qt = qEl.querySelector('.qe-q-text');
     if (qt) q.q = qt.value;
     const yt = qEl.querySelector('.qe-q-yt');
@@ -4875,7 +4974,14 @@ function qeRender() {
   const qs = _qe.questions;
   ed.innerHTML = `
     <div class="qe-box">
-      ${qs.map((q, qi) => `
+      ${qs.map((q, qi) => q.fib ? `
+        <div class="qe-q qe-q-fib" data-qi="${qi}">
+          <div class="qe-q-head">
+            <span class="qe-q-num">Spørgsmål ${qi + 1}</span>
+            <span class="qe-fib-tag">Udfyld-selv (kan ikke redigeres her)</span>
+          </div>
+          <div class="qe-fib-prompt">${esc0(q.q || '(udfyld-selv-opgave)')}</div>
+        </div>` : `
         <div class="qe-q" data-qi="${qi}">
           <div class="qe-q-head">
             <span class="qe-q-num">Spørgsmål ${qi + 1}</span>
@@ -4936,9 +5042,10 @@ function qeRemoveOption(qi, oi) {
 async function qeSave() {
   qeSyncFromDOM();
   const status = document.getElementById('qe-status');
-  // validér
+  // validér (udfyld-selv-spørgsmål springes over - de redigeres ikke her)
   for (let i = 0; i < _qe.questions.length; i++) {
     const q = _qe.questions[i];
+    if (q.fib) continue;
     if (!(q.q || '').trim()) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} mangler tekst.</span>`; return; }
     const opts = (q.opts || []).filter(o => (o || '').trim());
     if (opts.length < 2) { if (status) status.innerHTML = `<span class="auth-err">Spørgsmål ${i+1} skal have mindst 2 udfyldte svar.</span>`; return; }
@@ -4949,6 +5056,8 @@ async function qeSave() {
   try {
     // ryd tomme svar væk og normalisér (multi -> {multi, corrects}, ellers {ans})
     const clean = _qe.questions.map(q => {
+      // Udfyld-selv-spørgsmål bevares uændret (hele fib-strukturen).
+      if (q.fib) return { q: q.q || '', content: q.content || '', ytId: (q.ytId || '') || null, fib: true, template: q.template, blanks: q.blanks };
       const opts = (q.opts || []).map(o => (o || '').trim()).filter(Boolean);
       const base = { q: (q.q || '').trim(), opts, ytId: (q.ytId || '').trim() || null };
       if (q.multi) {

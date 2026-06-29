@@ -1085,6 +1085,30 @@ h4 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; line
   font-size: 13px; color: #356df1; background: #eef3ff;
   border-radius: 8px; padding: 8px 12px; margin-bottom: 14px;
 }
+/* Udfyld-selv (fill-in-blanks) */
+.fib-body {
+  font-size: 16px; line-height: 2.1; color: #1e293b; margin: 6px 0 4px;
+}
+.fib-body div { margin: 2px 0; }
+.fib-input {
+  display: inline-block; min-width: 70px; width: 70px;
+  padding: 4px 8px; margin: 0 3px;
+  border: 2px solid #cbd5e1; border-radius: 7px;
+  background: #fff; font-size: 15px; font-family: 'Inter', sans-serif;
+  color: #1e293b; text-align: center;
+}
+.fib-input:focus { outline: none; border-color: #356df1; background: #f0f4ff; }
+.fib-reveal {
+  display: inline-block; min-width: 60px; padding: 3px 8px; margin: 0 3px;
+  border-radius: 7px; font-weight: 600; text-align: center;
+}
+.fib-reveal.fib-ok  { background: #d1fae5; color: #065f46; }
+.fib-reveal.fib-bad { background: #fee2e2; color: #7f1d1d; }
+.fib-correct { color: #065f46; font-weight: 700; white-space: nowrap; }
+.qe-q-fib { opacity: .85; }
+.qe-fib-tag { font-size: 12px; color: #92722a; background: #fef3c7; padding: 3px 9px; border-radius: 999px; margin-left: auto; }
+.qe-fib-prompt { font-size: 14px; color: #475569; margin-top: 8px; }
+
 .btn-quiz-check {
   margin-top: 18px; width: 100%;
   padding: 13px; border: none; border-radius: 10px;

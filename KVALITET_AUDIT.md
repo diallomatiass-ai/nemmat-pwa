@@ -76,12 +76,15 @@ ikke til de opgivne tal) - sandsynligvis transskriberingsfejl fra nemmat.dk:
 
 ---
 
-## 5. Udeladte spørgsmål (44 stk - "fill-in-blank")
+## 5. Udfyld-selv-spørgsmål (44 stk) - NU UNDERSTØTTET
 
-44 spørgsmål har kun 1 svarmulighed og `ans=-1` (åbne svar / udfyld-selv, som
-multiple-choice-formatet ikke kan vise). De udelades automatisk og vises ikke
-for eleverne. Hovedsageligt i `læringstelt`-quizzer. Disse er en *content-mangel*,
-ikke en visuel fejl - de kan tilføjes som rigtige multiple-choice via admin.
+44 "fill-in-blanks"-spørgsmål blev tidligere udeladt (kun 1 "svarmulighed" med
+`{{FIB_id}}`-pladsholdere og `ans=-1`). De er nu **re-scrapet** fra nemmat.dk:
+hver blank har fået sit facit (`fib.blanks[].correct`), og der er bygget en ægte
+udfyld-selv-UI (inputfelter i opgaven, "Tjek svar", facit vist ved fejl).
+Scoring: alle felter rigtige = korrekt (ufølsom for mellemrum/store bogstaver/$).
+Quiz-editoren viser dem som skrivebeskyttede, så de ikke kan ødelægges ved gem.
+(qid 31307 havde én defekt blank i kilden - facit "aftagende" udfyldt manuelt.)
 
 ---
 
