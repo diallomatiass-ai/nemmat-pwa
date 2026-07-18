@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nemmat-v37';
+const CACHE_NAME = 'nemmat-v38';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE = [
@@ -39,6 +39,10 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
 
   if (request.method !== 'GET' || url.protocol === 'chrome-extension:') return;
+
+  // Supabase-API (profiler, fremgang, overrides) må ALDRIG caches — cache-first
+  // her betød at medlemskab/fremgang blev serveret forældet for evigt.
+  if (url.hostname.endsWith('.supabase.co')) return;
 
   // JS og CSS: altid network-first så opdateringer slår igennem med det samme
   if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
