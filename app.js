@@ -2814,14 +2814,19 @@ function navigate(page, data) {
 
 // ── BROWSER-HISTORIK (tilbage-knap + deep-link) ──
 let _historyReady = false;
+function _currentHash() {
+  // Hash'en der svarer til den aktuelle side (kursus-slug + lektion inkluderet).
+  if (currentCourse?.slug && currentPage === 'course') {
+    return `#course/${encodeURIComponent(currentCourse.slug)}`;
+  }
+  if (currentCourse?.slug && currentPage === 'lesson') {
+    return `#lesson/${encodeURIComponent(currentCourse.slug)}/${currentSection}/${currentItem}`;
+  }
+  return '#' + currentPage;
+}
 function _syncHistory() {
   // Skriv kursus-slug + lektion ind i hash'en, så reload/deep-link kan genskabe siden.
-  let hash = '#' + currentPage;
-  if (currentCourse?.slug && currentPage === 'course') {
-    hash = `#course/${encodeURIComponent(currentCourse.slug)}`;
-  } else if (currentCourse?.slug && currentPage === 'lesson') {
-    hash = `#lesson/${encodeURIComponent(currentCourse.slug)}/${currentSection}/${currentItem}`;
-  }
+  const hash = _currentHash();
   const state = { page: currentPage, course: currentCourse, section: currentSection, item: currentItem };
   if (!_historyReady) {
     history.replaceState(state, '', hash);
@@ -2859,6 +2864,13 @@ function _restoreFromHash() {
   const known = ['gymnasium','hf','stx','hhx','hf-c','hf-b','institutioner','private','om','kontakt','konto','opret'];
   navigate(known.includes(page) ? page : 'gymnasium');
 }
+// Ren fragment-navigation (fx klik på et delt #lesson/...-link mens sitet
+// allerede er åbent, eller manuel hash-redigering) udløser IKKE reload eller
+// popstate-restore — fang den her. Ved back/forward kører popstate først og
+// bringer state i sync, så guarden gør dette til en no-op dér.
+window.addEventListener('hashchange', () => {
+  if (location.hash !== _currentHash()) _restoreFromHash();
+});
 window.addEventListener('popstate', (e) => {
   const s = e.state;
   // Luk evt. åbne overlays før vi navigerer tilbage
@@ -2953,6 +2965,16 @@ function updateAuthUI() {
   }
 }
 
+// Oversæt tekniske fejl (fx "TypeError: Failed to fetch" når serveren er nede)
+// til en venlig dansk besked, med pænt fallback for alt andet.
+function _authErrMsg(e, fallback) {
+  const raw = ((e && e.message) || '').toLowerCase();
+  if (raw.includes('failed to fetch') || raw.includes('networkerror') || raw.includes('load failed') || raw.includes('network request failed')) {
+    return 'Vi kan ikke få forbindelse til serveren lige nu. Tjek din internetforbindelse og prøv igen om lidt.';
+  }
+  return (e && e.message) || fallback;
+}
+
 async function doSignup(ev) {
   if (ev) ev.preventDefault();
   const name = document.getElementById('su-name').value.trim();
@@ -2984,7 +3006,7 @@ async function doSignup(ev) {
     } else if (raw.includes('password')) {
       friendly = 'Adgangskoden er for svag — brug mindst 6 tegn.';
     } else {
-      friendly = e.message || 'Kunne ikke oprette konto. Prøv igen.';
+      friendly = _authErrMsg(e, 'Kunne ikke oprette konto. Prøv igen.');
     }
     if (msg) msg.innerHTML = `<span class="auth-err">${friendly}</span>`;
   }
@@ -3000,7 +3022,7 @@ async function doLogin(ev) {
     await Auth.signIn(email, pass);
     navigate('konto');
   } catch (e) {
-    if (msg) msg.innerHTML = `<span class="auth-err">${(e.message || '').includes('Invalid') ? 'Forkert email eller adgangskode.' : (e.message || 'Kunne ikke logge ind.')}</span>`;
+    if (msg) msg.innerHTML = `<span class="auth-err">${(e.message || '').includes('Invalid') ? 'Forkert email eller adgangskode.' : _authErrMsg(e, 'Kunne ikke logge ind.')}</span>`;
   }
 }
 
@@ -3026,7 +3048,7 @@ async function doForgot() {
     if (msg) msg.innerHTML = '<span class="auth-ok">Tjek din email — vi har sendt et link til at nulstille din adgangskode.</span>';
   } catch (e) {
     const raw = (e.message || '').toLowerCase();
-    if (msg) msg.innerHTML = `<span class="auth-err">${raw.includes('rate') ? 'For mange forsøg lige nu. Prøv igen om lidt.' : (e.message || 'Kunne ikke sende link.')}</span>`;
+    if (msg) msg.innerHTML = `<span class="auth-err">${raw.includes('rate') ? 'For mange forsøg lige nu. Prøv igen om lidt.' : _authErrMsg(e, 'Kunne ikke sende link.')}</span>`;
   }
 }
 
@@ -3042,7 +3064,7 @@ async function doResetPassword(ev) {
     await Auth.updatePassword(p1);
     navigate('konto');
   } catch (e) {
-    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke gemme adgangskoden.'}</span>`;
+    if (msg) msg.innerHTML = `<span class="auth-err">${_authErrMsg(e, 'Kunne ikke gemme adgangskoden.')}</span>`;
   }
 }
 
@@ -3113,7 +3135,7 @@ async function doDeleteAccount() {
     alert('Din konto er slettet.');
     navigate('gymnasium');
   } catch (e) {
-    alert('Kunne ikke slette kontoen: ' + (e.message || ''));
+    alert('Kunne ikke slette kontoen: ' + _authErrMsg(e, 'Prøv igen om lidt.'));
   }
 }
 
@@ -3131,7 +3153,7 @@ async function doChangePassword(ev) {
     document.getElementById('cp-pass').value = '';
     document.getElementById('cp-pass2').value = '';
   } catch (e) {
-    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke opdatere adgangskoden.'}</span>`;
+    if (msg) msg.innerHTML = `<span class="auth-err">${_authErrMsg(e, 'Kunne ikke opdatere adgangskoden.')}</span>`;
   }
 }
 
@@ -3154,7 +3176,7 @@ async function doSaveProfile(ev) {
       msg.innerHTML = '<span class="auth-ok">✅ Gemt!</span>';
     }
   } catch (e) {
-    if (msg) msg.innerHTML = `<span class="auth-err">${e.message || 'Kunne ikke gemme.'}</span>`;
+    if (msg) msg.innerHTML = `<span class="auth-err">${_authErrMsg(e, 'Kunne ikke gemme.')}</span>`;
   }
 }
 
@@ -4869,7 +4891,7 @@ async function lvSave() {
     if (status) status.innerHTML = `<span class="auth-ok">✅ Gemt (${changed} ændret). Live for alle elever.</span>`;
     lvSelectCourse(slug); // gen-render med opdaterede markeringer
   } catch (e) {
-    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${e.message || ''}</span>`;
+    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${_authErrMsg(e, 'Prøv igen om lidt.')}</span>`;
   }
 }
 
@@ -5075,7 +5097,7 @@ async function qeSave() {
     if (status) status.innerHTML = '<span class="auth-ok">✅ Gemt! Ændringen er nu live for alle elever.</span>';
     qeRender();
   } catch (e) {
-    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${e.message || ''}</span>`;
+    if (status) status.innerHTML = `<span class="auth-err">Kunne ikke gemme: ${_authErrMsg(e, 'Prøv igen om lidt.')}</span>`;
   }
 }
 
@@ -5088,7 +5110,7 @@ async function qeReset() {
     qeRender();
     const s = document.getElementById('qe-status');
     if (s) s.innerHTML = '<span class="auth-ok">Nulstillet til original.</span>';
-  } catch (e) { if (status) status.innerHTML = `<span class="auth-err">Kunne ikke nulstille: ${e.message || ''}</span>`; }
+  } catch (e) { if (status) status.innerHTML = `<span class="auth-err">Kunne ikke nulstille: ${_authErrMsg(e, 'Prøv igen om lidt.')}</span>`; }
 }
 
 async function loadAdminData() {
@@ -5128,7 +5150,7 @@ async function doSetMembership(userId, membership, el) {
     if (el) { el.disabled = false; el.style.borderColor = '#1a9b4b'; setTimeout(()=>{ el.style.borderColor=''; }, 900); }
   } catch (e) {
     if (el) { el.disabled = false; el.style.borderColor = '#d93636'; }
-    alert('Kunne ikke ændre medlemskab: ' + (e.message || ''));
+    alert('Kunne ikke ændre medlemskab: ' + _authErrMsg(e, 'Prøv igen om lidt.'));
   }
 }
 
@@ -5148,7 +5170,7 @@ async function doSetRole(userId, role, el) {
     if (role === 'user' && Auth.user && Auth.user.id === userId) { await Auth.init(); navigate('konto'); }
   } catch (e) {
     if (el) { el.disabled = false; el.style.borderColor = '#d93636'; }
-    alert('Kunne ikke ændre rolle: ' + (e.message || ''));
+    alert('Kunne ikke ændre rolle: ' + _authErrMsg(e, 'Prøv igen om lidt.'));
   }
 }
 
