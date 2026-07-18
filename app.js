@@ -2903,14 +2903,27 @@ async function onAuthChanged() {
   }
   if (window.Auth && Auth.isLoggedIn() && !_progressMerged) {
     _progressMerged = true;
-    try {
-      const dbKeys = await Auth.loadProgressKeys();
-      const dbSet = new Set(dbKeys);
-      const localOnly = [...completedLessons].filter(k => !dbSet.has(k));
-      if (localOnly.length) await Auth.uploadLocalProgress(localOnly);
-      dbKeys.forEach(k => completedLessons.add(k));
-      saveCompleted();
-    } catch (e) { /* offline */ }
+    // VIGTIGT: merge køres UDEN FOR auth-callbacken (setTimeout). Direkte kald
+    // herfra kan ramme mens supabase-klienten stadig holder sin auth-lås /
+    // før den nye JWT bruges → RLS returnerer 0 rækker, og fremgangen
+    // "forsvandt" permanent pga. engangs-flaget. Ved fejl (null) frigives
+    // flaget, så næste auth-event prøver igen.
+    setTimeout(async () => {
+      try {
+        const dbKeys = await Auth.loadProgressKeys();
+        if (dbKeys === null) { _progressMerged = false; return; }
+        const dbSet = new Set(dbKeys);
+        const localOnly = [...completedLessons].filter(k => !dbSet.has(k));
+        if (localOnly.length) await Auth.uploadLocalProgress(localOnly);
+        if (dbKeys.length) {
+          dbKeys.forEach(k => completedLessons.add(k));
+          saveCompleted();
+          render(); // vis den genskabte fremgang med det samme
+        } else {
+          saveCompleted();
+        }
+      } catch (e) { _progressMerged = false; }
+    }, 0);
   }
   if (window.Auth && !Auth.isLoggedIn()) _progressMerged = false;
   // Re-render kun når den auth-relevante tilstand faktisk ændrede sig. Ellers

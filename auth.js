@@ -99,12 +99,15 @@
       if (this.profile) Object.assign(this.profile, patch);
     },
 
+    // Returnerer null ved FEJL (så kalderen kan skelne "ingen fremgang" fra
+    // "kunne ikke hente" og prøve igen) — [] betyder ægte tom.
     async loadProgressKeys() {
-      if (!client || !this.user) return [];
+      if (!client || !this.user) return null;
       try {
-        const { data } = await client.from('progress').select('lesson_key').eq('user_id', this.user.id);
+        const { data, error } = await client.from('progress').select('lesson_key').eq('user_id', this.user.id);
+        if (error) return null;
         return (data || []).map(r => r.lesson_key);
-      } catch (e) { return []; }
+      } catch (e) { return null; }
     },
 
     async markProgress(key) {
