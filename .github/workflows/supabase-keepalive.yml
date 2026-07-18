@@ -1,0 +1,23 @@
+# Holder Supabase-projektet i live: free-tier pauser projekter uden API-aktivitet
+# i ~1 uge (det skete 2026-07 og lagde hele login/fremgang-laget ned).
+# Nøglen her er den offentlige publishable-nøgle (ligger også i supabase-config.js).
+name: Supabase keepalive
+
+on:
+  schedule:
+    - cron: '17 6 * * 1,4'   # mandag + torsdag kl 06:17 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST (tæller som aktivitet)
+        run: |
+          set -e
+          KEY="sb_publishable_TIeZqH5yPYKkbc1k0CbKcg_moK_OgW3"
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://kkipmxxgfgeyjyjqruui.supabase.co/rest/v1/quiz_overrides?select=course_slug&limit=1" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
+          echo "REST status: $code"
+          [ "$code" = "200" ] || exit 1
