@@ -8,6 +8,70 @@ const CARD_BG  = IMG_BASE + '2024/03/online_math_course_503df686-1de6-44b8-9c0d-
 const STX_BG   = IMG_BASE + '2024/12/rm373batch13-086-scaled.webp';
 const HHX_BG   = IMG_BASE + '2025/07/IMG_443F40E3442D-1.webp';
 
+// ── TEMA (admin-styret udseende: farver + skrifttyper, gemt i site_settings) ──
+const THEME_DEFAULTS = {
+  primary: '#356df1', primaryDk: '#082645', green: '#29cc57',
+  text: '#444444', title: '#212427', bgLight: '#e1e9fd', bgPage: '#ffffff',
+  fontHead: 'Poppins', fontBody: 'Inter',
+};
+const THEME_VARS = {
+  primary: '--primary', primaryDk: '--primary-dk', green: '--green',
+  text: '--text', title: '--title', bgLight: '--bg-light', bgPage: '--bg-page',
+};
+const THEME_FONTS = ['Inter', 'Poppins', 'Nunito', 'Open Sans', 'Roboto', 'Lato',
+  'Montserrat', 'Rubik', 'Work Sans', 'Source Sans 3'];
+
+// Behold kun gyldige hex-farver og kendte skrifttyper (temaet kan komme fra DB).
+function _themeSanitize(t) {
+  const out = {};
+  if (!t || typeof t !== 'object') return out;
+  Object.keys(THEME_VARS).forEach(k => {
+    if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(t[k] || '')) out[k] = t[k].toLowerCase();
+  });
+  ['fontHead', 'fontBody'].forEach(k => { if (THEME_FONTS.includes(t[k])) out[k] = t[k]; });
+  return out;
+}
+
+// Anvend et tema (null/tomt = standard-udseendet). preview=true springer
+// localStorage-cachen over, så et u-gemt admin-preview ikke overlever reload.
+function applyTheme(theme, preview) {
+  const t = _themeSanitize(theme);
+  const root = document.documentElement;
+  Object.entries(THEME_VARS).forEach(([k, cssVar]) => {
+    if (t[k] && t[k] !== THEME_DEFAULTS[k]) root.style.setProperty(cssVar, t[k]);
+    else root.style.removeProperty(cssVar);
+  });
+  const fh = t.fontHead || THEME_DEFAULTS.fontHead;
+  const fb = t.fontBody || THEME_DEFAULTS.fontBody;
+  if (fh !== THEME_DEFAULTS.fontHead || fb !== THEME_DEFAULTS.fontBody) {
+    const fams = [...new Set([fh, fb])]
+      .map(f => 'family=' + f.replace(/ /g, '+') + ':wght@400;500;600;700').join('&');
+    let link = document.getElementById('theme-fonts');
+    if (!link) {
+      link = document.createElement('link');
+      link.id = 'theme-fonts';
+      link.rel = 'stylesheet';
+      document.head.appendChild(link);
+    }
+    const href = 'https://fonts.googleapis.com/css2?' + fams + '&display=swap';
+    if (link.href !== href) link.href = href;
+    root.style.setProperty('--font-head', "'" + fh + "', sans-serif");
+    root.style.setProperty('--font-body', "'" + fb + "', system-ui, sans-serif");
+  } else {
+    root.style.removeProperty('--font-head');
+    root.style.removeProperty('--font-body');
+  }
+  if (!preview) {
+    try {
+      if (Object.keys(t).length) localStorage.setItem('nemmat_theme', JSON.stringify(t));
+      else localStorage.removeItem('nemmat_theme');
+    } catch (e) {}
+  }
+}
+
+// Anvend cached tema med det samme (før Supabase har svaret) - undgår farve-blink.
+try { applyTheme(JSON.parse(localStorage.getItem('nemmat_theme') || 'null'), true); } catch (e) {}
+
 // ── HF C NIVEAU KURSER (nemmat.dk/hf-1aar-2) ──
 const HF_C_COURSES = [
   {
@@ -2895,6 +2959,9 @@ window.addEventListener('popstate', (e) => {
 let _progressMerged = false;
 async function onAuthChanged() {
   updateAuthUI();
+  // Anvend det globale tema fra DB (kun når site_settings faktisk blev hentet -
+  // ved netværksfejl er SITE_SETTINGS undefined, og cachen må ikke ryddes).
+  if (window.SITE_SETTINGS) applyTheme(window.SITE_SETTINGS.theme || null);
   // Brugeren kom ind via et "nulstil adgangskode"-link → vis sæt-ny-kode-side
   if (window._passwordRecovery) {
     window._passwordRecovery = false;
@@ -4765,7 +4832,90 @@ function renderAdmin() {
         </label>
       </div>
       <div id="lv-editor"></div>
+
+      <h2 style="margin-top:40px;font-size:20px">Udseende</h2>
+      <p class="info-lead" style="margin-bottom:14px">Justér appens farver og skrifttyper. Ændringerne vises med det samme her på siden som preview - tryk "Gem udseende" for at slå dem igennem for alle elever.</p>
+      <div id="theme-editor">${renderThemeEditor()}</div>
     </div>`;
+}
+
+// ── TEMA-EDITOR (admin: farver + skrifttyper) ──
+const THEME_LABELS = {
+  primary: 'Primærfarve (knapper/links)', primaryDk: 'Mørk primær (hover/menuer)',
+  green: 'Succesfarve (rigtigt svar)', text: 'Brødtekst', title: 'Overskrifter',
+  bgLight: 'Lys baggrund (header/footer)', bgPage: 'Sidebaggrund',
+};
+
+function renderThemeEditor() {
+  const cur = Object.assign({}, THEME_DEFAULTS,
+    _themeSanitize(window.SITE_SETTINGS && window.SITE_SETTINGS.theme));
+  return `
+    <div class="theme-grid">
+      ${Object.keys(THEME_VARS).map(k => `
+        <label class="theme-field">${THEME_LABELS[k]}
+          <span class="theme-color-row">
+            <input type="color" id="th-${k}" value="${esc0(cur[k])}" oninput="thPreview()">
+            <code id="th-${k}-hex">${esc0(cur[k])}</code>
+          </span>
+        </label>`).join('')}
+      ${['fontHead', 'fontBody'].map(k => `
+        <label class="theme-field">${k === 'fontHead' ? 'Skrifttype - overskrifter' : 'Skrifttype - brødtekst'}
+          <select id="th-${k}" onchange="thPreview()">
+            ${THEME_FONTS.map(f => `<option value="${f}"${f === cur[k] ? ' selected' : ''}>${f}</option>`).join('')}
+          </select>
+        </label>`).join('')}
+    </div>
+    <div class="theme-actions">
+      <button class="btn-auth" onclick="thSave()">💾 Gem udseende</button>
+      <button class="btn-auth th-reset" onclick="thReset()">Nulstil til standard</button>
+      <span id="th-status"></span>
+    </div>`;
+}
+
+function _thCollect() {
+  const t = {};
+  Object.keys(THEME_VARS).concat(['fontHead', 'fontBody']).forEach(k => {
+    const el = document.getElementById('th-' + k);
+    if (el) t[k] = el.value;
+  });
+  return t;
+}
+
+function thPreview() {
+  const t = _thCollect();
+  Object.keys(THEME_VARS).forEach(k => {
+    const hexEl = document.getElementById('th-' + k + '-hex');
+    if (hexEl) hexEl.textContent = t[k];
+  });
+  applyTheme(t, true);
+}
+
+async function thSave() {
+  const status = document.getElementById('th-status');
+  if (status) status.textContent = 'Gemmer…';
+  try {
+    const t = _themeSanitize(_thCollect());
+    await Auth.saveSiteSetting('theme', t);
+    applyTheme(t);
+    if (status) status.innerHTML = '<span class="auth-ok">✅ Gemt. Udseendet er live for alle elever.</span>';
+  } catch (e) {
+    if (status) status.innerHTML = '<span class="auth-err">Kunne ikke gemme: ' + _authErrMsg(e, 'Prøv igen om lidt.') + '</span>';
+  }
+}
+
+async function thReset() {
+  const status = document.getElementById('th-status');
+  if (status) status.textContent = 'Nulstiller…';
+  try {
+    await Auth.deleteSiteSetting('theme');
+    applyTheme(null);
+    const ed = document.getElementById('theme-editor');
+    if (ed) ed.innerHTML = renderThemeEditor();
+    const s2 = document.getElementById('th-status');
+    if (s2) s2.innerHTML = '<span class="auth-ok">✅ Nulstillet til standard-udseendet.</span>';
+  } catch (e) {
+    if (status) status.innerHTML = '<span class="auth-err">Kunne ikke nulstille: ' + _authErrMsg(e, 'Prøv igen om lidt.') + '</span>';
+  }
 }
 
 // Hjælpe-escape (bruges i admin-render)

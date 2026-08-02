@@ -214,6 +214,35 @@
       if (error) throw error;
       if (window.LESSON_OVERRIDES) delete window.LESSON_OVERRIDES[slug + '::' + key];
     },
+
+    // ── SITE-INDSTILLINGER (globalt tema: farver/skrifttyper - admin skriver, alle læser) ──
+    async loadSiteSettings() {
+      if (!client) return;
+      try {
+        const { data, error } = await client.from('site_settings').select('key,value');
+        if (error) return; // fx tabel mangler endnu / netværksfejl → rør ikke cache
+        const map = {};
+        (data || []).forEach(r => { map[r.key] = r.value; });
+        // Sættes KUN ved succes: undefined betyder "ukendt", og appen må ikke
+        // rydde det cachede tema på baggrund af en fejlet hentning.
+        window.SITE_SETTINGS = map;
+      } catch (e) { /* offline - behold cached tilstand */ }
+    },
+    async saveSiteSetting(key, value) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('site_settings').upsert(
+        { key, value, updated_by: this.user.id, updated_at: new Date().toISOString() },
+        { onConflict: 'key' });
+      if (error) throw error;
+      window.SITE_SETTINGS = window.SITE_SETTINGS || {};
+      window.SITE_SETTINGS[key] = value;
+    },
+    async deleteSiteSetting(key) {
+      if (!client || !this.isAdmin()) throw new Error('Kun admin.');
+      const { error } = await client.from('site_settings').delete().eq('key', key);
+      if (error) throw error;
+      if (window.SITE_SETTINGS) delete window.SITE_SETTINGS[key];
+    },
   };
 
   async function refresh() {
@@ -225,6 +254,7 @@
       } catch (e) { Auth.user = null; Auth.profile = null; }
       await Auth.loadQuizOverrides();
       await Auth.loadLessonOverrides();
+      await Auth.loadSiteSettings();
     }
     if (typeof window.onAuthChanged === 'function') await window.onAuthChanged();
   }

@@ -1,0 +1,14 @@
+/home/ahmes/nemmat-pwa/sw.js
+/home/ahmes/nemmat-pwa/app.js
+/home/ahmes/nemmat-pwa/PLAN.md
+/home/ahmes/nemmat-pwa/FEJLSØGNING.md
+/home/ahmes/nemmat-pwa/hero-vectors.png
+/home/ahmes/nemmat-pwa/logo.webp
+/home/ahmes/nemmat-pwa/icons/icon-72.png
+/home/ahmes/nemmat-pwa/icons/icon-96.png
+/home/ahmes/nemmat-pwa/icons/icon-144.png
+/home/ahmes/nemmat-pwa/icons/icon-512.png
+/home/ahmes/nemmat-pwa/icons/icon-152.png
+/home/ahmes/nemmat-pwa/icons/icon-384.png
+/home/ahmes/nemmat-pwa/icons/icon-192.png
+/home/ahmes/nemmat-pwa/icons/icon-128.png
