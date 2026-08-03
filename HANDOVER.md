@@ -101,3 +101,42 @@ Vigtigt om nøgler:
 
 Når A+B+C er overdraget, ejer han alt: indhold (via admin-panel), data/login
 (Supabase) og kode/hosting (GitHub + Vercel).
+
+---
+
+## 4. VIGTIGT: beslutninger der SKAL gennemgås med den, der overtager projektet
+*(tilføjet 2026-08-03 - gennemgå punkt for punkt ved overdragelsen)*
+
+### 4a. Supabase-økonomi: gratis vs. Pro (ubesluttet)
+Backend (login, fremgang, medlemskaber, tema) kører på Supabase **free-tier**, og den
+**pauser automatisk efter ~7 dages "inaktivitet"** - det har lagt login-laget ned
+TO gange (medio juli + 30/7-2026), selv om et keepalive-ping kørte 2x/uge.
+Når projektet er pauset, kan elever hverken logge ind eller gemme fremgang,
+og genoplivning kræver manuelt klik i Supabase-dashboardet.
+
+Valgmulighederne (Supabase har INGEN billigere betalt plan end Pro):
+
+| Løsning | Pris | Konsekvens |
+|---|---|---|
+| Free + dagligt keepalive (NUVÆRENDE) | 0 kr | Kan stadig pause -> manuel genoplivning, nedetid på login |
+| Free + keepalive + AUTO-RESTORE via Management API | 0 kr | Selvhelbredende, men op til nogle timers nedetid pr. hændelse. Kræver access-token fra ejerens Supabase-konto. IKKE sat op endnu |
+| **Supabase Pro** | ~$25/md | Pauser aldrig, daglige backups, 8 GB DB (free: 500 MB, INGEN backups) |
+
+**Anbefaling:** senest når appen har betalende medlemmer i rigtig drift, opgradér til Pro -
+free-tier har ingen backups af elevdata. Indtil da er 0 kr-løsningen med auto-restore acceptabel.
+
+### 4b. Andre åbne punkter ved overdragelsen
+1. **Supabase-kontoen ejes i dag af diallomatiass-ai (GitHub-login)** - skal flyttes/deles
+   med den nye ejer (Supabase: Organization -> Members). Admin-logins til selve appen: se afsnit 2.
+2. **Domænet nemmat.app** er godkendt men endnu ikke købt (~120-180 kr/år, .app kræver
+   HTTPS = gratis via Vercel). Peges på Vercel-projektet, når det er købt.
+3. **Kursus-gab:** nemmat.dk har 102 kurser - appen dækker kun 19. ALLE HHX- (24),
+   STX 1.års- (11), STX 2.års- (8) og STX/A-kurser (19) mangler. Fuld liste + metode: `GAP_ANALYSE.md`.
+4. **Auto-synk fra nemmat.dk** er PLANLAGT men afventer at ejeren udleverer sourcekode/DB-adgang
+   til WordPress-sitet. Strategivalg der skal træffes sammen: (a) WordPress forbliver
+   redigeringsværktøj og appen synker derfra, eller (b) appen bliver hele platformen og
+   WordPress pensioneres (appen har allerede quiz-/video-/tema-editor + brugerstyring).
+5. **Tema-editor (nyt 2026-08):** admin-panelet kan ændre farver/skrifttyper for alle elever
+   (gemmes i `site_settings`-tabellen). Ende-til-ende-testet. Nulstil-knap findes.
+6. **Keepalive-workflowet** (`.github/workflows/supabase-keepalive.yml`) kører DAGLIGT
+   fra GitHub Actions på dette repo - flyttes repoet, skal workflowet med.
