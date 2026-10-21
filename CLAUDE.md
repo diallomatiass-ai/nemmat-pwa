@@ -9,7 +9,7 @@ python3 -m http.server 8000
 Åbn http://localhost:8000. Der er ingen build og ingen tests i repoet.
 
 ## Arbejdsregler
-- Hæv `CACHE_NAME` i `sw.js` ved hver ændring af en fil, der ligger i `PRECACHE`. Ellers ser brugerne den gamle udgave.
+- Hæv `CACHE_NAME` i `sw.js` ved hver ændring af en fil, der ligger i `PRECACHE`, så den nye service worker henter `PRECACHE` på ny og rydder gamle caches. JS og CSS hentes altid fra nettet først.
 - Repoet er offentligt. Ingen hemmeligheder, ingen persondata og ingen logins.
 - `supabase-config.js` må kun indeholde den offentlige publishable-nøgle, aldrig en secret-nøgle. Data beskyttes af reglerne for rækkeadgang i `supabase/schema.sql`.
 - Quiz-indholdet ligger i `nemmat-scraped.js`. Hvor data og fejl ligger, og hvordan projektet overdrages, står i `HANDOVER.md`.
